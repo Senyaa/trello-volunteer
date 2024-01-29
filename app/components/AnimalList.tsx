@@ -14,13 +14,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
   }
 
   const getWidthClass = () => {
-    let animalDetailsCount = 1;
-    if (settings.medsEnabled) {
-      animalDetailsCount++;
-    }
-    if (settings.testsEnabled) {
-      animalDetailsCount++;
-    }
+    const animalDetailsCount = Object.values(settings).filter(Boolean).length - 1;
 
     // tailwind doesn't support dynamically created classes
     // hence cannot use a template string
@@ -34,6 +28,15 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
 
   const widthClass = getWidthClass();
 
+  const headerDetails = () => {
+    if (Object.values(settings).length < 2) return null;
+    return <> {settings.medsEnabled && <div className={widthClass}>💊 Leki</div>}
+    {settings.testsEnabled && <div className={widthClass}>🩸 Testy</div>}
+    {settings.statusEnabled && <div className={widthClass}>🏠 Status</div>}
+    {settings.personalityEnabled && <div className={widthClass}>😈 Charakter</div>}
+    {settings.castrationEnabled && <div className={widthClass}>✂️ Kastracja</div>}</>
+  }
+
   return (
     <>
       <div className="hidden z-10 md:flex bg-neutral-900 rounded-md p-2 mx-2 mt-2 gap-2 border-2 border-solid border-black">
@@ -42,11 +45,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
 
         <div className="flex w-full gap-2">
           <div className={widthClass}>🍽 Karma</div>
-          {settings.medsEnabled && <div className={widthClass}>💊 Leki</div>}
-          {settings.testsEnabled && <div className={widthClass}>🩸 Testy</div>}
-          {settings.statusEnabled && <div className={widthClass}> Status</div>}
-          {settings.personalityEnabled && <div className={widthClass}> Personality</div>}
-          {settings.castrationEnabled && <div className={widthClass}> Castration</div>}
+         {headerDetails()}
         </div>
         <div className="w-[3rem]">Trello</div>
       </div>

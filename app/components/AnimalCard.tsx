@@ -44,6 +44,11 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
     castrationEnabled,
   } = settings;
 
+  
+  const loaderProp = ({ src }: {src: any}) => {
+    return src;
+  };
+
   return (
     <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-900">
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
@@ -53,6 +58,8 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
             fill
             sizes="33vw"
             alt={animal.name}
+            priority={false}
+            loader={loaderProp}
             className="object-cover rounded-full"
           />
         </div>
