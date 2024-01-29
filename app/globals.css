@@ -1,3 +1,5 @@
+@import url("https://fonts.cdnfonts.com/css/century-gothic-paneuropean");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,4 +26,5 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: "Century Gothic Paneuropean", sans-serif;
 }
