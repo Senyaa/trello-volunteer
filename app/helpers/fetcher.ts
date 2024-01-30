@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-
 export const fetcher = async (input: URL | RequestInfo, init?: RequestInit) => {
   const response = await fetch(input, init);
   if (response.ok) {

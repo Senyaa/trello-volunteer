@@ -2,15 +2,15 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getSession";
 import { filterCats } from "@/app/helpers/cardFilters";
 import CatsNav from "@/app/components/CatsNav";
-import getCards from "../../../../client/trelloCards";
 import AnimalList from "../../../../components/AnimalList";
 import { getUserSettings } from "../../settings/getUserSettings";
+import { getCardsWithImages } from "@/actions/getCardsWithImages";
 
 const Cats = async () => {
   const session = await getServerSession();
   const settings = await getUserSettings();
 
-  const cards = await getCards(session?.user?.trelloId || "").catch((e) => {
+  const cards = await getCardsWithImages(session?.user?.trelloId || "").catch((e) => {
     if (e.message.includes("Unauthorized")) {
       redirect("/access-denied?boardAccess=false");
     }

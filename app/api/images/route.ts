@@ -1,12 +1,15 @@
 import { getToken } from "@/app/helpers/getToken";
 import trelloURL from "@/app/helpers/trelloUrlParser";
+import { CardCover } from "@/app/types/Card";
 import { getServerSession } from "@/lib/getSession";
+import prisma from "@/lib/prisma";
 
 export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
   try {
     const session = await getServerSession();
     const cardId = searchParams.get("cardId") || "";
+    const attachmentId = searchParams.get("attachmentId") || "";
     const trelloId = session?.user?.trelloId || "";
     if (!cardId) {
       throw Error("Missing value: cardId");
@@ -18,11 +21,33 @@ export async function GET(request: Request): Promise<Response> {
     const token = await getToken(trelloId);
     const response = await fetch(
       trelloURL(`/1/cards/${cardId}/attachments`, token)
-    ).then((response) => response.body);
+    );
 
-    return new Response(response);
+    const responseData = await response.json();
+
+    await cacheImageUrl(responseData, attachmentId);
+
+    return new Response(JSON.stringify(responseData));
   } catch (error) {
     console.error(error);
     return new Response();
   }
 }
+
+const cacheImageUrl = async (responseData: CardCover[], attachmentId: string) => {
+  const attachment = responseData.find((i) => i.id === attachmentId);
+
+  if (attachment) {
+    const data = {
+      attachmentId,
+      url: attachment.url,
+      createdAt: attachment.date,
+    };
+
+    await prisma.imageUrl.upsert({
+      where: { attachmentId },
+      update: data,
+      create: data,
+    });
+  }
+};

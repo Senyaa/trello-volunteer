@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "../types/Card";
 import { FC, useEffect, useState } from "react";
-import getCardCover from "../client/cardCover";
+import getCardCover from "../client/getCardCover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
 import { useSelector } from "@/lib/redux";
@@ -22,14 +22,19 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
   const [cover, setCover] = useState("");
 
   useEffect(() => {
-    getCardCover(animal.id).then((images) => {
-      const coverUrl = images.find(
-        (i) => i.id === animal.cover.idAttachment
-      )?.url;
+    if (animal.cover.url) {
+      setCover(`/api/imageFile?url=${animal.cover.url}`);
+
+      return;
+    }
+
+    const attachmentId = animal.cover.idAttachment;
+
+    getCardCover(animal.id, attachmentId).then((images) => {
+      const coverUrl = images.find((i) => i.id === attachmentId)?.url;
 
       if (coverUrl) {
-        const coverSrc = `/api/imageFile?url=${coverUrl}`;
-        setCover(coverSrc);
+        setCover(`/api/imageFile?url=${coverUrl}`);
       }
     });
   }, [animal]);
@@ -44,8 +49,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
     castrationEnabled,
   } = settings;
 
-
-  const loaderProp = ({ src, width }: {src: string, width: number}) => {
+  const loaderProp = ({ src, width }: { src: string; width: number }) => {
     return `${src}/?w=${width}`;
   };
 

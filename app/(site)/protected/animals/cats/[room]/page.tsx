@@ -1,10 +1,10 @@
-import getCards from "@/app/client/trelloCards";
 import AnimalList from "@/app/components/AnimalList";
 import { catRooms, filterCats } from "@/app/helpers/cardFilters";
 import CatsNav from "@/app/components/CatsNav";
 import { getUserSettings } from "../../../settings/getUserSettings";
 import { getServerSession } from "@/lib/getSession";
 import { redirect } from "next/navigation";
+import { getCardsWithImages } from "@/actions/getCardsWithImages";
 
 interface CatsRoomProps {
   params: { room: string };
@@ -18,7 +18,7 @@ export default async function CatsRoom({ params }: CatsRoomProps) {
     (r) => r.name.toLocaleLowerCase() === params.room.toLocaleLowerCase()
   )?.id;
 
-  const cards = await getCards(session?.user?.trelloId || "").catch((e) => {
+  const cards = await getCardsWithImages(session?.user?.trelloId || "").catch((e) => {
     if (e.message.includes("Unauthorized")) {
       redirect("/access-denied?boardAccess=false");
     }

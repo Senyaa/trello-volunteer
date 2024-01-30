@@ -80,6 +80,7 @@ interface Cover {
   size?: string;
   brightness?: string;
   isTemplate?: boolean;
+  url?: string;
 }
 
 export interface CardCover {
