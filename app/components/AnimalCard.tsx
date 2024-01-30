@@ -19,7 +19,7 @@ interface AnimalCardProps {
 
 const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
   const settings = useSelector(selectSettings);
-  const [cover, setCover] = useState("/assets/placeholder.jpg");
+  const [cover, setCover] = useState("");
 
   useEffect(() => {
     getCardCover(animal.id).then((images) => {
@@ -44,9 +44,9 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
     castrationEnabled,
   } = settings;
 
-  
-  const loaderProp = ({ src }: {src: any}) => {
-    return src;
+
+  const loaderProp = ({ src, width }: {src: string, width: number}) => {
+    return `${src}/?w=${width}`;
   };
 
   return (
@@ -54,20 +54,21 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
         <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
           <Image
-            src={cover}
+            src={cover || "/assets/placeholder.jpg"}
             fill
             sizes="33vw"
             alt={animal.name}
             priority={false}
             loader={loaderProp}
+            quality={50}
             className="object-cover rounded-full"
           />
         </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <h3 className="text-xl font-extrabold md:w-28">{animal.name}</h3>
-          <div className="md:w-48 px-2">
+          <div className="md:w-48 md:px-2">
             {warning && (
-              <div className="bg-red-300 w-full rounded-md p-1 px-2 mt-4 md:mt-0">
+              <div className="bg-red-300 border border-red-800 w-full rounded-md p-1 px-2 mt-4 md:mt-0">
                 <span className="text-red-800 text-xs font-bold">UWAGA!</span>
                 <div className="text-red-800 whitespace-pre-wrap leading-none">
                   {warning}
@@ -116,8 +117,8 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
             width={detailWidth}
           />
         </div>
-        <div className="text-right p-1">
-          <Link href={animal.shortUrl} className="text-sm text-gray-400 w-10">
+        <div className="text-right p-1 md:pl-4 md:pr-0">
+          <Link href={animal.shortUrl} className="text-sm text-gray-400 w-15">
             <FontAwesomeIcon icon={faTrello} size="lg" />
           </Link>
         </div>
