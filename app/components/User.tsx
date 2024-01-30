@@ -35,7 +35,7 @@ const User = () => {
   } else {
     dispatch(userSlice.actions.setTrelloId(""));
 
-    return <LoginButton />;
+    return null;
   }
 };
 

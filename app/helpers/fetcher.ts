@@ -5,9 +5,5 @@ export const fetcher = async (input: URL | RequestInfo, init?: RequestInit) => {
   if (response.ok) {
     return response.json();
   }
-  
-  if (response.statusText.includes("Unauthorized")) {
-    redirect("/access-denied?boardAccess=false");
-  }
   throw new Error(response.statusText);
 };

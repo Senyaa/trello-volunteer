@@ -1,13 +1,14 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
+import { MAIN_PAGE } from "@/app/helpers/consts";
 
 export default function Home() {
 
     return (
       <main className="flex min-h-screen flex-col items-center w-full">
         <Link
-          href={"/protected/animals/cats"}
+          href={MAIN_PAGE}
           className="block w-full relative h-[40vh]"
         >
           <Image

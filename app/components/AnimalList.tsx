@@ -10,7 +10,7 @@ interface AnimalListProps {
 
 const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
   if (animals.length === 0) {
-    return <span>Nie znaleziono zwierzaków.</span>;
+    return <div className="p-4">Nie znaleziono zwierzaków.</div>;
   }
 
   const getWidthClass = () => {

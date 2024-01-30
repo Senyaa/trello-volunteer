@@ -10,9 +10,9 @@ import { ReduxProvider } from "./components/ReduxProvider";
 import { getUserSettings } from "./(site)/protected/settings/getUserSettings";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { selectIsLoading } from "@/lib/redux";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { MAIN_PAGE } from "./helpers/consts";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default async function RootLayout({
             <main className="h-full">
               <header className="header flex items-center justify-between p-5 bg-neutral-900">
                 <h2 className="ml-2 text-3xl uppercase">
-                  <Link href={session ? "/protected/home" : "/"}>
+                  <Link href={session ? MAIN_PAGE : "/"}>
                     <FontAwesomeIcon icon={faShieldCat} size="sm" />
                   </Link>
                 </h2>
