@@ -18,7 +18,7 @@ const getDetails = (description: string) => {
 
   const warning = getDetailSanitized(
     description,
-    new RegExp(/UWAGA:(.*?)(Czip|Info)/gis)
+    new RegExp(/UWAGA:(.*?)(Czip|Info dla)/gis)
   );
 
   const medsFound = getDetailSanitized(
