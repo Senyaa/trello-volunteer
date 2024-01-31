@@ -4,8 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 214, 219, 220;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
+}
+
 body {
-  color: rgb(255, 255, 255);
-  background: rgb(0, 0, 0);
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-end-rgb));
   font-family: "Century Gothic Paneuropean", sans-serif;
-} 
+}

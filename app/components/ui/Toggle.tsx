@@ -23,7 +23,7 @@ const Toggle: FC<ToggleProps> = ({ name, label, checked, onChange }) => {
         />
         <span
           className={`slider mr-3 flex h-[26px] w-[50px] items-center rounded-full p-1 duration-200 ${
-            checked ? "bg-green-800" : "bg-neutral-700"
+            checked ? "bg-green-800" : "bg-neutral-300 dark:bg-neutral-700"
           }`}
         >
           <span

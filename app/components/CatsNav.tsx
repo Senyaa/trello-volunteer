@@ -26,7 +26,7 @@ const CatsNav: FC<CatsNavProps> = ({ current }) => {
       </Link>
 
       <select
-        className="rounded-md py-1 pl-2 pr-7 text-white bg-neutral-800"
+        className="rounded-md py-1 pl-2 pr-7 bg-neutral-200 dark:text-white dark:bg-neutral-800"
         name="cats-nav"
         id="cats-nav"
         onChange={(e) =>

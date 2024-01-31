@@ -54,7 +54,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
   };
 
   return (
-    <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-900">
+    <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900">
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
         <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
           <Image
@@ -72,7 +72,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
           <h3 className="text-xl font-extrabold md:w-28">{animal.name}</h3>
           <div className="md:w-48 md:px-2">
             {warning && (
-              <div className="bg-red-300 border border-red-800 w-full rounded-md p-1 px-2 mt-4 md:mt-0">
+              <div className="bg-red-100 dark:bg-red-300 border border-red-200 dark:border-red-800 w-full rounded-md p-1 px-2 mt-4 md:mt-0">
                 <span className="text-red-800 text-xs font-bold">UWAGA!</span>
                 <div className="text-red-800 whitespace-pre-wrap leading-none">
                   {warning}

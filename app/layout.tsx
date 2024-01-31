@@ -34,7 +34,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ReduxProvider userSettings={settings}>
             <main className="h-full">
-              <header className="header flex items-center justify-between p-5 bg-neutral-900">
+              <header className="header flex items-center justify-between p-5 bg-neutral-100 dark:bg-neutral-900">
                 <h2 className="ml-2 text-3xl uppercase">
                   <Link href={session ? MAIN_PAGE : "/"}>
                     <FontAwesomeIcon icon={faShieldCat} size="sm" />

@@ -28,7 +28,7 @@ const Button = ({
   } bg-green-800 text-white`;
   const secondaryBtnClasses = `${
     disabled ? "opacity-80" : "opacity-100 hover:bg-green-800 hover:text-white"
-  } bg-transparent border-green-800 border-2 text-white `;
+  } bg-transparent border-green-800 border-2 dark:text-white`;
   
   if (href)
     return (
