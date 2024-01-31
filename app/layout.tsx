@@ -30,7 +30,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="w-full h-full">
-      <body className="w-full h-full">
+      <body className="w-full h-full bg-white dark:bg-black">
         <SessionProvider session={session}>
           <ReduxProvider userSettings={settings}>
             <main className="h-full flex flex-col">

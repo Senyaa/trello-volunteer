@@ -39,7 +39,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
 
   return (
     <>
-      <div className="hidden z-10 md:flex bg-neutral-900 rounded-md p-2 mx-2 mt-2 gap-2 border-2 border-solid border-black">
+      <div className="hidden z-10 md:flex bg-neutral-200 dark:bg-neutral-900 rounded-md p-2 mx-2 mt-2 gap-2 border-2 border-solid dark:border-black">
         <div className="shrink-0 w-[12rem]">Imię</div>
         <div className="shrink-0 w-[12rem]">Uwagi</div>
 

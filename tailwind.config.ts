@@ -7,7 +7,6 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './stories/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
       backgroundImage: {

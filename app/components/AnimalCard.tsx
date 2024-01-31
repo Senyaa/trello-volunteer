@@ -61,7 +61,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
             src={cover || "/assets/placeholder.png"}
             alt={animal.name}
             loading="lazy"
-            className="object-cover rounded-full h-[7rem] w-[7rem]"
+            className="object-cover rounded-full aspect-square"
           />
         </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
