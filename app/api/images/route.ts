@@ -25,6 +25,7 @@ export async function GET(request: Request): Promise<Response> {
 
     const responseData = await response.json();
 
+
     await cacheImageUrl(responseData, attachmentId);
 
     return new Response(JSON.stringify(responseData));
@@ -36,11 +37,14 @@ export async function GET(request: Request): Promise<Response> {
 
 const cacheImageUrl = async (responseData: CardCover[], attachmentId: string) => {
   const attachment = responseData.find((i) => i.id === attachmentId);
+  const url = attachment?.previews.find(p => p.width === 300 && p.scaled)?.url;
+
+  console.log(JSON.stringify(responseData));
 
   if (attachment) {
     const data = {
       attachmentId,
-      url: attachment.url,
+      url: url || attachment.url,
       createdAt: attachment.date,
     };
 

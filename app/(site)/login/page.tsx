@@ -18,7 +18,7 @@ const Login = async () => {
         <h2>Nie masz dostępu do tej strony </h2>
         <div className="relative h-[12rem] rounded-md my-2">
           <Image
-            src={"/assets/placeholder.jpg"}
+            src={"/assets/placeholder.png"}
             fill
             sizes="5rem"
             alt="kotek"
