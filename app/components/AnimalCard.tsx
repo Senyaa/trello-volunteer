@@ -57,14 +57,15 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
     <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900">
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
         <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
-          <Image
+          <img
             src={cover || "/assets/placeholder.jpg"}
-            fill
+            // fill
             sizes="33vw"
             alt={animal.name}
-            priority={false}
-            loader={loaderProp}
-            quality={50}
+            // priority={false}
+            // loader={loaderProp}
+            // quality={50}
+            loading="lazy"
             className="object-cover rounded-full"
           />
         </div>

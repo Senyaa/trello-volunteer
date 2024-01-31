@@ -58,7 +58,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
   return (
     <form
       onSubmit={handleSubmitForm}
-      className="h-full mb-2 flex flex-col justify-between"
+      className="flex grow flex-col justify-between"
     >
       <section className="flex flex-col gap-2">
         <h2>Widoczne pola</h2>
