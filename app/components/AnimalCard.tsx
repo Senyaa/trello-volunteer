@@ -1,44 +1,36 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
 import { Card } from "../types/Card";
-import { FC, useEffect, useState } from "react";
+import { FC,} from "react";
 import getCardCover from "../client/getCardCover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
-import { useSelector } from "@/lib/redux";
-import { selectSettings } from "@/lib/redux/slices/userSlice/selectors";
 import CardDetail from "./CardDetail";
 import getDetails from "../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 
 interface AnimalCardProps {
   animal: Card;
   detailWidth: string;
+  settings: SettingsFormType
 }
 
-const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
-  const settings = useSelector(selectSettings);
-  const [cover, setCover] = useState("");
+const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
+  let cover = "";
 
-  useEffect(() => {
-    if (animal.cover.url) {
-      setCover(`/api/imageFile?url=${animal.cover.url}`);
+  if (animal.cover.url) {
+    cover = `/api/imageFile?url=${animal.cover.url}`;
+  }
 
-      return;
+  const attachmentId = animal.cover.idAttachment;
+
+  getCardCover(animal.id, attachmentId).then((images) => {
+    const coverUrl = images.find((i) => i.id === attachmentId)?.url;
+
+    if (coverUrl) {
+      cover = `/api/imageFile?url=${coverUrl}`;
     }
-
-    const attachmentId = animal.cover.idAttachment;
-
-    getCardCover(animal.id, attachmentId).then((images) => {
-      const coverUrl = images.find((i) => i.id === attachmentId)?.url;
-
-      if (coverUrl) {
-        setCover(`/api/imageFile?url=${coverUrl}`);
-      }
-    });
-  }, [animal]);
+  });
 
   const { food, meds, tests, warning, status, personality, castration } =
     getDetails(animal.desc);
@@ -69,7 +61,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
             {info && (
               <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
                 <div className="text-blue-800 whitespace-pre-wrap leading-none">
-                  <FontAwesomeIcon icon={faInfoCircle} className="mr-2"/>
+                  <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
                   {info}
                 </div>
               </div>

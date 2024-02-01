@@ -53,7 +53,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
         {animals
           .map((animal) => (
             <li key={animal.id} className="m-2">
-              <AnimalCard animal={animal} detailWidth={widthClass} />
+              <AnimalCard animal={animal} detailWidth={widthClass} settings={settings}/>
             </li>
           ))}
       </ul>

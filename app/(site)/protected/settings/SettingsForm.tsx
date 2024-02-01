@@ -6,8 +6,7 @@ import SaveSettingsButton from "@/app/components/SaveSettingsButton";
 import Toggle from "@/app/components/ui/Toggle";
 import { FormEventHandler, useState } from "react";
 import { useDispatch, userSlice } from "@/lib/redux";
-import { revalidatePath } from "next/cache";
-import BackButton from "@/app/components/BackButton";
+import { useRouter } from "next/navigation";
 
 export type SettingsFormType = {
   testsEnabled: boolean;
@@ -30,8 +29,10 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
   initialValues,
 }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const [state, setState] = useState<SettingsFormType>(initialValues);
-  const [formStatus, setFormStatus] = useState<"LOADING" | "SAVED" | "INITIAL">(
+  const [formStatus, setFormStatus] = useState<"LOADING" | "SAVED" | "INITIAL"|"ERROR">(
     "INITIAL"
   );
 
@@ -48,10 +49,11 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
       await updateSettings(state);
       dispatch(userSlice.actions.changeSettings(state));
       setFormStatus("SAVED");
+      router.back()
     } catch (e) {
       console.log(e);
+      setFormStatus("ERROR")
     }
-    revalidatePath("/protected/animals/[slug]", "page");
     setFormStatus("INITIAL");
   };
 
@@ -94,8 +96,8 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
         />
       </section>
       <div className="flex flex-col gap-2">
+        {formStatus === "ERROR" && <span className="text-red dark:text-red-200">Wystąpił błąd, spróbuj później</span>}
         <SaveSettingsButton formStatus={formStatus} />
-        <BackButton />
       </div>
     </form>
   );
