@@ -8,6 +8,7 @@ import CardDetail from "./CardDetail";
 import getDetails from "../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
+import Button from "./ui/Button";
 
 interface AnimalCardProps {
   animal: Card;
@@ -116,10 +117,16 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
             width={detailWidth}
           />
         </div>
-        <div className="text-right p-1 md:pl-4 md:pr-0">
-          <Link href={animal.shortUrl} className="text-sm text-gray-400 w-15">
+        <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
+          <Link href={animal.shortUrl} className="text-sm text-gray-400 w-15 hidden md:block">
             <FontAwesomeIcon icon={faTrello} size="lg" />
           </Link>
+          <Button
+            href={animal.shortUrl}
+            label="Zobacz w trello"
+            iconRight={<FontAwesomeIcon icon={faTrello} className="ml-2" />}
+            classes="text-sm text-gray-400 w-15 md:hidden bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+          />
         </div>
       </div>
     </div>
