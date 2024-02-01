@@ -39,6 +39,7 @@ const Button = ({
         } rounded-md py-2 px-4 ease-in-out ${classes}`}
       >
         {label}
+        {iconRight}
       </Link>
     );
   return (

@@ -33,7 +33,7 @@ export default async function CatsRoom({ params }: CatsRoomProps) {
 
   return (
     <div>
-      <div className="flex justify-between px-2 pt-2">
+      <div className="flex justify-between items-end px-2 pt-2">
         <h1 className="uppercase m-2">{`Koty (${filteredCards.length})`}</h1>
         <CatsNav current={params.room} />
       </div>

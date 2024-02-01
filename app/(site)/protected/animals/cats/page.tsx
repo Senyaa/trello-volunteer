@@ -23,7 +23,7 @@ const Cats = async () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center px-2 pt-2">
+      <div className="flex justify-between items-end px-2 pt-2">
         <h1 className="uppercase m-2">{`Koty (${filteredCards.length})`}</h1>
         <CatsNav />
       </div>
