@@ -11,6 +11,7 @@ import { useSelector } from "@/lib/redux";
 import { selectSettings } from "@/lib/redux/slices/userSlice/selectors";
 import CardDetail from "./CardDetail";
 import getDetails from "../helpers/details";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface AnimalCardProps {
   animal: Card;
@@ -49,9 +50,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
     castrationEnabled,
   } = settings;
 
-  const loaderProp = ({ src, width }: { src: string; width: number }) => {
-    return `${src}/?w=${width}`;
-  };
+  const [name, info] = animal.name.split(" - ");
 
   return (
     <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900">
@@ -65,10 +64,18 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth }) => {
           />
         </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
-          <h3 className="text-xl font-extrabold md:w-28">{animal.name}</h3>
+          <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
           <div className="md:w-48 md:px-2">
+            {info && (
+              <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
+                <div className="text-blue-800 whitespace-pre-wrap leading-none">
+                  <FontAwesomeIcon icon={faInfoCircle} className="mr-2"/>
+                  {info}
+                </div>
+              </div>
+            )}
             {warning && (
-              <div className="bg-red-100 dark:bg-red-300 border border-red-200 dark:border-red-800 w-full rounded-md p-1 px-2 mt-4 md:mt-0">
+              <div className="bg-red-100 dark:bg-red-300 border border-red-200 dark:border-red-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
                 <span className="text-red-800 text-xs font-bold">UWAGA!</span>
                 <div className="text-red-800 whitespace-pre-wrap leading-none">
                   {warning}
