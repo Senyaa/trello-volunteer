@@ -7,6 +7,7 @@ import Toggle from "@/app/components/ui/Toggle";
 import { FormEventHandler, useState } from "react";
 import { useDispatch, userSlice } from "@/lib/redux";
 import { useRouter } from "next/navigation";
+import BackButton from "@/app/components/BackButton";
 
 export type SettingsFormType = {
   testsEnabled: boolean;
@@ -32,9 +33,9 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
   const router = useRouter();
 
   const [state, setState] = useState<SettingsFormType>(initialValues);
-  const [formStatus, setFormStatus] = useState<"LOADING" | "SAVED" | "INITIAL"|"ERROR">(
-    "INITIAL"
-  );
+  const [formStatus, setFormStatus] = useState<
+    "LOADING" | "SAVED" | "INITIAL" | "ERROR"
+  >("INITIAL");
 
   const handleStateChange =
     (field: keyof SettingsFormType) => (value: boolean) => {
@@ -49,10 +50,10 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
       await updateSettings(state);
       dispatch(userSlice.actions.changeSettings(state));
       setFormStatus("SAVED");
-      router.back()
+      router.back();
     } catch (e) {
       console.log(e);
-      setFormStatus("ERROR")
+      setFormStatus("ERROR");
     }
     setFormStatus("INITIAL");
   };
@@ -96,8 +97,13 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
         />
       </section>
       <div className="flex flex-col gap-2">
-        {formStatus === "ERROR" && <span className="text-red dark:text-red-200">Wystąpił błąd, spróbuj później</span>}
+        {formStatus === "ERROR" && (
+          <span className="text-red dark:text-red-200">
+            Wystąpił błąd, spróbuj później
+          </span>
+        )}
         <SaveSettingsButton formStatus={formStatus} />
+        <BackButton />
       </div>
     </form>
   );
