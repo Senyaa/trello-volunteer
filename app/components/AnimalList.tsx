@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import { Card } from "../types/Card";
-import AnimalCard from "./AnimalCard";
+import AnimalData from "./AnimalData";
 
 interface AnimalListProps {
   animals: Card[];
@@ -14,7 +14,8 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
   }
 
   const getWidthClass = () => {
-    const animalDetailsCount = Object.values(settings).filter(Boolean).length - 1;
+    const animalDetailsCount =
+      Object.values(settings).filter(Boolean).length - 1;
 
     // tailwind doesn't support dynamically created classes
     // hence cannot use a template string
@@ -30,12 +31,20 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
 
   const headerDetails = () => {
     if (Object.values(settings).length < 2) return null;
-    return <> {settings.medsEnabled && <div className={widthClass}>💊 Leki</div>}
-    {settings.testsEnabled && <div className={widthClass}>🩸 Testy</div>}
-    {settings.statusEnabled && <div className={widthClass}>🏠 Status</div>}
-    {settings.personalityEnabled && <div className={widthClass}>😈 Charakter</div>}
-    {settings.castrationEnabled && <div className={widthClass}>✂️ Kastracja</div>}</>
-  }
+    return (
+      <>
+        {settings.medsEnabled && <div className={widthClass}>💊 Leki</div>}
+        {settings.testsEnabled && <div className={widthClass}>🩸 Testy</div>}
+        {settings.statusEnabled && <div className={widthClass}>🏠 Status</div>}
+        {settings.personalityEnabled && (
+          <div className={widthClass}>😈 Charakter</div>
+        )}
+        {settings.castrationEnabled && (
+          <div className={widthClass}>✂️ Kastracja</div>
+        )}
+      </>
+    );
+  };
 
   return (
     <>
@@ -45,18 +54,15 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings }) => {
 
         <div className="flex w-full gap-2">
           <div className={widthClass}>🍽 Karma</div>
-         {headerDetails()}
+          {headerDetails()}
         </div>
         <div className="w-[3rem]">Trello</div>
       </div>
-      <ul className="w-full md:my-4">
-        {animals
-          .map((animal) => (
-            <li key={animal.id} className="m-2">
-              <AnimalCard animal={animal} detailWidth={widthClass} settings={settings}/>
-            </li>
-          ))}
-      </ul>
+      <AnimalData
+        animals={animals}
+        widthClass={widthClass}
+        settings={settings}
+      />
     </>
   );
 };

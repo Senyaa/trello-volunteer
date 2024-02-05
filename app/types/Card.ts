@@ -1,4 +1,4 @@
-export interface Card {
+export interface TrelloCard {
   id: string;
   address?: string;
   badges?: {
@@ -71,6 +71,7 @@ export interface Card {
   subscribed?: boolean;
   url: string;
   cover: Cover;
+  isDone?: boolean;
 }
 
 interface Cover {
@@ -107,3 +108,5 @@ export interface Preview {
   width: number;
   _id: string;
 }
+
+export type Card = Pick<TrelloCard, "id" | "desc" | "idBoard" | "idList" | "name" | "shortUrl" | "url" | "cover"| "isDone">

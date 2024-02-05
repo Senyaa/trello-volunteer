@@ -1,9 +1,9 @@
-import { Card } from "../types/Card";
+import { TrelloCard } from "../types/Card";
 import trelloURL from "../helpers/trelloUrlParser";
 import { getToken } from "../helpers/getToken";
 import { fetcher } from "../helpers/fetcher";
 
-const getCards = async (trelloId: string): Promise<Card[]> => {
+const getCards = async (trelloId: string): Promise<TrelloCard[]> => {
   const boardId = process.env.NEXT_PUBLIC_MAIN_BOARD_ID;
   const token = await getToken(trelloId);
 

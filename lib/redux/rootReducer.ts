@@ -1,5 +1,6 @@
-import { userSlice } from "./slices";
+import { AppSlice, userSlice } from "./slices";
 
 export const reducer = {
-  user: userSlice.reducer
+  user: userSlice.reducer,
+  app: AppSlice.reducer,
 };
