@@ -39,17 +39,18 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  trelloId      String     @unique
+  id            String         @id @default(cuid())
+  trelloId      String         @unique
   name          String?
   fullName      String?
-  email         String?    @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   boards        String[]
   accounts      Account[]
   sessions      Session[]
   settings      Settings[]
+  Shift         UsersOnShift[]
 }
 
 model VerificationToken {
@@ -70,6 +71,39 @@ model Settings {
   castrationEnabled  Boolean @default(false)
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model Shift {
+  id             String          @id @default(cuid())
+  started        DateTime        @default(now())
+  finished       DateTime?
+  shiftType      String
+  description    String?
+  animalsOnShift AnimalOnShift[]
+  users          UsersOnShift[]
+}
+
+model UsersOnShift {
+  userId     String
+  shiftId    String
+  assignedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  shift Shift @relation(fields: [shiftId], references: [id])
+
+  @@id([userId, shiftId])
+}
+
+model AnimalOnShift {
+  id             String  @id @default(cuid())
+  animalTrelloId String
+  shiftId        String
+  done           Boolean @default(false)
+  description    String?
+
+  Shift Shift @relation(fields: [shiftId], references: [id])
+
+  @@unique([animalTrelloId, shiftId], name: "animal_shift")
 }
 
 model ImageUrl {

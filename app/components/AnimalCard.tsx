@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card } from "../types/Card";
-import { FC,} from "react";
+import { FC, useEffect, useState } from "react";
 import getCardCover from "../client/getCardCover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
@@ -9,29 +9,40 @@ import getDetails from "../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import Button from "./ui/Button";
+import ShiftCheckbox from "./ShiftCheckbox";
 
 interface AnimalCardProps {
   animal: Card;
   detailWidth: string;
-  settings: SettingsFormType
+  settings: SettingsFormType;
+  isShift: boolean;
 }
 
-const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
-  let cover = "";
+const AnimalCard: FC<AnimalCardProps> = ({
+  animal,
+  detailWidth,
+  settings,
+  isShift,
+}) => {
+  const [cover, setCover] = useState("");
 
-  if (animal.cover.url) {
-    cover = `/api/imageFile?url=${animal.cover.url}`;
-  }
+  useEffect(() => {
+    if (animal.cover.url) {
+      setCover(`/api/imageFile?url=${animal.cover.url}`);
 
-  const attachmentId = animal.cover.idAttachment;
-
-  getCardCover(animal.id, attachmentId).then((images) => {
-    const coverUrl = images.find((i) => i.id === attachmentId)?.url;
-
-    if (coverUrl) {
-      cover = `/api/imageFile?url=${coverUrl}`;
+      return;
     }
-  });
+
+    const attachmentId = animal.cover.idAttachment;
+
+    getCardCover(animal.id, attachmentId).then((images) => {
+      const coverUrl = images.find((i) => i.id === attachmentId)?.url;
+
+      if (coverUrl) {
+        setCover(`/api/imageFile?url=${coverUrl}`);
+      }
+    });
+  }, [animal]);
 
   const { food, meds, tests, warning, status, personality, castration } =
     getDetails(animal.desc);
@@ -46,7 +57,11 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
   const [name, info] = animal.name.split(" - ");
 
   return (
-    <div className="p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900">
+    <div
+      className={`p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900 ${
+        animal.isDone ? "opacity-50" : ""
+      }`}
+    >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
         <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
           <img
@@ -57,7 +72,15 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
           />
         </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
-          <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
+          <div className="flex justify-between">
+            <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
+            {isShift && (
+              <ShiftCheckbox
+                animalID={animal.id}
+                isDone={animal.isDone || false}
+              />
+            )}
+          </div>
           <div className="md:w-48 md:px-2">
             {info && (
               <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
@@ -118,7 +141,10 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, detailWidth, settings }) => {
           />
         </div>
         <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
-          <Link href={animal.shortUrl} className="text-sm text-gray-400 w-15 hidden md:block">
+          <Link
+            href={animal.shortUrl}
+            className="text-sm text-gray-400 w-15 hidden md:block"
+          >
             <FontAwesomeIcon icon={faTrello} size="lg" />
           </Link>
           <Button
