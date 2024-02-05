@@ -22,6 +22,7 @@ const CatsNav: FC<CatsNavProps> = ({ current }) => {
   const router = useRouter();
   const shift = useSelector(selectShiftId);
 
+
   return (
     <div className="flex items-end">
       <div className="mr-2 ">
