@@ -3,14 +3,18 @@
 import { FC } from "react";
 import Button from "./ui/Button";
 import { startShift } from "@/actions/startShift";
+import { useDispatch, userSlice } from "@/lib/redux";
 
 interface StartShiftButtonProps {
   shiftType: string;
 }
 
 const StartShiftButton: FC<StartShiftButtonProps> = ({ shiftType }) => {
+const dispatch = useDispatch();
+
   const handleStartShift = async () => {
-    await startShift(shiftType);
+    const newShift = await startShift(shiftType);
+    dispatch(userSlice.actions.setShiftId(newShift.id));
   };
 
   return <Button label="Zacznij dyżur" onClick={handleStartShift} />;

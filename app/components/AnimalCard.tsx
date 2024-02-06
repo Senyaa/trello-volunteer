@@ -78,6 +78,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
               <ShiftCheckbox
                 animalID={animal.id}
                 isDone={animal.isDone || false}
+                classes="md:hidden"
               />
             )}
           </div>

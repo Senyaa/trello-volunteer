@@ -33,13 +33,13 @@ const Cats = async ({
 
   const isLowerCatroom =
     searchParams?.room?.toLocaleLowerCase() === "lowercatroom";
-    
+
   return (
     <div>
-      <div className="flex justify-between items-end px-2 pt-2">
-        <h1 className="uppercase m-2">{`Koty (${filteredCards.length})`}</h1>
-        <CatsNav current={searchParams?.room || ""} />
-      </div>
+      <CatsNav
+        current={searchParams?.room || ""}
+        animalListLength={filteredCards.length}
+      />
       {isLowerCatroom && (
         <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
       )}
