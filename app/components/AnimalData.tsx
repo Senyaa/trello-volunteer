@@ -36,7 +36,9 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
         </ul>
       ) : (
         <div className="flex flex-col px-2 py-4">
-          <span className="text-center font-extrabold">Wszystko zrobione!</span>
+          <span className="text-center font-extrabold mb-2">Wszystko tu zrobione!</span>
+          <span className="text-center">Sprawdź inne pomieszczenia uzywając selektora w prawym górnym rogu</span>
+          <span className="text-center my-2">lub</span>
           <EndShiftButton />
         </div>
       )}
