@@ -27,7 +27,8 @@ const CatsNav: FC<CatsNavProps> = ({ current, animalListLength }) => {
         <div className="flex items-end">
           <Button
             href="/protected/settings"
-            classes="px-2 mr-2 bg-neutral-100 dark:bg-neutral-800 text-black dark:text-white hover:text-white"
+            classes="px-2 mr-2"
+            color="grey"
             label="Pola"
             iconRight={<FontAwesomeIcon icon={faGear} className="ml-2" />}
           />

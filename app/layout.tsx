@@ -34,12 +34,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="w-full h-full">
-      <body className="w-full h-full bg-white dark:bg-black">
+      <body className="w-full h-full bg-neutral-100 dark:bg-black">
         <SessionProvider session={session}>
           <ReduxProvider>
             <StoreHydration userSettings={settings} shiftId={shift || ""}>
               <main className="h-full flex flex-col">
-                <header className="header flex items-center justify-between p-5 bg-neutral-100 dark:bg-neutral-900 shrink-0">
+                <header className="header flex items-center justify-between p-5 bg-white shadow-xs dark:bg-neutral-900 shrink-0">
                   <h2 className="ml-2 text-3xl uppercase">
                     <Link href={session ? MAIN_PAGE : "/"}>
                       <FontAwesomeIcon icon={faShieldCat} size="sm" />

@@ -58,7 +58,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
 
   return (
     <div
-      className={`p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-neutral-100 dark:bg-neutral-900 ${
+      className={`p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-white shadow-xs dark:bg-neutral-900 ${
         animal.isDone ? "opacity-50" : ""
       }`}
     >
@@ -152,7 +152,9 @@ const AnimalCard: FC<AnimalCardProps> = ({
             href={animal.shortUrl}
             label="Zobacz w trello"
             iconRight={<FontAwesomeIcon icon={faTrello} className="ml-2" />}
-            classes="text-sm text-gray-400 w-15 md:hidden bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+            color="grey"
+            primary={false}
+            classes="text-sm w-15 md:hidden"
           />
         </div>
       </div>

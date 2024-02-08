@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   classes?: string;
   iconRight?: ReactNode;
+  color?: "green" | "grey";
 }
 
 const Button = ({
@@ -22,21 +23,43 @@ const Button = ({
   disabled = false,
   primary = true,
   iconRight,
+  color = "green",
 }: ButtonProps) => {
-  const primaryBtnClasses = `${
-    disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
-  } bg-green-800 text-white`;
-  const secondaryBtnClasses = `${
-    disabled ? "opacity-80" : "opacity-100 hover:bg-green-800 hover:text-white"
-  } bg-transparent border-green-800 border-2 dark:text-white`;
-  
+  const getColorClasses = () => {
+    switch (color) {
+      case "grey": {
+        if (primary) {
+          return `${
+            disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
+          } bg-neutral-200 dark:bg-neutral-700 dark:text-white`;
+        } else {
+          return `${
+            disabled
+              ? "opacity-80"
+              : "opacity-100 hover:bg-green-800 hover:text-white"
+          } bg-transparent border-neutral-400 dark:border-neutral-200 border text-neutral-400 dark:text-neutral-200`;
+        }
+      }
+      default:
+        if (primary) {
+          return `${
+            disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
+          } bg-green-800 text-white`;
+        } else {
+          return `${
+            disabled
+              ? "opacity-80"
+              : "opacity-100 hover:bg-green-800 hover:text-white"
+          } bg-transparent border-green-800 border-2 dark:text-white`;
+        }
+    }
+  };
+
   if (href)
     return (
       <Link
         href={href}
-        className={`${
-          primary ? primaryBtnClasses : secondaryBtnClasses
-        } rounded-md py-2 px-4 ease-in-out ${classes}`}
+        className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
       >
         {label}
         {iconRight}
@@ -46,9 +69,7 @@ const Button = ({
     <button
       disabled={disabled}
       type={type}
-      className={`${
-        primary ? primaryBtnClasses : secondaryBtnClasses
-      } rounded-md py-2 px-4 ease-in-out ${classes}`}
+      className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
       onClick={disabled ? undefined : onClick}
     >
       {label}

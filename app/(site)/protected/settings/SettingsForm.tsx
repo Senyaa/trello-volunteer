@@ -5,9 +5,10 @@ import { updateSettings } from "@/actions/updateSettings";
 import SaveSettingsButton from "@/app/components/SaveSettingsButton";
 import Toggle from "@/app/components/ui/Toggle";
 import { FormEventHandler, useState } from "react";
-import { useDispatch, userSlice } from "@/lib/redux";
+import { selectShiftId, useDispatch, userSlice } from "@/lib/redux";
 import { useRouter } from "next/navigation";
 import BackButton from "@/app/components/BackButton";
+import { useSelector } from "react-redux";
 
 export type SettingsFormType = {
   testsEnabled: boolean;
@@ -31,6 +32,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const shiftId = useSelector(selectShiftId);
 
   const [state, setState] = useState<SettingsFormType>(initialValues);
   const [formStatus, setFormStatus] = useState<
@@ -96,7 +98,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
           onChange={handleStateChange("castrationEnabled")}
         />
       </section>
-      <div className="flex flex-col gap-2">
+      <div className={`flex flex-col gap-2 ${shiftId ? "mb-8" : ''}`}>
         {formStatus === "ERROR" && (
           <span className="text-red dark:text-red-200">
             Wystąpił błąd, spróbuj później

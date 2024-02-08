@@ -6,7 +6,7 @@ import Button from "./ui/Button";
 const BackButton = () => {
   const router = useRouter();
   return (
-    <Button primary={false} classes={"w-full"} label={"< Wróć"} onClick={() => router.back()} />
+    <Button primary={false} classes="w-full" label="< Wróć" onClick={() => router.back()} />
   );
 };
 
