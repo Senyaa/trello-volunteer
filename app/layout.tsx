@@ -15,6 +15,7 @@ import Loading from "./loading";
 import { MAIN_PAGE } from "./helpers/consts";
 import { getCurrentShiftId } from "@/actions/getCurrentShiftId";
 import { StoreHydration } from "./components/StoreHydration";
+import ShiftIndicator from "./components/shift/ShiftIndicator";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {

@@ -27,7 +27,9 @@ const Cats = async ({
       return [];
     }
   );
-  const filteredCards = filterCats(cards)
+
+  const allCats = filterCats(cards)
+  const filteredCards = allCats
     .filter((card) => (roomId ? card.idList === roomId : true))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -43,7 +45,7 @@ const Cats = async ({
       {isLowerCatroom && (
         <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
       )}
-      <AnimalList animals={filteredCards} settings={settings} />
+      <AnimalList animals={filteredCards} settings={settings} allCatsCount={allCats.length}/>
     </div>
   );
 };

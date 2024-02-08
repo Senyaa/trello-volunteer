@@ -9,7 +9,7 @@ import getDetails from "../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import Button from "./ui/Button";
-import ShiftCheckbox from "./ShiftCheckbox";
+import ShiftCheckbox from "./shift/ShiftCheckbox";
 
 interface AnimalCardProps {
   animal: Card;
