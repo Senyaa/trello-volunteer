@@ -40,14 +40,18 @@ export default async function RootLayout({
             <StoreHydration userSettings={settings} shiftId={shift || ""}>
               <main className="h-full flex flex-col">
                 <header className="header flex items-center justify-between p-5 bg-white shadow-xs dark:bg-neutral-900 shrink-0">
-                  <h2 className="ml-2 text-3xl uppercase">
-                    <Link href={session ? MAIN_PAGE : "/"}>
-                      <FontAwesomeIcon icon={faShieldCat} size="sm" />
+                  <h2>
+                    <Link
+                      href={session ? MAIN_PAGE : "/"}
+                      className="flex items-center"
+                    >
+                      <FontAwesomeIcon icon={faShieldCat} className="text-3xl"/>
+                      <span className="hidden md:block text-sm ml-2">ekoapka</span>
                     </Link>
                   </h2>
                   <div className="flex items-center">
-                    {session &&  <ShiftIndicator isShift={Boolean(shift)}/>}
-                  <User />
+                    {session && <ShiftIndicator isShift={Boolean(shift)} />}
+                    <User />
                   </div>
                 </header>
                 <Suspense fallback={<Loading />}>{children}</Suspense>

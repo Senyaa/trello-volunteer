@@ -1,4 +1,4 @@
-import LoginButton from "@/app/components/LoginButton";
+import LoginForm from "@/app/components/LoginButton";
 import { getServerSession } from "@/lib/getSession";
 
 const AccessDenied = async (params: {
@@ -10,7 +10,7 @@ const AccessDenied = async (params: {
     if (!session) {
       return (
         <div className="mt-2">
-          <LoginButton />
+          <LoginForm />
         </div>
       );
     } else if (params.searchParams.boardAccess === "false") {

@@ -2,11 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import Button from "./ui/Button";
+import { FC } from "react";
 
-const BackButton = () => {
+interface BackButtonProps {
+  classes?: string;
+}
+
+const BackButton: FC<BackButtonProps> = ({ classes = "w-full" }) => {
   const router = useRouter();
   return (
-    <Button primary={false} classes="w-full" label="< Wróć" onClick={() => router.back()} />
+    <Button
+      primary={false}
+      classes={classes}
+      label="< Wróć"
+      onClick={() => router.back()}
+    />
   );
 };
 
