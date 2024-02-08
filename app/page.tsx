@@ -1,6 +1,6 @@
 import { getServerSession } from "@/lib/getSession";
 import { redirect } from "next/navigation";
-import LoginButton from "./components/LoginButton";
+import LoginForm from "./components/LoginForm";
 import { MAIN_PAGE } from "./helpers/consts";
 
 const Home = async () => {
@@ -16,7 +16,7 @@ const Home = async () => {
         fundacji i chcesz przejrzeć ✨tylko ważne rzeczy o kotach✨, to
         zapraszam!
       </p>
-      <LoginButton classes="mt-5"/>
+      <LoginForm classes="mt-5"/>
     </article>
   );
 };

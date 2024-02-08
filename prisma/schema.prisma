@@ -111,3 +111,10 @@ model ImageUrl {
   url          String
   createdAt    DateTime
 }
+
+model Documents {
+  documentId String   @id
+  name       String
+  createdAt  DateTime @default(now())
+  content    String
+}

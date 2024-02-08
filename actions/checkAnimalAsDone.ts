@@ -13,6 +13,11 @@ export async function checkAnimalAsDone(
   description?: string
 ) {
   const userId = await getCurrentUserId();
+
+  if (!userId) {
+    throw new Error("Couldn't find the shift");
+  }
+
   const currentShift = await getCurrentShift(shiftType, userId)
 
   if (!currentShift) {

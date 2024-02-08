@@ -5,8 +5,13 @@ import { initialSettingsForm } from "./SettingsForm";
 
 export const getUserSettings = async () => {
     const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return initialSettingsForm;
+    }
+
     const settings = await prisma.settings.findFirst({
-      where: { user: session?.user },
+      where: { user: session.user },
     });
   
    return settings || initialSettingsForm;

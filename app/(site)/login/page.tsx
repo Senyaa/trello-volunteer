@@ -1,4 +1,4 @@
-import LoginButton from "@/app/components/LoginButton";
+import LoginForm from "@/app/components/LoginForm";
 import { getServerSession } from "@/lib/getSession";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,7 @@ const Login = async () => {
         <h2>Nie masz dostępu do tej strony </h2>
         <div className="relative h-[12rem] rounded-md my-2">
           <Image
-            src={"/assets/placeholder.png"}
+            src="/assets/placeholder.png"
             fill
             sizes="5rem"
             alt="kotek"
@@ -26,7 +26,8 @@ const Login = async () => {
             className="object-cover rounded-md"
           />
         </div>
-        <LoginButton
+
+        <LoginForm
           label="Zaloguj się przez trello"
           classes="w-full"
           iconRight={
