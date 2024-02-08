@@ -1,6 +1,6 @@
 # ekoapka
 ![trello vs app view](/public/assets/ekoapka.png)
-ekoapka is an app that simplifies volunteer animal care in a polish animal care non-profit organization. It was designed to primarily be used in mobile version. It uses data from trello to keep one source of truth and let users decided if they want to use it. App is currently available only in polish.
+ekoapka is an app that simplifies volunteers' shift in a polish animal care non-profit organization. It was primarily designed to be used in mobile version. It retrieves data from trello to keep one source of truth and let volunteers decide if they want to become users. App is currently available only in polish.
 
 
 ## launch locally
