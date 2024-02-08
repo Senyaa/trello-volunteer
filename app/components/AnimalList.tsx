@@ -105,7 +105,7 @@ const AnimalList: FC<AnimalListProps> = ({
         widthClass={widthClass}
         settings={settings}
       />
-    </>
+    </div>
   );
 };
 

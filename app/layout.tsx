@@ -3,7 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import User from "./components/User";
 import SessionProvider from "./components/SessionProvider";
-import { faShieldCat, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faShieldCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getServerSession } from "@/lib/getSession";
 import { ReduxProvider } from "./components/ReduxProvider";
@@ -45,7 +45,10 @@ export default async function RootLayout({
                       <FontAwesomeIcon icon={faShieldCat} size="sm" />
                     </Link>
                   </h2>
+                  <div className="flex items-center">
+                    {session &&  <ShiftIndicator isShift={Boolean(shift)}/>}
                   <User />
+                  </div>
                 </header>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </main>

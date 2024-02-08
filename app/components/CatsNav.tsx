@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import Button from "./ui/Button";
-import StartShiftButton from "./StartShiftButton";
-import { selectShiftId, useSelector } from "@/lib/redux";
 
 interface CatsNavProps {
   animalListLength: number;
@@ -21,19 +19,8 @@ const options = [
 
 const CatsNav: FC<CatsNavProps> = ({ current, animalListLength }) => {
   const router = useRouter();
-  const shift = useSelector(selectShiftId);
 
   return (
-    <>
-      <div className="mx-2 mt-2 flex justify-end">
-        {Boolean(shift) ? (
-          <div className="bg-green-700 text-sm rounded-lg px-2">
-            trwa dyżur
-          </div>
-        ) : (
-          <StartShiftButton shiftType="cats" />
-        )}
-      </div>
       <div className="flex justify-between items-end m-2">
         <h1 className="uppercase m-2">{`Koty (${animalListLength})`}</h1>
 
@@ -70,7 +57,6 @@ const CatsNav: FC<CatsNavProps> = ({ current, animalListLength }) => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

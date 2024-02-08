@@ -5,7 +5,6 @@ import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import { Card } from "../types/Card";
 import AnimalCard from "./AnimalCard";
 import { selectShiftId, useSelector } from "@/lib/redux";
-import EndShiftButton from "./EndShiftButton";
 
 interface AnimalDataProps {
   animals: Card[];
@@ -21,7 +20,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
 
   return (
     <>
-      {animalsNotDone.length !== 0 ? (
+      {animalsNotDone.length !== 0 && (
         <ul className="w-full md:my-4">
           {animalsNotDone.map((animal) => (
             <li key={animal.id} className="m-2">
@@ -34,13 +33,6 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
             </li>
           ))}
         </ul>
-      ) : (
-        <div className="flex flex-col px-2 py-4">
-          <span className="text-center font-extrabold mb-2">Wszystko tu zrobione!</span>
-          <span className="text-center">Sprawdź inne pomieszczenia uzywając selektora w prawym górnym rogu</span>
-          <span className="text-center my-2">lub</span>
-          <EndShiftButton />
-        </div>
       )}
       {animalsDone.length !== 0 && (
         <>
