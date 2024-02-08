@@ -16,13 +16,13 @@ import {
 interface AnimalListProps {
   animals: Card[];
   settings: SettingsFormType;
-  allCatsCount: number;
+  allCats: Card[];
 }
 
 const AnimalList: FC<AnimalListProps> = ({
   animals,
   settings,
-  allCatsCount,
+  allCats,
 }) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
@@ -30,7 +30,8 @@ const AnimalList: FC<AnimalListProps> = ({
   const done = useSelector(selectCurrentShiftDone);
 
   const room = searchParams.get("room");
-  dispatch(userSlice.actions.setAnimalsToDo(allCatsCount));
+  dispatch(userSlice.actions.setAnimalsToDo(allCats.length));
+  dispatch(userSlice.actions.setAnimalsDone(allCats.filter(c => c.isDone).length));
 
   if (animals.length === 0) {
     return <div className="p-4">Nie znaleziono zwierzaków.</div>;
@@ -71,7 +72,7 @@ const AnimalList: FC<AnimalListProps> = ({
 
   return (
     <div className="mb-16 md:mb-0">
-      {shift && done === allCatsCount && (
+      {shift && done === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 m-2 rounded-md">
           <p className="text-center">
             <span className="font-extrabold mb-2 block">
