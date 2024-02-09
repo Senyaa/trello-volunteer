@@ -157,6 +157,13 @@ const AnimalCard: FC<AnimalCardProps> = ({
             classes="text-sm w-15 md:hidden"
           />
         </div>
+        {isShift && (
+              <ShiftCheckbox
+                animalID={animal.id}
+                isDone={animal.isDone || false}
+                classes="hidden md:block ml-2"
+              />
+            )}
       </div>
     </div>
   );

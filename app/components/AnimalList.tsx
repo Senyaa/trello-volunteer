@@ -75,7 +75,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
       </>
     );
   };
-  
+
   if (animals.length === 0) {
     return <div className="p-4">Nie znaleziono zwierzaków.</div>;
   }
@@ -110,6 +110,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
           {headerDetails()}
         </div>
         <div className="w-[3rem]">Trello</div>
+        {shift ? <div className="w-[3rem]">Dyżur</div> : null}
       </div>
       <AnimalData
         animals={animalsLocalDone}
