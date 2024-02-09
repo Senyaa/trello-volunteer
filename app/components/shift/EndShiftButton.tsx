@@ -12,7 +12,7 @@ const EndShiftButton: FC = () => {
   const handleEndShift = async () => {
     await endShift();
     dispatch(userSlice.actions.setShiftId(""));
-    dispatch(userSlice.actions.setAnimalsDone(0));
+    dispatch(userSlice.actions.setAnimalsIdsDone([]));
     dispatch(userSlice.actions.setAnimalsToDo(0));
     router.push("/protected/shift-finished");
   };

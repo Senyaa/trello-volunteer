@@ -6,7 +6,7 @@ const initialState: UserSliceState = {
   currentShift: {
     id: "",
     type: "cats",
-    done: 0,
+    idsDone: [],
     all: 0,
   },
   shiftId: "",
@@ -33,14 +33,16 @@ export const userSlice = createSlice({
     setAnimalsToDo: (state, action: PayloadAction<number>) => {
       state.currentShift.all = action.payload;
     },
-    setAnimalsDone: (state, action: PayloadAction<number>) => {
-      state.currentShift.done = action.payload;
+    setAnimalsIdsDone: (state, action: PayloadAction<string[]>) => {
+      state.currentShift.idsDone = action.payload;
     },
-    checkAnimal: (state, action: PayloadAction<boolean>) => {
-      if (action.payload) {
-        state.currentShift.done++;
+    checkAnimalWithId: (state, action: PayloadAction<string>) => {
+      const newId = action.payload;
+      if (state.currentShift.idsDone.includes(newId)) {
+        const newIds = state.currentShift.idsDone.filter((id) => id !== newId);
+        state.currentShift.idsDone = newIds;
       } else {
-        state.currentShift.done--;
+        state.currentShift.idsDone.push(newId);
       }
     },
     changeSettings: (state, action: PayloadAction<SettingsFormType>) => {
@@ -59,6 +61,6 @@ export interface UserSliceState {
 interface CurrentShift {
   id: string;
   type: "cats" | "dogs";
-  done: number;
+  idsDone: string[];
   all: number;
 }

@@ -23,7 +23,7 @@ const ShiftCheckbox: FC<ShiftCheckboxProps> = ({
   const checkAnimal = async () => {
     setIsLoading(true);
     await checkAnimalAsDone("cats", animalID, !isDone);
-    dispatch(userSlice.actions.checkAnimal(!isDone));
+    dispatch(userSlice.actions.checkAnimalWithId(animalID));
     setIsLoading(false);
   };
 

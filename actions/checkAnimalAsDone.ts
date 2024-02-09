@@ -44,7 +44,5 @@ export async function checkAnimalAsDone(
     },
   });
 
-  revalidatePath("/protected/animals/cats");
-
   return currentShift;
 }

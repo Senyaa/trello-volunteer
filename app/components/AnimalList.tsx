@@ -1,12 +1,13 @@
 "use client";
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import { Card } from "../types/Card";
 import AnimalData from "./AnimalData";
 import { useSearchParams } from "next/navigation";
 import EndShiftButton from "./shift/EndShiftButton";
 import {
-  selectCurrentShiftDone,
+  selectCurrentShiftDoneCount,
+  selectCurrentShiftDoneIds,
   selectShiftId,
   useDispatch,
   useSelector,
@@ -19,23 +20,27 @@ interface AnimalListProps {
   allCats: Card[];
 }
 
-const AnimalList: FC<AnimalListProps> = ({
-  animals,
-  settings,
-  allCats,
-}) => {
+const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const shift = useSelector(selectShiftId);
-  const done = useSelector(selectCurrentShiftDone);
+  const doneCount = useSelector(selectCurrentShiftDoneCount);
+  const isDoneIds = useSelector(selectCurrentShiftDoneIds);
 
   const room = searchParams.get("room");
-  dispatch(userSlice.actions.setAnimalsToDo(allCats.length));
-  dispatch(userSlice.actions.setAnimalsDone(allCats.filter(c => c.isDone).length));
+
+  useEffect(() => {
+    dispatch(userSlice.actions.setAnimalsToDo(allCats.length));
+    dispatch(
+      userSlice.actions.setAnimalsIdsDone(allCats.filter(c => c.isDone).map(c => c.id))
+    );
+  }, []);
 
   if (animals.length === 0) {
     return <div className="p-4">Nie znaleziono zwierzaków.</div>;
   }
+
+  const animalsLocalDone = useMemo(() => animals.map(a => ({...a, isDone: isDoneIds.includes(a.id)})), [animals, isDoneIds]);
 
   const getWidthClass = () => {
     const animalDetailsCount =
@@ -72,7 +77,7 @@ const AnimalList: FC<AnimalListProps> = ({
 
   return (
     <div className="mb-16 md:mb-0">
-      {shift && done === allCats.length && (
+      {shift && doneCount === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
           <p className="text-center">
             <span className="font-extrabold mb-2 block">
@@ -102,7 +107,7 @@ const AnimalList: FC<AnimalListProps> = ({
         <div className="w-[3rem]">Trello</div>
       </div>
       <AnimalData
-        animals={animals}
+        animals={animalsLocalDone}
         widthClass={widthClass}
         settings={settings}
       />

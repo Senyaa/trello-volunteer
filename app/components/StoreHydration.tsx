@@ -28,7 +28,10 @@ export const StoreHydration = ({ children, shiftId, userSettings }: Props) => {
 
     reduxStore.dispatch(userSlice.actions.setShiftId(shiftId));
     reduxStore.dispatch(userSlice.actions.changeSettings(userSettings));
+
+    //has to be last
     reduxStore.dispatch(AppSlice.actions.appLoaded());
+    
   }, [userSettings, shiftId]);
 
   if (!isAppLoaded) {
