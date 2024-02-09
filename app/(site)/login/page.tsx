@@ -1,4 +1,4 @@
-import LoginForm from "@/app/components/LoginButton";
+import LoginForm from "@/app/components/LoginForm";
 import { getServerSession } from "@/lib/getSession";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

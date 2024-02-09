@@ -1,4 +1,4 @@
-import LoginForm from "@/app/components/LoginButton";
+import LoginForm from "@/app/components/LoginForm";
 import { getServerSession } from "@/lib/getSession";
 
 const AccessDenied = async (params: {

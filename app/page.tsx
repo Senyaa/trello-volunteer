@@ -1,6 +1,6 @@
 import { getServerSession } from "@/lib/getSession";
 import { redirect } from "next/navigation";
-import LoginForm from "./components/LoginButton";
+import LoginForm from "./components/LoginForm";
 import { MAIN_PAGE } from "./helpers/consts";
 
 const Home = async () => {

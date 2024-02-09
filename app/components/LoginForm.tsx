@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import Button from "./ui/Button";
-import { FC, ReactNode, useRef } from "react";
+import { FC, ReactNode, useState } from "react";
 import { MAIN_PAGE } from "../helpers/consts";
 import Link from "next/link";
 
@@ -17,13 +17,13 @@ const LoginForm: FC<LoginButtonProps> = ({
   iconRight,
   classes,
 }) => {
-  const inputRef = useRef(null);
-  console.log(inputRef.current);
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <label htmlFor="privacy-policy" className="mt-2">
         <input
-          ref={inputRef}
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target?.checked)}
           type="checkbox"
           id="privacy-policy"
           className="accent-green-800 mr-2"
@@ -35,7 +35,7 @@ const LoginForm: FC<LoginButtonProps> = ({
       </label>
       <Button
         classes={classes}
-        // disabled={inputRef.current}
+        disabled={!isChecked}
         label={label}
         onClick={() => signIn("trello", { callbackUrl: MAIN_PAGE })}
         iconRight={iconRight}
