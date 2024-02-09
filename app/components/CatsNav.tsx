@@ -29,8 +29,8 @@ const CatsNav: FC<CatsNavProps> = ({ current, animalListLength }) => {
             href="/protected/settings"
             classes="px-2 mr-2"
             color="grey"
-            label="Pola"
-            iconRight={<FontAwesomeIcon icon={faGear} className="ml-2" />}
+            label={<span className="hidden md:inline">Pola</span>}
+            iconRight={<FontAwesomeIcon icon={faGear} className="md:ml-2" />}
           />
           <div className="flex flex-col">
             <label htmlFor="cats-nav" className="text-xs mb-0">
