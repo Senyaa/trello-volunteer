@@ -4,7 +4,7 @@ import getCurrentUserId from "./services/getCurrentUserId";
 import { drizzle } from "@/drizzle/drizzle";
 import { and, eq, isNull } from "drizzle-orm";
 import { animalOnShift, shifts } from "@/drizzle/drizzleSchema";
-import { v4 } from "uuid";
+import { createId } from "@paralleldrive/cuid2";
 
 export async function checkAnimalAsDone(
   shiftType = "cats",
@@ -36,7 +36,7 @@ export async function checkAnimalAsDone(
     shiftId: currentShift.id,
     done: isDone,
     description,
-    id: v4(),
+    id: createId(),
   };
 
   await drizzle

@@ -7,3 +7,5 @@ import postgres from "postgres";
 export const drizzle = process.env.PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK
   ? vercelDb(sql, { schema })
   : postgresDb(postgres(process.env.DATABASE_URL || ""), { schema });
+
+export const drizzleSchema = schema;

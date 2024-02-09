@@ -1,13 +1,16 @@
 import { AuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/lib/prisma";
+// import { PrismaAdapter } from "@next-auth/prisma-adapter";
+// import prisma from "@/lib/prisma";
 
-const prismaAdapter = PrismaAdapter(prisma);
+// const prismaAdapter = PrismaAdapter(prisma);
+
+import { drizzle } from "@/drizzle/drizzle";
+import { drizzleAdapter } from "@/drizzle/adapter";
 
 export const authOptions: AuthOptions = {
-  adapter: prismaAdapter,
+  adapter: drizzleAdapter(drizzle),
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   session: {
     strategy: "database",
