@@ -32,15 +32,16 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   useEffect(() => {
     dispatch(userSlice.actions.setAnimalsToDo(allCats.length));
     dispatch(
-      userSlice.actions.setAnimalsIdsDone(allCats.filter(c => c.isDone).map(c => c.id))
+      userSlice.actions.setAnimalsIdsDone(
+        allCats.filter((c) => c.isDone).map((c) => c.id)
+      )
     );
-  }, []);
+  }, [allCats, dispatch]);
 
-  if (animals.length === 0) {
-    return <div className="p-4">Nie znaleziono zwierzaków.</div>;
-  }
-
-  const animalsLocalDone = useMemo(() => animals.map(a => ({...a, isDone: isDoneIds.includes(a.id)})), [animals, isDoneIds]);
+  const animalsLocalDone = useMemo(
+    () => animals.map((a) => ({ ...a, isDone: isDoneIds.includes(a.id) })),
+    [animals, isDoneIds]
+  );
 
   const getWidthClass = () => {
     const animalDetailsCount =
@@ -74,6 +75,10 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
       </>
     );
   };
+  
+  if (animals.length === 0) {
+    return <div className="p-4">Nie znaleziono zwierzaków.</div>;
+  }
 
   return (
     <div className="mb-16 md:mb-0">
