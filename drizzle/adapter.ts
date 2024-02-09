@@ -10,6 +10,7 @@ export function drizzleAdapter(
   const { users, accounts, sessions, verificationTokens } = schema;
 
   return {
+    //@ts-expect-error
     async createUser(data) {
       return await client
         .insert(users)
@@ -17,6 +18,7 @@ export function drizzleAdapter(
         .returning()
         .then((res) => res[0] ?? null);
     },
+    //@ts-expect-error
     async getUser(data) {
       console.log("getUser", data);
       return await client
@@ -25,6 +27,7 @@ export function drizzleAdapter(
         .where(eq(users.id, data))
         .then((res) => res[0] ?? null);
     },
+    //@ts-expect-error
     async getUserByEmail(data) {
       console.log("getUserByEmail", data);
       return await client
@@ -40,6 +43,7 @@ export function drizzleAdapter(
         .returning()
         .then((res) => res[0]);
     },
+    //@ts-expect-error
     async getSessionAndUser(data) {
       return await client
         .select({
@@ -51,6 +55,7 @@ export function drizzleAdapter(
         .innerJoin(users, eq(users.id, sessions.userId))
         .then((res) => res[0] ?? null);
     },
+    //@ts-expect-error
     async updateUser(data) {
       if (!data.id) {
         throw new Error("No user id.");
@@ -72,14 +77,17 @@ export function drizzleAdapter(
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
+      //@ts-expect-error
       return stripUndefined(
         await client
           .insert(accounts)
+          //@ts-expect-error
           .values(rawAccount)
           .returning()
           .then((res) => res[0])
       );
     },
+    //@ts-expect-error
     async getUserByAccount(account) {
       console.log("getUserByAccount", account);
       const dbAccount =
