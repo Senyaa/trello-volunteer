@@ -37,8 +37,8 @@ const ShiftCheckbox: FC<ShiftCheckboxProps> = ({
       {isLoading ? (
         <FontAwesomeIcon
           icon={faSpinner}
-          className={`hidden text-neutral-200 group-hover:inline group-hover:text-green-800  animate-spin ${
-            isDone ? "inline" : "text-neutral-200 dark:text-neutral-800"
+          className={`animate-spin ${
+            isDone ? "text-neutral-200" : "text-green-800"
           }`}
         />
       ) : (
