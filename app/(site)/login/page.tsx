@@ -15,16 +15,12 @@ const Login = async () => {
   return (
     <main className="flex justify-center  items-center mt-5 h-[75vh]">
       <div>
-        <h2>Nie masz dostępu do tej strony </h2>
-        <div className="relative h-[12rem] rounded-md my-2">
-          <Image
-            src="https://http.cat/401.jpg"
-            fill
-            sizes="5rem"
-            alt="kotek"
-            className="object-cover rounded-md"
-          />
-        </div>
+        <Image
+          src="https://http.cat/401.jpg"
+          width={500}
+          height={500}
+          alt="kotek"
+        />
         <LoginForm
           label="Zaloguj się przez trello"
           classes="w-full"

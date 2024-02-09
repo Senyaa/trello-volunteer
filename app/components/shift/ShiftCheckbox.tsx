@@ -30,7 +30,7 @@ const ShiftCheckbox: FC<ShiftCheckboxProps> = ({
   return (
     <button
       onClick={checkAnimal}
-      className={`w-7 h-7 p-1 border-solid border-2 border-green-800 rounded-md group hover:animate-[wiggle_1s_ease-in-out_infinite] ${
+      className={`w-7 h-7 p-1 border-solid border-2 border-green-800 rounded-md group ${
         isDone ? "bg-green-800" : "bg-transparent dark:bg-neutral-800"
       } ${classes}`}
     >
@@ -44,7 +44,7 @@ const ShiftCheckbox: FC<ShiftCheckboxProps> = ({
       ) : (
         <FontAwesomeIcon
           icon={faCheck}
-          className={`hidden text-neutral-200 group-hover:inline group-hover:text-green-800  hover:animate-[wiggle_1s_ease-in-out_infinite] ${
+          className={`hidden text-neutral-200 group-hover:inline group-hover:text-green-800 ${
             isDone ? "inline" : "text-transparent"
           }`}
         />
