@@ -1,9 +1,8 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   date,
   integer,
-  json,
   pgTable,
   primaryKey,
   text,
@@ -48,7 +47,9 @@ export const sessions = pgTable("Session", {
 export const shifts = pgTable("Shift", {
   id: text("id").notNull().primaryKey(),
   shiftType: text("shiftType"),
-  finished: date("finished"),
+  finished: timestamp("finished"),
+  started: timestamp("started"),
+  description: text("description"),
 });
 
 export const users = pgTable("User", {
@@ -85,7 +86,7 @@ export const usersOnShift = pgTable(
       .references(() => shifts.id),
   },
   (t) => ({
-    pk: primaryKey(t.userId, t.shiftId),
+    pk: primaryKey({ columns: [t.userId, t.shiftId] }),
   })
 );
 
@@ -97,8 +98,19 @@ export const animalOnShift = pgTable("AnimalOnShift", {
   description: text("description"),
 });
 
-export const userRelations = relations(users, ({ many }) => ({
+export const settings = pgTable("Settings", {
+  userId: text("userId").primaryKey(),
+  foodEnabled: boolean("foodEnabled").default(true),
+  medsEnabled: boolean("medsEnabled").default(false),
+  testsEnabled: boolean("testsEnabled").default(false),
+  statusEnabled: boolean("statusEnabled").default(false),
+  personalityEnabled: boolean("personalityEnabled").default(false),
+  castrationEnabled: boolean("castrationEnabled").default(false),
+});
+
+export const userRelations = relations(users, ({ many, one }) => ({
   shifts: many(usersOnShift),
+  settings: one(settings),
 }));
 
 export const shiftRelations = relations(shifts, ({ many }) => ({
@@ -115,3 +127,23 @@ export const usersOnShiftRelations = relations(usersOnShift, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const settingsRelations = relations(settings, ({ one }) => ({
+  user: one(users, {
+    fields: [settings.userId],
+    references: [users.id],
+  }),
+}));
+
+export const imageUrl = pgTable("ImageUrl", {
+  attachmentId: text("attachmentId"),
+  url: text("url"),
+  createdAt: timestamp("createdAt").default(sql`now()`),
+});
+
+export const document = pgTable("Document", {
+  id: text("id"),
+  name: text("name"),
+  createdAt: timestamp("createdAt").default(sql`now()`),
+  content: text("content"),
+});

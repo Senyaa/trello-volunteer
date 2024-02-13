@@ -1,7 +1,9 @@
 import { Card } from "../app/types/Card";
 import getCards from "../app/client/getCards";
-import prisma from "@/lib/prisma";
 import { getCurrentShiftId } from "./getCurrentShiftId";
+import { drizzle } from "@/drizzle/drizzle";
+import { eq, inArray } from "drizzle-orm";
+import { animalOnShift, imageUrl } from "@/drizzle/drizzleSchema";
 
 export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
   const trelloCards = await getCards(trelloId);
@@ -9,20 +11,20 @@ export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
     .map((card) => card.cover.idAttachment || "")
     .filter(Boolean);
 
-  const imageUrls = await prisma.imageUrl.findMany({
-    where: { attachmentId: { in: attachmentIds } },
+  const imageUrls = await drizzle.query.imageUrl.findMany({
+    where: inArray(imageUrl.attachmentId, attachmentIds ),
   });
 
   const currentShiftId = await getCurrentShiftId();
 
-  const isDoneOnCurrentShift = await prisma.animalOnShift.findMany({
-    where: { shiftId: currentShiftId },
+  const isDoneOnCurrentShift = await drizzle.query.animalOnShift.findMany({
+    where: eq(animalOnShift.shiftId, currentShiftId || ''),
   });
 
   trelloCards.forEach((card) => {
     card.cover.url = imageUrls.find(
       (url) => url.attachmentId === card.cover.idAttachment
-    )?.url;
+    )?.url || '';
 
     const isCardOnShift =
       isDoneOnCurrentShift.find(

@@ -1,10 +1,9 @@
 "use server";
 
-import getCurrentUserId from "./services/getCurrentUserId";
 import { drizzle } from "@/drizzle/drizzle";
-import { and, eq, isNull } from "drizzle-orm";
-import { animalOnShift, shifts } from "@/drizzle/drizzleSchema";
+import { animalOnShift } from "@/drizzle/drizzleSchema";
 import { createId } from "@paralleldrive/cuid2";
+import { getCurrentShiftId } from "./getCurrentShiftId";
 
 export async function checkAnimalAsDone(
   shiftType = "cats",
@@ -12,28 +11,15 @@ export async function checkAnimalAsDone(
   isDone: boolean,
   description = ""
 ) {
-  const userId = await getCurrentUserId();
+  const currentShiftId = await getCurrentShiftId(shiftType);
 
-  if (!userId) {
-    throw Error("There is no user");
-  }
-
-  const currentShift = await drizzle.query.shifts.findFirst({
-    where: and(eq(shifts.shiftType, shiftType), isNull(shifts.finished)),
-    with: {
-      usersOnShift: {
-        where: (u) => eq(u.userId, userId),
-      },
-    },
-  });
-
-  if (!currentShift) {
+  if (!currentShiftId) {
     throw new Error("Couldn't find the shift");
   }
 
   const updateData = {
     animalTrelloId: animalId,
-    shiftId: currentShift.id,
+    shiftId: currentShiftId,
     done: isDone,
     description,
     id: createId(),
@@ -47,5 +33,5 @@ export async function checkAnimalAsDone(
       set: { done: isDone, description },
     });
 
-  return currentShift;
+  return true;
 }

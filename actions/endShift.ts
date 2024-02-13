@@ -1,21 +1,23 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getCurrentShiftId } from "./getCurrentShiftId";
+import { drizzle, drizzleSchema } from "@/drizzle/drizzle";
+import { eq } from "drizzle-orm";
 
 export async function endShift() {
   const shiftId = await getCurrentShiftId();
   if (!shiftId) {
-    throw Error("Nie jest obecnie prowadzony dyżur")
+    throw Error("Nie jest obecnie prowadzony dyżur");
   }
 
-  const shift = await prisma.shift.update({
-    where: { id: shiftId },
-    data: { finished: new Date() },
-  });
+  const shift = await drizzle
+    .update(drizzleSchema.shifts)
+    .set({ finished: new Date() })
+    .where(eq(drizzleSchema.shifts.id, shiftId))
+    .returning();
 
-  revalidatePath("/protected/animals/cats")
+  revalidatePath("/protected/animals/cats");
 
   return shift;
 }

@@ -1,9 +1,14 @@
-import prisma from "@/lib/prisma";
+import { drizzle } from "@/drizzle/drizzle";
+import { accounts, users } from "@/drizzle/drizzleSchema";
+import { eq } from "drizzle-orm";
 
 export const getToken = async (trelloId: string) => {
-  const user = await prisma.user.findFirst({ where: { trelloId: trelloId } });
-  const account = await prisma.account.findFirst({
-    where: { userId: user?.id },
+  const user = await drizzle.query.users.findFirst({
+    where: eq(users.trelloId, trelloId),
   });
-  return account?.oauth_token || "";
+  const accountReturned = await drizzle.query.accounts.findFirst({
+    where:  eq(accounts.userId, user?.id || '') ,
+  });
+ 
+  return accountReturned?.oauth_token || "";
 };

@@ -1,9 +1,4 @@
 import { AuthOptions } from "next-auth";
-// import { PrismaAdapter } from "@next-auth/prisma-adapter";
-// import prisma from "@/lib/prisma";
-
-// const prismaAdapter = PrismaAdapter(prisma);
-
 import { drizzle } from "@/drizzle/drizzle";
 import { drizzleAdapter } from "@/drizzle/adapter";
 
