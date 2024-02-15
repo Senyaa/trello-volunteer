@@ -1,48 +1,35 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
-import getCurrentUserId from "./services/getCurrentUserId";
-import getCurrentShift from "./services/getCurrentShift";
+import { drizzle } from "@/drizzle/drizzle";
+import { animalOnShift } from "@/drizzle/drizzleSchema";
+import { getCurrentShiftId } from "./getCurrentShiftId";
 
 export async function checkAnimalAsDone(
   shiftType = "cats",
   animalId: string,
   isDone: boolean,
-  description?: string
+  description = ""
 ) {
-  const userId = await getCurrentUserId();
+  const currentShiftId = await getCurrentShiftId(shiftType);
 
-  if (!userId) {
-    throw Error("There is no user");
-  }
-
-  const currentShift = await getCurrentShift(shiftType, userId);
-
-  if (!currentShift) {
+  if (!currentShiftId) {
     throw new Error("Couldn't find the shift");
   }
 
-  await prisma.animalOnShift.upsert({
-    where: {
-      animal_shift: {
-        animalTrelloId: animalId,
-        shiftId: currentShift.id,
-      },
-    },
-    update: {
-      animalTrelloId: animalId,
-      shiftId: currentShift.id,
-      done: isDone,
-      description,
-    },
-    create: {
-      animalTrelloId: animalId,
-      shiftId: currentShift.id,
-      done: true,
-      description,
-    },
-  });
+  const updateData = {
+    animalTrelloId: animalId,
+    shiftId: currentShiftId,
+    done: isDone,
+    description,
+  };
 
-  return currentShift;
+  await drizzle
+    .insert(animalOnShift)
+    .values(updateData)
+    .onConflictDoUpdate({
+      target: [animalOnShift.animalTrelloId, animalOnShift.shiftId],
+      set: { done: isDone, description },
+    });
+
+  return true;
 }

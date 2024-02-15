@@ -1,20 +1,25 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import getCurrentUserId from "./services/getCurrentUserId";
+import { drizzle } from "@/drizzle/drizzle";
+import { shift as dbShift, usersOnShift } from "@/drizzle/drizzleSchema";
+import getCurrentShiftIdOrThrow from "./services/getCurrentUserIdOrThrow";
 
 export async function startShift(shiftType = "cats") {
-  const userId = await getCurrentUserId();
+  const userId = await getCurrentShiftIdOrThrow();
 
- const shift =  await prisma.shift.create({
-    data: {
-      shiftType,
-      users: { create: [{ user: { connect: { id: userId } } }] },
-    },
+  const shiftReturned = await drizzle.transaction(async (tx) => {
+    const [shift] = await tx
+      .insert(dbShift)
+      .values({
+        shiftType: shiftType,
+      })
+      .returning();
+    await tx.insert(usersOnShift).values({ userId, shiftId: shift.id });
+    return shift;
   });
 
   revalidatePath("/protected/animals/[slug]", "page");
 
-  return shift;
+  return shiftReturned;
 }

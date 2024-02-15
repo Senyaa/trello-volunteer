@@ -1,9 +1,12 @@
-import prisma from "@/lib/prisma";
+import { drizzle } from "@/drizzle/drizzle";
+import { account, user as dbUser } from "@/drizzle/drizzleSchema";
+import { eq } from "drizzle-orm";
 
 export const getToken = async (trelloId: string) => {
-  const user = await prisma.user.findFirst({ where: { trelloId: trelloId } });
-  const account = await prisma.account.findFirst({
-    where: { userId: user?.id },
+  const user = await drizzle.query.user.findFirst({
+    where: eq(dbUser.trelloId, trelloId),
+    with: { account: true }
   });
-  return account?.oauth_token || "";
+ 
+  return user?.account?.oauthToken || "";
 };

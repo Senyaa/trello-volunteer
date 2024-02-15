@@ -1,8 +1,9 @@
 import { getToken } from "@/app/helpers/getToken";
 import trelloURL from "@/app/helpers/trelloUrlParser";
 import { CardCover } from "@/app/types/Card";
+import { drizzle } from "@/drizzle/drizzle";
+import { imageUrl } from "@/drizzle/drizzleSchema";
 import { getServerSession } from "@/lib/getSession";
-import prisma from "@/lib/prisma";
 
 export async function GET(request: Request): Promise<Response> {
   const { searchParams } = new URL(request.url);
@@ -25,7 +26,6 @@ export async function GET(request: Request): Promise<Response> {
 
     const responseData = await response.json();
 
-
     await cacheImageUrl(responseData, attachmentId);
 
     return new Response(JSON.stringify(responseData));
@@ -35,21 +35,26 @@ export async function GET(request: Request): Promise<Response> {
   }
 }
 
-const cacheImageUrl = async (responseData: CardCover[], attachmentId: string) => {
+const cacheImageUrl = async (
+  responseData: CardCover[],
+  attachmentId: string
+) => {
   const attachment = responseData?.find((i) => i.id === attachmentId);
-  const url = attachment?.previews.find(p => p.width === 300 && p.scaled)?.url;
+  const url = attachment?.previews.find(
+    (p) => p.width === 300 && p.scaled
+  )?.url;
 
   if (attachment) {
     const data = {
       attachmentId,
       url: url || attachment.url,
-      createdAt: attachment.date,
+      createdAt: new Date(attachment.date),
     };
 
-    await prisma.imageUrl.upsert({
-      where: { attachmentId },
-      update: data,
-      create: data,
-    });
+    await drizzle
+      .insert(imageUrl)
+      .values(data)
+      .onConflictDoUpdate({ target: [imageUrl.attachmentId], set: data });
+
   }
 };

@@ -1,18 +1,22 @@
 "use server";
 
 import { SettingsFormType } from "@/app/(site)/protected/settings/SettingsForm";
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import getCurrentUserId from "./services/getCurrentUserId";
+import { drizzle } from "@/drizzle/drizzle";
+import { settings } from "@/drizzle/drizzleSchema";
+import getCurrentShiftIdOrThrow from "./services/getCurrentUserIdOrThrow";
 
 export async function updateSettings(formData: SettingsFormType) {
-  const userId = await getCurrentUserId()
+  const userId = await getCurrentShiftIdOrThrow();
 
-  await prisma.settings.upsert({
-    where: { userId },
-    update: { ...formData, userId },
-    create: { ...formData, userId },
-  });
+  await drizzle
+    .insert(settings)
+    .values({ userId, ...formData })
+    .onConflictDoUpdate({
+      target: [settings.userId],
+      set: formData,
+    });
+  
   revalidatePath("/protected/animals/[slug]", "page");
 
   return formData;
