@@ -42,3 +42,5 @@ next-env.d.ts
 /stories/assets
 
 /.vscode
+
+/app/(site)/privacy-policy/content.html
