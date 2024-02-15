@@ -1,124 +1,126 @@
 import { PgDatabase } from "drizzle-orm/pg-core";
 import * as schema from "./drizzleSchema";
-import { Adapter } from "next-auth/adapters";
+import { Adapter, AdapterUser } from "next-auth/adapters";
 import { and, eq } from "drizzle-orm";
-import { createId } from "@paralleldrive/cuid2";
+
+type NonNullableProps<T> = {
+  [P in keyof T]: null extends T[P] ? never : P
+}[keyof T]
+
+function stripUndefined<T>(obj: T): Pick<T, NonNullableProps<T>> {
+  const result = {} as T
+  for (const key in obj) if (obj[key] !== undefined) result[key] = obj[key]
+  return result
+}
 
 export function drizzleAdapter(
   client: InstanceType<typeof PgDatabase>
 ): Adapter {
-  const { users, accounts, sessions, verificationTokens } = schema;
+  const { user, account, session, verificationToken } = schema;
 
   return {
-    //@ts-expect-error
     async createUser(data) {
       return await client
-        .insert(users)
-        .values({ ...data, id: createId() })
+        .insert(user)
+        .values(data)
         .returning()
         .then((res) => res[0] ?? null);
     },
-    //@ts-expect-error
     async getUser(data) {
-      console.log("getUser", data);
       return await client
         .select()
-        .from(users)
-        .where(eq(users.id, data))
+        .from(user)
+        .where(eq(user.id, data))
         .then((res) => res[0] ?? null);
     },
-    //@ts-expect-error
     async getUserByEmail(data) {
-      console.log("getUserByEmail", data);
       return await client
         .select()
-        .from(users)
-        .where(eq(users.email, data))
+        .from(user)
+        .where(eq(user.email, data))
         .then((res) => res[0] ?? null);
     },
     async createSession(data) {
       return await client
-        .insert(sessions)
-        .values({ ...data, id: createId() })
+        .insert(session)
+        .values(data)
         .returning()
         .then((res) => res[0]);
     },
-    //@ts-expect-error
     async getSessionAndUser(data) {
       return await client
         .select({
-          session: sessions,
-          user: users,
+          session: session,
+          user: user,
         })
-        .from(sessions)
-        .where(eq(sessions.sessionToken, data))
-        .innerJoin(users, eq(users.id, sessions.userId))
+        .from(session)
+        .where(eq(session.sessionToken, data))
+        .innerJoin(user, eq(user.id, session.userId))
         .then((res) => res[0] ?? null);
     },
-    //@ts-expect-error
     async updateUser(data) {
       if (!data.id) {
         throw new Error("No user id.");
       }
 
       return await client
-        .update(users)
+        .update(user)
         .set(data)
-        .where(eq(users.id, data.id))
+        .where(eq(user.id, data.id))
         .returning()
         .then((res) => res[0]);
     },
     async updateSession(data) {
       return await client
-        .update(sessions)
+        .update(session)
         .set(data)
-        .where(eq(sessions.sessionToken, data.sessionToken))
+        .where(eq(session.sessionToken, data.sessionToken))
         .returning()
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      //@ts-expect-error
+      console.log(rawAccount);
+      
       return stripUndefined(
         await client
-          .insert(accounts)
-          //@ts-expect-error
-          .values(rawAccount)
+          .insert(account)
+          .values({
+            ...rawAccount,
+            oauthToken: rawAccount.oauth_token as string,
+            oauthTokenSecret: rawAccount.oauth_token_secret as string,
+          })
           .returning()
           .then((res) => res[0])
       );
     },
-    //@ts-expect-error
-    async getUserByAccount(account) {
-      console.log("getUserByAccount", account);
+    async getUserByAccount(acc) {
       const dbAccount =
         (await client
           .select()
-          .from(accounts)
+          .from(account)
           .where(
             and(
-              eq(accounts.providerAccountId, account.providerAccountId),
-              eq(accounts.provider, account.provider)
+              eq(account.providerAccountId, acc.providerAccountId),
+              eq(account.provider, acc.provider)
             )
           )
-          .leftJoin(users, eq(accounts.userId, users.id))
+          .leftJoin(user, eq(account.userId, user.id))
           .then((res) => res[0])) ?? null;
 
-      console.log(dbAccount);
-
-      return dbAccount?.User ?? null;
+      return dbAccount?.user ?? null;
     },
     async deleteSession(sessionToken) {
-      const session = await client
-        .delete(sessions)
-        .where(eq(sessions.sessionToken, sessionToken))
+      const sessionReturned = await client
+        .delete(session)
+        .where(eq(session.sessionToken, sessionToken))
         .returning()
         .then((res) => res[0] ?? null);
 
-      return session;
+      return sessionReturned;
     },
     async createVerificationToken(token) {
       return await client
-        .insert(verificationTokens)
+        .insert(verificationToken)
         .values(token)
         .returning()
         .then((res) => res[0]);
@@ -126,11 +128,11 @@ export function drizzleAdapter(
     async useVerificationToken(token) {
       try {
         return await client
-          .delete(verificationTokens)
+          .delete(verificationToken)
           .where(
             and(
-              eq(verificationTokens.identifier, token.identifier),
-              eq(verificationTokens.token, token.token)
+              eq(verificationToken.identifier, token.identifier),
+              eq(verificationToken.token, token.token)
             )
           )
           .returning()
@@ -141,18 +143,18 @@ export function drizzleAdapter(
     },
     async deleteUser(id) {
       await client
-        .delete(users)
-        .where(eq(users.id, id))
+        .delete(user)
+        .where(eq(user.id, id))
         .returning()
         .then((res) => res[0] ?? null);
     },
-    async unlinkAccount(account) {
+    async unlinkAccount(acc) {
       const { type, provider, providerAccountId, userId } = await client
-        .delete(accounts)
+        .delete(account)
         .where(
           and(
-            eq(accounts.providerAccountId, account.providerAccountId),
-            eq(accounts.provider, account.provider)
+            eq(account.providerAccountId, acc.providerAccountId),
+            eq(account.provider, acc.provider)
           )
         )
         .returning()

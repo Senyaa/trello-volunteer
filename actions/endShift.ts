@@ -12,9 +12,9 @@ export async function endShift() {
   }
 
   const shift = await drizzle
-    .update(drizzleSchema.shifts)
+    .update(drizzleSchema.shift)
     .set({ finished: new Date() })
-    .where(eq(drizzleSchema.shifts.id, shiftId))
+    .where(eq(drizzleSchema.shift.id, shiftId))
     .returning();
 
   revalidatePath("/protected/animals/cats");

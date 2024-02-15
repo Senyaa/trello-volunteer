@@ -1,70 +1,68 @@
 import { relations, sql } from "drizzle-orm";
 import {
   boolean,
-  date,
   integer,
   pgTable,
   primaryKey,
   text,
   timestamp,
+  unique,
+  uuid,
 } from "drizzle-orm/pg-core";
 import { AdapterAccount } from "next-auth/adapters";
 
-export const accounts = pgTable(
-  "Account",
+export const account = pgTable(
+  "account",
   {
-    id: text("id").primaryKey(),
-    userId: text("userId")
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "cascade" }),
     type: text("type").$type<AdapterAccount["type"]>().notNull(),
     provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    oauth_token: text("oauth_token"),
-    oauth_token_secret: text("oauth_token_secret"),
-    expires_at: integer("expires_at"),
-    token_type: text("token_type"),
+    providerAccountId: text("provider_account_id").notNull(),
+    oauthToken: text("oauth_token"),
+    oauthTokenSecret: text("oauth_token_secret"),
+    expiresAt: integer("expires_at"),
+    tokenType: text("token_type"),
     scope: text("scope"),
-    id_token: text("id_token"),
-    session_state: text("session_state"),
+    idToken: text("id_token"),
+    sessionState: text("session_state"),
   },
   (account) => ({
-    compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
-    }),
+    uniqueProvider: unique().on(account.provider, account.providerAccountId),
   })
 );
 
-export const sessions = pgTable("Session", {
-  id: text("id").primaryKey(),
-  sessionToken: text("sessionToken").notNull().primaryKey(),
-  userId: text("userId")
+export const session = pgTable("session", {
+  sessionToken: text("session_token").notNull().primaryKey(),
+  userId: uuid("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
-export const shifts = pgTable("Shift", {
-  id: text("id").notNull().primaryKey(),
-  shiftType: text("shiftType"),
+export const shift = pgTable("shift", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  shiftType: text("shift_type"),
   finished: timestamp("finished"),
   started: timestamp("started"),
   description: text("description"),
 });
 
-export const users = pgTable("User", {
-  id: text("id").primaryKey(),
-  trelloId: text("trelloId"),
+export const user = pgTable("user", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  trelloId: text("trello_id"),
   name: text("name"),
-  fullName: text("fullName"),
-  email: text("email"),
-  emailVerified: timestamp("emailVerified"),
+  fullName: text("full_name"),
+  email: text("email").default("").notNull(),
+  emailVerified: timestamp("email_verified"),
   image: text("image"),
   boards: text("boards").array(),
 });
 
-export const verificationTokens = pgTable(
-  "VerificationToken",
+export const verificationToken = pgTable(
+  "verification_token",
   {
     identifier: text("identifier").notNull(),
     token: text("token").notNull(),
@@ -76,74 +74,87 @@ export const verificationTokens = pgTable(
 );
 
 export const usersOnShift = pgTable(
-  "UsersOnShift",
+  "users_on_shift",
   {
-    userId: text("userId")
+    userId: uuid("user_id")
       .notNull()
-      .references(() => users.id),
-    shiftId: text("shiftId")
+      .references(() => user.id),
+    shiftId: uuid("shift_id")
       .notNull()
-      .references(() => shifts.id),
+      .references(() => shift.id),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userId, t.shiftId] }),
   })
 );
 
-export const animalOnShift = pgTable("AnimalOnShift", {
-  id: text("id").primaryKey(),
-  animalTrelloId: text("animalTrelloId"),
-  shiftId: text("shiftId"),
-  done: boolean("done"),
-  description: text("description"),
+export const animalOnShift = pgTable(
+  "animal_on_shift",
+  {
+    shiftId: uuid("shift_id"),
+    animalTrelloId: text("animal_trello_id"),
+    done: boolean("done"),
+    description: text("description"),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.shiftId, t.animalTrelloId] }),
+  })
+);
+
+export const settings = pgTable("settings", {
+  userId: uuid("user_id").primaryKey(),
+  foodEnabled: boolean("food_enabled").notNull().default(true),
+  medsEnabled: boolean("meds_enabled").notNull().default(false),
+  testsEnabled: boolean("tests_enabled").notNull().default(false),
+  statusEnabled: boolean("status_enabled").notNull().default(false),
+  personalityEnabled: boolean("personality_enabled").notNull().default(false),
+  castrationEnabled: boolean("castration_enabled").notNull().default(false),
 });
 
-export const settings = pgTable("Settings", {
-  userId: text("userId").primaryKey(),
-  foodEnabled: boolean("foodEnabled").default(true),
-  medsEnabled: boolean("medsEnabled").default(false),
-  testsEnabled: boolean("testsEnabled").default(false),
-  statusEnabled: boolean("statusEnabled").default(false),
-  personalityEnabled: boolean("personalityEnabled").default(false),
-  castrationEnabled: boolean("castrationEnabled").default(false),
-});
-
-export const userRelations = relations(users, ({ many, one }) => ({
+export const userRelations = relations(user, ({ many, one }) => ({
   shifts: many(usersOnShift),
   settings: one(settings),
+  account: one(account),
 }));
 
-export const shiftRelations = relations(shifts, ({ many }) => ({
+export const shiftRelations = relations(shift, ({ many }) => ({
   usersOnShift: many(usersOnShift),
 }));
 
-export const usersOnShiftRelations = relations(usersOnShift, ({ one }) => ({
-  shift: one(shifts, {
-    fields: [usersOnShift.shiftId],
-    references: [shifts.id],
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, {
+    fields: [account.userId],
+    references: [user.id],
   }),
-  user: one(users, {
+}));
+
+export const usersOnShiftRelations = relations(usersOnShift, ({ one }) => ({
+  shift: one(shift, {
+    fields: [usersOnShift.shiftId],
+    references: [shift.id],
+  }),
+  user: one(user, {
     fields: [usersOnShift.userId],
-    references: [users.id],
+    references: [user.id],
   }),
 }));
 
 export const settingsRelations = relations(settings, ({ one }) => ({
-  user: one(users, {
+  user: one(user, {
     fields: [settings.userId],
-    references: [users.id],
+    references: [user.id],
   }),
 }));
 
-export const imageUrl = pgTable("ImageUrl", {
-  attachmentId: text("attachmentId"),
+export const imageUrl = pgTable("image_url", {
+  attachmentId: text("attachment_id").primaryKey(),
   url: text("url"),
-  createdAt: timestamp("createdAt").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`now()`),
 });
 
-export const document = pgTable("Document", {
-  id: text("id"),
+export const document = pgTable("document", {
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name"),
-  createdAt: timestamp("createdAt").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`now()`),
   content: text("content"),
 });

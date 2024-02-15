@@ -2,7 +2,6 @@
 
 import { drizzle } from "@/drizzle/drizzle";
 import { animalOnShift } from "@/drizzle/drizzleSchema";
-import { createId } from "@paralleldrive/cuid2";
 import { getCurrentShiftId } from "./getCurrentShiftId";
 
 export async function checkAnimalAsDone(
@@ -22,7 +21,6 @@ export async function checkAnimalAsDone(
     shiftId: currentShiftId,
     done: isDone,
     description,
-    id: createId(),
   };
 
   await drizzle

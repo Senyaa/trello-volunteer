@@ -6,7 +6,7 @@ import { fetcher } from "../helpers/fetcher";
 const getCards = async (trelloId: string): Promise<TrelloCard[]> => {
   const boardId = process.env.NEXT_PUBLIC_MAIN_BOARD_ID;
   const token = await getToken(trelloId);
-
+  
   return await fetcher(trelloURL(`/1/boards/${boardId}/cards`, token));
 };
 

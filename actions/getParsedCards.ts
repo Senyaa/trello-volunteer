@@ -11,20 +11,22 @@ export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
     .map((card) => card.cover.idAttachment || "")
     .filter(Boolean);
 
-  const imageUrls = await drizzle.query.imageUrl.findMany({
-    where: inArray(imageUrl.attachmentId, attachmentIds ),
+  const returnedUrls = await drizzle.query.imageUrl.findMany({
+    where: inArray(imageUrl.attachmentId, attachmentIds),
   });
 
   const currentShiftId = await getCurrentShiftId();
 
-  const isDoneOnCurrentShift = await drizzle.query.animalOnShift.findMany({
-    where: eq(animalOnShift.shiftId, currentShiftId || ''),
-  });
+  const isDoneOnCurrentShift = currentShiftId
+    ? await drizzle.query.animalOnShift.findMany({
+        where: eq(animalOnShift.shiftId, currentShiftId),
+      })
+    : [];
 
   trelloCards.forEach((card) => {
-    card.cover.url = imageUrls.find(
-      (url) => url.attachmentId === card.cover.idAttachment
-    )?.url || '';
+    card.cover.url =
+      returnedUrls.find((url) => url.attachmentId === card.cover.idAttachment)
+        ?.url || "";
 
     const isCardOnShift =
       isDoneOnCurrentShift.find(

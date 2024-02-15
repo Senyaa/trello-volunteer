@@ -1,8 +1,13 @@
 import getCurrentShift from "./services/getCurrentShift";
-import getCurrentUserIdOrThrow from "./services/getCurrentUserIdOrThrow";
+import getCurrentUserId from "./services/getCurrentUserId";
 
 export async function getCurrentShiftId(shiftType = "cats") {
-  const userId = await getCurrentUserIdOrThrow();
+  const userId = await getCurrentUserId();
+
+  if (!userId) {
+    return null;
+  }
+
   const currentShift = await getCurrentShift(shiftType, userId);
 
   return currentShift?.id;

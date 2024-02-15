@@ -6,6 +6,11 @@ import { eq } from "drizzle-orm";
 
 export const getUserSettings = async () => {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return initialSettingsForm;
+  }
+
   const returnedSettings = await drizzle.query.settings.findFirst({
     where: eq(drizzleSchema.settings.userId, session?.user?.id || ""),
   });
