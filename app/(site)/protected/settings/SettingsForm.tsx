@@ -16,6 +16,13 @@ export type SettingsFormType = {
   statusEnabled: boolean;
   personalityEnabled: boolean;
   castrationEnabled: boolean;
+  dogInteractionEnabled: boolean;
+  catInteractionEnabled: boolean;
+  childrenInteractionEnabled: boolean;
+  dewormingEnabled: boolean;
+  healthEnabled: boolean;
+  storyEnabled: boolean;
+  infoForCarerEnabled: boolean;
   userId?: string;
 };
 
@@ -25,6 +32,13 @@ export const initialSettingsForm = {
   statusEnabled: false,
   personalityEnabled: false,
   castrationEnabled: false,
+  dogInteractionEnabled: false,
+  catInteractionEnabled: false,
+  childrenInteractionEnabled: false,
+  dewormingEnabled: false,
+  healthEnabled: false,
+  storyEnabled: false,
+  infoForCarerEnabled: false,
 };
 
 export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
@@ -97,8 +111,50 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
           checked={state.castrationEnabled}
           onChange={handleStateChange("castrationEnabled")}
         />
+        <Toggle
+          name="dogInteractionEnabled"
+          label="🐶 Stosunek do kotów"
+          checked={state.dogInteractionEnabled}
+          onChange={handleStateChange("dogInteractionEnabled")}
+        />
+        <Toggle
+          name="catInteractionEnabled"
+          label="🐱 Stosunek do kotów"
+          checked={state.catInteractionEnabled}
+          onChange={handleStateChange("catInteractionEnabled")}
+        />
+        <Toggle
+          name="childrenInteractionEnabled"
+          label="👶🏻 Stosunek do dzieci"
+          checked={state.childrenInteractionEnabled}
+          onChange={handleStateChange("childrenInteractionEnabled")}
+        />
+        <Toggle
+          name="dewormingEnabled"
+          label="🐛 Odrobaczanie"
+          checked={state.dewormingEnabled}
+          onChange={handleStateChange("dewormingEnabled")}
+        />
+        <Toggle
+          name="healthEnabled"
+          label="👨🏻‍⚕️ Leczenie"
+          checked={state.healthEnabled}
+          onChange={handleStateChange("healthEnabled")}
+        />
+        <Toggle
+          name="storyEnabled"
+          label="👩🏼‍🏫 Historia"
+          checked={state.storyEnabled}
+          onChange={handleStateChange("storyEnabled")}
+        />
+        <Toggle
+          name="infoForCarerEnabled"
+          label="Info dla właścicieli/opiekunów"
+          checked={state.infoForCarerEnabled}
+          onChange={handleStateChange("infoForCarerEnabled")}
+        />
       </section>
-      <div className={`flex flex-col gap-2 ${shiftId ? "mb-8" : ''}`}>
+      <div className={`flex flex-col gap-2 ${shiftId ? "mb-8" : ""}`}>
         {formStatus === "ERROR" && (
           <span className="text-red dark:text-red-200">
             Wystąpił błąd, spróbuj później

@@ -44,14 +44,35 @@ const AnimalCard: FC<AnimalCardProps> = ({
     });
   }, [animal]);
 
-  const { food, meds, tests, warning, status, personality, castration } =
-    getDetails(animal.desc);
+  const {
+    food,
+    meds,
+    tests,
+    warning,
+    status,
+    personality,
+    castration,
+    dogInteraction,
+    catInteraction,
+    childrenInteraction,
+    deworming,
+    health,
+    story,
+    infoForCarer,
+  } = getDetails(animal.desc);
   const {
     medsEnabled,
     testsEnabled,
     statusEnabled,
     personalityEnabled,
     castrationEnabled,
+    dogInteractionEnabled,
+    catInteractionEnabled,
+    childrenInteractionEnabled,
+    dewormingEnabled,
+    healthEnabled,
+    storyEnabled,
+    infoForCarerEnabled,
   } = settings;
 
   const [name, info] = animal.name.split(" - ");
@@ -140,6 +161,55 @@ const AnimalCard: FC<AnimalCardProps> = ({
             isOn={settings.castrationEnabled}
             width={detailWidth}
           />
+          <CardDetail
+            visible={Boolean(dogInteractionEnabled && dogInteraction)}
+            text={dogInteraction}
+            icon="🐶"
+            isOn={settings.dogInteractionEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(catInteractionEnabled && catInteraction)}
+            text={catInteraction}
+            icon="🐱"
+            isOn={settings.catInteractionEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(childrenInteractionEnabled && childrenInteraction)}
+            text={childrenInteraction}
+            icon="👶🏻"
+            isOn={settings.childrenInteractionEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(dewormingEnabled && deworming)}
+            text={deworming}
+            icon="🐛"
+            isOn={settings.dewormingEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(healthEnabled && health)}
+            text={health}
+            icon="👨🏻"
+            isOn={settings.healthEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(storyEnabled && story)}
+            text={story}
+            icon="👩🏼‍🏫"
+            isOn={settings.storyEnabled}
+            width={detailWidth}
+          />
+          <CardDetail
+            visible={Boolean(infoForCarerEnabled && infoForCarer)}
+            text={infoForCarer}
+            icon="Info dla opiekunów: "
+            isOn={settings.infoForCarerEnabled}
+            width={detailWidth}
+          />
         </div>
         <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
           <Link
@@ -158,12 +228,12 @@ const AnimalCard: FC<AnimalCardProps> = ({
           />
         </div>
         {isShift && (
-              <ShiftCheckbox
-                animalID={animal.id}
-                isDone={animal.isDone || false}
-                classes="hidden md:block ml-2"
-              />
-            )}
+          <ShiftCheckbox
+            animalID={animal.id}
+            isDone={animal.isDone || false}
+            classes="hidden md:block ml-2"
+          />
+        )}
       </div>
     </div>
   );

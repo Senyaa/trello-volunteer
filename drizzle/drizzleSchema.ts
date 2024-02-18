@@ -109,6 +109,13 @@ export const settings = pgTable("settings", {
   statusEnabled: boolean("status_enabled").notNull().default(false),
   personalityEnabled: boolean("personality_enabled").notNull().default(false),
   castrationEnabled: boolean("castration_enabled").notNull().default(false),
+  dogInteractionEnabled: boolean("dog_interaction_enabled").notNull().default(false),
+  catInteractionEnabled: boolean("cat_interaction_enabled").notNull().default(false),
+  childrenInteractionEnabled: boolean("children_interaction_enabled").notNull().default(false),
+  dewormingEnabled: boolean("deworming_enabled").notNull().default(false),
+  healthEnabled: boolean("health_enabled").notNull().default(false),
+  storyEnabled: boolean("story_enabled").notNull().default(false),
+  infoForCarerEnabled: boolean("info_for_carer_enabled").notNull().default(false),
 });
 
 export const userRelations = relations(user, ({ many, one }) => ({
