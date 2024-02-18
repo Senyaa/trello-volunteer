@@ -79,7 +79,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
 
   return (
     <div
-      className={`p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-white shadow-xs dark:bg-neutral-900 ${
+      className={`p-4 flex flex-col md:flex-row items-center md:items-start rounded-md bg-white shadow-lg dark:shadow-none dark:bg-neutral-900 ${
         animal.isDone ? "opacity-50" : ""
       }`}
     >
