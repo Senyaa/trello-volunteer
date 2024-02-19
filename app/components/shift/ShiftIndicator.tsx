@@ -42,7 +42,7 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
           <ul className="flex justify-center">
             <li>
               <EndShiftButton
-                classNames="bg-transparent text-black hover:bg-transparent w-100"
+                classNames="bg-transparent text-black dark:text-white hover:bg-transparent w-100"
                 onEnd={() => setMenuOpened(false)}
               />
             </li>
