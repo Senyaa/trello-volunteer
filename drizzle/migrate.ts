@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import { migrate as migrateVercel } from "drizzle-orm/vercel-postgres/migrator";
-import { drizzleVercel, drizzleVercelConnection } from "./drizzleVercel";
+import { drizzleVercel } from "./drizzleVercel";
 
 (async function () {
   const isVercel = process.env.PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK;
@@ -14,13 +14,11 @@ import { drizzleVercel, drizzleVercelConnection } from "./drizzleVercel";
 
   if (isVercel) {
     await migrateVercel(drizzleVercel, options);
-    await drizzleVercelConnection.end();
   } else {
     const { migrate } = await import("drizzle-orm/postgres-js/migrator");
-    const { drizzleLocal, drizzleLocalConnection } = await import("./drizzleLocal");
+    const { drizzleLocal } = await import("./drizzleLocal");
 
     await migrate(drizzleLocal, options);
-    await drizzleLocalConnection.end();
   }
 
   console.log("Finished migrations migrations");
