@@ -54,6 +54,13 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
     if (animalDetailsCount === 4) return "md:w-1/4";
     if (animalDetailsCount === 5) return "md:w-1/5";
     if (animalDetailsCount === 6) return "md:w-1/6";
+    if (animalDetailsCount === 7) return "md:w-[14%]";
+    if (animalDetailsCount === 8) return "md:w-[12%]";
+    if (animalDetailsCount === 9) return "md:w-[11%]";
+    if (animalDetailsCount === 10) return "md:w-[10%]";
+    if (animalDetailsCount === 11) return "md:w-[9%]";
+    if (animalDetailsCount === 12) return "md:w-1/12";
+    if (animalDetailsCount === 13) return "md:w-[7%]";
     return "md:w-full";
   };
 
@@ -71,6 +78,23 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
         )}
         {settings.castrationEnabled && (
           <div className={widthClass}>✂️ Kastracja</div>
+        )}
+        {settings.dogInteractionEnabled && (
+          <div className={widthClass}>Stosunek do psów</div>
+        )}
+        {settings.catInteractionEnabled && (
+          <div className={widthClass}>Stosunek do kotów</div>
+        )}
+        {settings.childrenInteractionEnabled && (
+          <div className={widthClass}>Stosunek do dzieci</div>
+        )}
+        {settings.dewormingEnabled && (
+          <div className={widthClass}>Odrobaczanie</div>
+        )}
+        {settings.healthEnabled && <div className={widthClass}>Leczenie</div>}
+        {settings.storyEnabled && <div className={widthClass}>Historia</div>}
+        {settings.infoForCarerEnabled && (
+          <div className={widthClass}>Info dla opiekunów</div>
         )}
       </>
     );
@@ -98,7 +122,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
               </>
             )}
           </p>
-          <EndShiftButton classNames="mt-2"/>
+          <EndShiftButton classNames="mt-2" />
         </div>
       )}
       <div className="hidden z-10 md:flex bg-neutral-200 dark:bg-neutral-900 rounded-md p-2 mx-2 mt-2 gap-2 border-2 border-solid dark:border-black">

@@ -16,6 +16,13 @@ const initialState: UserSliceState = {
     statusEnabled: false,
     personalityEnabled: false,
     castrationEnabled: false,
+    dogInteractionEnabled: false,
+    catInteractionEnabled: false,
+    childrenInteractionEnabled: false,
+    dewormingEnabled: false,
+    healthEnabled: false,
+    storyEnabled: false,
+    infoForCarerEnabled: false,
   },
 };
 
