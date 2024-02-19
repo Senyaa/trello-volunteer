@@ -6,7 +6,12 @@ import { endShift } from "@/actions/endShift";
 import { useDispatch, userSlice } from "@/lib/redux";
 import { useRouter } from "next/navigation";
 
-const EndShiftButton: FC = () => {
+interface EndShiftButtonProps {
+  classNames?: string;
+  onEnd?: () => void;
+}
+
+const EndShiftButton: FC<EndShiftButtonProps> = ({ classNames, onEnd }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const handleEndShift = async () => {
@@ -14,11 +19,18 @@ const EndShiftButton: FC = () => {
     dispatch(userSlice.actions.setShiftId(""));
     dispatch(userSlice.actions.setAnimalsIdsDone([]));
     dispatch(userSlice.actions.setAnimalsToDo(0));
+    if (onEnd) {
+      onEnd();
+    }
     router.push("/protected/shift-finished");
   };
 
   return (
-    <Button label="Zakończ dyżur" onClick={handleEndShift} classes="mt-2" />
+    <Button
+      label="Zakończ dyżur"
+      onClick={handleEndShift}
+      classes={classNames}
+    />
   );
 };
 

@@ -98,7 +98,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
               </>
             )}
           </p>
-          <EndShiftButton />
+          <EndShiftButton classNames="mt-2"/>
         </div>
       )}
       <div className="hidden z-10 md:flex bg-neutral-200 dark:bg-neutral-900 rounded-md p-2 mx-2 mt-2 gap-2 border-2 border-solid dark:border-black">
