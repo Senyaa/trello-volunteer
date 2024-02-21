@@ -10,6 +10,7 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import Button from "./ui/Button";
 import ShiftCheckbox from "./shift/ShiftCheckbox";
+import { usePathname } from "next/navigation";
 
 interface AnimalCardProps {
   animal: Card;
@@ -25,6 +26,8 @@ const AnimalCard: FC<AnimalCardProps> = ({
   isShift,
 }) => {
   const [cover, setCover] = useState("");
+  const pathname = usePathname();
+  const isNewbieMode = pathname.includes('newbie')
 
   useEffect(() => {
     if (animal.cover.url) {
@@ -84,14 +87,14 @@ const AnimalCard: FC<AnimalCardProps> = ({
       }`}
     >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
-        <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
+        {!isNewbieMode && <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
           <img
             src={cover || "/assets/placeholder.png"}
             alt={animal.name}
             loading="lazy"
             className="object-cover rounded-full aspect-square"
           />
-        </div>
+        </div>}
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
             <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
@@ -211,7 +214,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
             width={detailWidth}
           />
         </div>
-        <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
+        {!isNewbieMode && <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
           <Link
             href={animal.shortUrl}
             className="text-sm text-gray-400 w-15 hidden md:block"
@@ -226,7 +229,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
             primary={false}
             classes="text-sm w-15 md:hidden"
           />
-        </div>
+        </div>}
         {isShift && (
           <ShiftCheckbox
             animalID={animal.id}

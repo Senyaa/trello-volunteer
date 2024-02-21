@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   integer,
+  jsonb,
   pgTable,
   primaryKey,
   text,
@@ -109,13 +110,21 @@ export const settings = pgTable("settings", {
   statusEnabled: boolean("status_enabled").notNull().default(false),
   personalityEnabled: boolean("personality_enabled").notNull().default(false),
   castrationEnabled: boolean("castration_enabled").notNull().default(false),
-  dogInteractionEnabled: boolean("dog_interaction_enabled").notNull().default(false),
-  catInteractionEnabled: boolean("cat_interaction_enabled").notNull().default(false),
-  childrenInteractionEnabled: boolean("children_interaction_enabled").notNull().default(false),
+  dogInteractionEnabled: boolean("dog_interaction_enabled")
+    .notNull()
+    .default(false),
+  catInteractionEnabled: boolean("cat_interaction_enabled")
+    .notNull()
+    .default(false),
+  childrenInteractionEnabled: boolean("children_interaction_enabled")
+    .notNull()
+    .default(false),
   dewormingEnabled: boolean("deworming_enabled").notNull().default(false),
   healthEnabled: boolean("health_enabled").notNull().default(false),
   storyEnabled: boolean("story_enabled").notNull().default(false),
-  infoForCarerEnabled: boolean("info_for_carer_enabled").notNull().default(false),
+  infoForCarerEnabled: boolean("info_for_carer_enabled")
+    .notNull()
+    .default(false),
 });
 
 export const userRelations = relations(user, ({ many, one }) => ({
@@ -165,3 +174,20 @@ export const document = pgTable("document", {
   createdAt: timestamp("created_at").default(sql`now()`),
   content: text("content"),
 });
+
+export const guestView = pgTable("guest_view", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => user.id),
+  createdAt: timestamp("created_at").default(sql`now()`),
+  endsAt: timestamp("ends_at").notNull(),
+  content: jsonb("content"),
+});
+
+export const guestViewRelations = relations(guestView, ({ one }) => ({
+  user: one(user, {
+    fields: [guestView.userId],
+    references: [user.id],
+  }),
+}));

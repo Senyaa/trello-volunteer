@@ -10,6 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import EndShiftButton from "./EndShiftButton";
+import NewbieModeButton from "./NewbieModeButton";
 
 interface ShiftIndicatorProps {
   isShift: boolean;
@@ -36,10 +37,13 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
     <div className="relative">
       {isMenuOpened ? (
         <div
-          className="bg-neutral-100 shadow-md dark:bg-neutral-700 w-40 z-10 fixed bottom-12 right-0 mb-1"
+          className="bg-neutral-100 shadow-md dark:bg-neutral-700 w-50 z-10 fixed bottom-12 right-0 mb-1"
           ref={menuRef}
         >
-          <ul className="flex justify-center">
+          <ul className="flex flex-col">
+            <li className="border-bottom border-white">
+              <NewbieModeButton classNames="bg-transparent text-black dark:text-white hover:bg-transparent w-100" />
+            </li>
             <li>
               <EndShiftButton
                 classNames="bg-transparent text-black dark:text-white hover:bg-transparent w-100"
