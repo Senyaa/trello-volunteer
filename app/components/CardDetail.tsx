@@ -18,7 +18,7 @@ const CardDetail: FC<DetailProps> = ({
   return (
     <div className={isOn ? width : "hidden"}>
       {visible && (
-        <div className="whitespace-pre-wrap mt-2 md:mt-0 flex gap-2 md:gap-0 w-full rounded-md bg-neutral-100 dark:bg-neutral-800 border-neutral-200 dark:border-black border p-2">
+        <div className="text-wrap mt-2 md:mt-0 flex gap-2 md:gap-0 w-full rounded-md bg-neutral-100 dark:bg-neutral-800 border-neutral-200 dark:border-black border p-2">
           <div className="md:hidden">{icon}</div>
           <span>{text}</span>
         </div>
