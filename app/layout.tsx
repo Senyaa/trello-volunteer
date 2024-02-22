@@ -20,7 +20,7 @@ config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: "ekoapka",
-  description: "Dyżury w eko łatwiejsze niz z trello",
+  description: "Dyżury w eko łatwiejsze niż z trello",
 };
 
 export default async function RootLayout({
