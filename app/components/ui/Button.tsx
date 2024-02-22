@@ -6,7 +6,7 @@ interface ButtonProps {
   href?: string;
   onClick?: () => void;
   type?: "button" | "submit";
-  primary?: boolean;
+  level?: "primary" | "secondary" | "terinary";
   outlined?: boolean;
   disabled?: boolean;
   classes?: string;
@@ -21,36 +21,44 @@ const Button = ({
   classes,
   type = "button",
   disabled = false,
-  primary = true,
+  level = "primary",
   iconRight,
   color = "green",
 }: ButtonProps) => {
   const getColorClasses = () => {
     switch (color) {
       case "grey": {
-        if (primary) {
+        if (level === "primary") {
           return `${
             disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
           } bg-neutral-200 dark:bg-neutral-700 dark:text-white`;
-        } else {
+        } else if (level === "secondary") {
           return `${
             disabled
               ? "opacity-80"
               : "opacity-100 hover:bg-green-800 hover:text-white"
           } bg-transparent border-neutral-400 dark:border-neutral-200 border text-neutral-400 dark:text-neutral-200`;
+        } else {
+          return `${
+            disabled ? "opacity-80" : "opacity-100"
+          } bg-transparent text-neutral-900 dark:text-neutral-100 `;
         }
       }
       default:
-        if (primary) {
+        if (level === "primary") {
           return `${
             disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
           } bg-green-800 text-white`;
-        } else {
+        } else if (level === "secondary") {
           return `${
             disabled
               ? "opacity-80"
               : "opacity-100 hover:bg-green-800 hover:text-white"
           } bg-transparent border-green-800 border-2 dark:text-white`;
+        } else {
+          return `${
+            disabled ? "opacity-80" : "opacity-100"
+          } bg-transparent text-green-700 `;
         }
     }
   };

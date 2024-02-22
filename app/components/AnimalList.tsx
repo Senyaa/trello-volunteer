@@ -115,7 +115,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
             {room && (
               <>
                 <span>
-                  Sprawdź inne pomieszczenia uzywając selektora w prawym górnym
+                  Sprawdź inne pomieszczenia używając selektora w prawym górnym
                   rogu
                 </span>
                 <span className="my-2 block">lub</span>

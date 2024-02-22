@@ -28,6 +28,8 @@ const EndShiftButton: FC<EndShiftButtonProps> = ({ classNames, onEnd }) => {
   return (
     <Button
       label="Zakończ dyżur"
+      level="terinary"
+      color="grey"
       onClick={handleEndShift}
       classes={classNames}
     />

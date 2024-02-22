@@ -3,7 +3,7 @@ import { getToken } from "@/app/helpers/getToken";
 import trelloURL from "@/app/helpers/trelloUrlParser";
 import { getServerSession } from "@/lib/getSession";
 
-export async function GET(request: Request): Promise<Response> {
+export async function GET(): Promise<Response> {
     const boardId = process.env.NEXT_PUBLIC_MAIN_BOARD_ID;
   try {
     const session = await getServerSession();

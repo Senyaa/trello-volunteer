@@ -5,7 +5,10 @@ import { drizzle } from "@/drizzle/drizzle";
 import { eq, inArray } from "drizzle-orm";
 import { animalOnShift, imageUrl } from "@/drizzle/drizzleSchema";
 
-export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
+export const getParsedCards = async (
+  trelloId: string,
+  isOnShift?: boolean
+): Promise<Card[]> => {
   const trelloCards = await getCards(trelloId);
   const attachmentIds = trelloCards
     .map((card) => card.cover.idAttachment || "")
@@ -15,25 +18,32 @@ export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
     where: inArray(imageUrl.attachmentId, attachmentIds),
   });
 
-  const currentShiftId = await getCurrentShiftId();
+  let isDoneOnCurrentShift: Shift[] = [];
+  let currentShiftId: string | null | undefined = null;
 
-  const isDoneOnCurrentShift = currentShiftId
-    ? await drizzle.query.animalOnShift.findMany({
-        where: eq(animalOnShift.shiftId, currentShiftId),
-      })
-    : [];
+  if (isOnShift) {
+    currentShiftId = await getCurrentShiftId();
+
+    isDoneOnCurrentShift = currentShiftId
+      ? await drizzle.query.animalOnShift.findMany({
+          where: eq(animalOnShift.shiftId, currentShiftId),
+        })
+      : [];
+  }
 
   trelloCards.forEach((card) => {
     card.cover.url =
       returnedUrls.find((url) => url.attachmentId === card.cover.idAttachment)
         ?.url || "";
 
-    const isCardOnShift =
-      isDoneOnCurrentShift.find(
-        (shiftAnimal) => shiftAnimal.animalTrelloId === card.id
-      )?.done || false;
+    if (isOnShift) {
+      const isCardOnShift =
+        isDoneOnCurrentShift.find(
+          (shiftAnimal) => shiftAnimal.animalTrelloId === card.id
+        )?.done || false;
 
-    card.isDone = currentShiftId ? isCardOnShift : false;
+      card.isDone = currentShiftId ? isCardOnShift : false;
+    }
   });
 
   const cards = trelloCards.map(
@@ -62,4 +72,11 @@ export const getParsedCards = async (trelloId: string): Promise<Card[]> => {
   );
 
   return cards;
+};
+
+type Shift = {
+  description: string | null;
+  shiftId: string | null;
+  animalTrelloId: string | null;
+  done: boolean | null;
 };
