@@ -29,13 +29,10 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
 
   const [isMenuOpened, setMenuOpened] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [sharedView, setSharedView] = useState<GuestView | null>(
-    null
-  );
+  const [sharedView, setSharedView] = useState<GuestView | null>(null);
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  
   const handleNewbieMode = async () => {
     const guestView = await shareCards(trelloId);
     setSharedView(guestView || null);
@@ -44,16 +41,22 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
   };
 
   useEffect(() => {
+    if (!isMenuOpened) {
+      return;
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpened(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener("click", handleClickOutside);
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, [menuRef]);
+  }, [isMenuOpened]);
 
   const newbieLink = `${window.location.origin}/newbie/${sharedView?.id}`;
 
@@ -75,7 +78,7 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
         )}
       {isMenuOpened ? (
         <div
-          className="bg-neutral-100 shadow-md dark:bg-neutral-700 w-50 z-20 fixed bottom-12 right-0 mb-1"
+          className="bg-neutral-100 shadow-md dark:bg-neutral-700 w-50 z-10 fixed bottom-12 right-0 mb-1"
           ref={menuRef}
         >
           <ul className="flex flex-col">
@@ -102,10 +105,7 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
           <>
             <div className="flex justify-between px-2 py-1">
               <span className="text-sm">{`trwa dyżur (${doneCount}/${allCount})`}</span>
-              <button
-                className="px-2"
-                onClick={() => setMenuOpened(prev => !prev)}
-              >
+              <button className="px-2" onClick={() => setMenuOpened((s) => !s)}>
                 <FontAwesomeIcon icon={faEllipsisV} />
               </button>
             </div>

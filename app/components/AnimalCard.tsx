@@ -226,7 +226,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
             label="Zobacz w trello"
             iconRight={<FontAwesomeIcon icon={faTrello} className="ml-2" />}
             color="grey"
-            primary={false}
+            level="secondary"
             classes="text-sm w-15 md:hidden"
           />
         </div>}

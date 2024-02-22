@@ -1,10 +1,11 @@
 import QRCode from "react-qr-code";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import Button from "../ui/Button";
 import Toast from "../ui/Toast";
+import { isMobile } from "@/app/helpers/isMobile";
 
 interface ShareModalContentProps {
   newbieLink: string;
@@ -43,6 +44,13 @@ const ShareModalContent: FC<ShareModalContentProps> = ({
         >
           <FontAwesomeIcon icon={faCopy} />
         </button>
+        {isMobile() && <Button
+          label={<FontAwesomeIcon icon={faShare} />}
+          classes="ml-2"
+          onClick={() => {
+            navigator.share({ url: newbieLink });
+          }}
+        />}
       </div>
       {createPortal(
         <Toast
