@@ -17,6 +17,7 @@ import { shareCards } from "@/actions/shareCards";
 import Button from "../ui/Button";
 import { GuestView } from "@/app/types/Shift";
 import ShareModalContent from "./ShareModalContent";
+import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 
 interface ShiftIndicatorProps {
   isShift: boolean;
@@ -24,19 +25,20 @@ interface ShiftIndicatorProps {
 const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
   const allCount = useSelector(selectCurrentShiftAll);
   const doneCount = useSelector(selectCurrentShiftDoneCount);
+  const trelloId = useSelector(selectTrelloId);
 
   const [isMenuOpened, setMenuOpened] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [sharedView, setSharedView] = useState<GuestView | null | undefined>(
+  const [sharedView, setSharedView] = useState<GuestView | null>(
     null
   );
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const trelloId = useSelector(selectTrelloId);
+  
   const handleNewbieMode = async () => {
     const guestView = await shareCards(trelloId);
-    setSharedView(guestView);
+    setSharedView(guestView || null);
     setShowModal(true);
     setMenuOpened(false);
   };
@@ -60,13 +62,11 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
       {showModal &&
         createPortal(
           <Modal
-            title="Udostępnij dane"
+            title="Udostępniasz dane"
             content={
               <ShareModalContent
                 newbieLink={newbieLink}
-                expiresAt={`${sharedView?.endsAt.getHours()}:${sharedView?.endsAt.getMinutes()} (${sharedView?.endsAt.toLocaleDateString(
-                  "pl"
-                )})`}
+                expiresAt={parseToHumanDateTime(sharedView?.endsAt)}
               />
             }
             onClose={() => setShowModal(false)}
@@ -83,12 +83,14 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
               <Button
                 label="Udostępnij świeżynce"
                 onClick={handleNewbieMode}
-                classes="bg-transparent text-black dark:text-white hover:bg-transparent w-100"
+                level="terinary"
+                color="grey"
+                classes="w-100"
               />
             </li>
             <li>
               <EndShiftButton
-                classNames="bg-transparent text-black dark:text-white hover:bg-transparent w-100"
+                classNames="w-100"
                 onEnd={() => setMenuOpened(false)}
               />
             </li>
@@ -102,7 +104,7 @@ const ShiftIndicator: FC<ShiftIndicatorProps> = ({ isShift }) => {
               <span className="text-sm">{`trwa dyżur (${doneCount}/${allCount})`}</span>
               <button
                 className="px-2"
-                onClick={() => setMenuOpened(!isMenuOpened)}
+                onClick={() => setMenuOpened(prev => !prev)}
               >
                 <FontAwesomeIcon icon={faEllipsisV} />
               </button>

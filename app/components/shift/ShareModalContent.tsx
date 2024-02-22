@@ -1,3 +1,4 @@
+import QRCode from "react-qr-code";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useState } from "react";
@@ -7,24 +8,34 @@ import Toast from "../ui/Toast";
 
 interface ShareModalContentProps {
   newbieLink: string;
-  expiresAt: string
+  expiresAt: string;
 }
 
-const ShareModalContent: FC<ShareModalContentProps> = ({ newbieLink, expiresAt }) => {
+const ShareModalContent: FC<ShareModalContentProps> = ({
+  newbieLink,
+  expiresAt,
+}) => {
   const [isCopied, setIsCopied] = useState(false);
 
   return (
     <>
       <span className="block text-sm mb-4">
-        Pod tym linkiem dane będą widoczne przez 3 godziny. (Do {expiresAt})
+        Ten link będzie działał przez 3 godziny, do {expiresAt}.
       </span>
-
-      <div className="flex items-center">
-        <span className="p-2 bg-neutral-600 rounded-md overflow-x-hidden text-nowrap select-all whitespace-nowrap">
+      <div className="bg-white p-4 mb-4">
+        <QRCode
+          size={256}
+          style={{ height: "256px", maxWidth: "100%", width: "100%" }}
+          value={newbieLink}
+          viewBox={`0 0 256 256`}
+        />
+      </div>
+      <div className="flex items-center mb-4">
+        <span className="p-2 bg-neutral-100 dark:bg-neutral-600 rounded-md overflow-x-hidden text-nowrap select-all whitespace-nowrap">
           {newbieLink}
         </span>
         <button
-          className="rounded-md bg-neutral-600 flex justify-center items-center p-3 ml-2"
+          className="rounded-md bg-neutral-100 dark:bg-neutral-600 flex justify-center items-center p-3 ml-2"
           onClick={() => {
             navigator.clipboard.writeText(newbieLink);
             setIsCopied(true);
@@ -32,12 +43,6 @@ const ShareModalContent: FC<ShareModalContentProps> = ({ newbieLink, expiresAt }
         >
           <FontAwesomeIcon icon={faCopy} />
         </button>
-      </div>
-      <div className="flex justify-end mt-4">
-        <Button
-          label="Udostępnij"
-          onClick={() => navigator.share({ url: newbieLink })}
-        />
       </div>
       {createPortal(
         <Toast

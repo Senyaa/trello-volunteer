@@ -3,9 +3,11 @@ import getUser from "@/actions/getUser";
 import AnimalList from "@/app/components/AnimalList";
 import CatsNav from "@/app/components/CatsNav";
 import { catRooms } from "@/app/helpers/cardFilters";
+import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import { Card } from "@/app/types/Card";
 import { getServerSession } from "@/lib/getSession";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 const allTrueSettings = {
   testsEnabled: true,
@@ -33,7 +35,18 @@ const NewbiePage = async ({
   const validUUID =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   if (!validUUID.test(newbieId)) {
-    return "Złe id.";
+    return (
+      <div className="pt-4 text-center flex justify-center items-center flex-col">
+        <Image
+          src="https://http.cat/204.jpg"
+          width={500}
+          height={500}
+          alt="kotek"
+        />
+        <h3 className="font-extrabold text-lg">Oho, tu nic nie ma</h3>
+        <span>Poproś wolontariusza o przesłanie poprawnego linku</span>
+      </div>
+    );
   }
   const session = await getServerSession();
   if (session) {
@@ -45,7 +58,12 @@ const NewbiePage = async ({
   // obrazki
 
   if ((guestView?.endsAt || new Date()) < new Date()) {
-    return "No i skończyło się rumakowanie.";
+    return (
+      <>
+        <h3 className="font-extrabold text-lg">No i skończyło się rumakowanie.</h3>
+        <span>Twoja sesja wygasła. Zapraszamy na (dalszy) wolontariat ❤️</span>
+      </>
+    );
   }
 
   const roomId = catRooms.find(
@@ -70,9 +88,7 @@ const NewbiePage = async ({
         </span>
         <span>
           Dostęp do tego widoku zakończy się o{" "}
-          {`${guestView?.endsAt.getHours()}:${guestView?.endsAt.getMinutes()} (${guestView?.endsAt.toLocaleDateString(
-            "pl"
-          )})`}
+          {parseToHumanDateTime(guestView?.endsAt)}
         </span>
       </div>
       <CatsNav
