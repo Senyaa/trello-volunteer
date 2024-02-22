@@ -12,7 +12,7 @@ const BackButton: FC<BackButtonProps> = ({ classes = "w-full" }) => {
   const router = useRouter();
   return (
     <Button
-      primary={false}
+      level="secondary"
       classes={classes}
       label="< Wróć"
       onClick={() => router.back()}
