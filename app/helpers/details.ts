@@ -66,7 +66,9 @@ const getDetails = (description: string) => {
   const story =
     getDetailSanitized(description, new RegExp(/Historia:(.*?)✂️/gis)) || "";
   const infoForCarer =
-    getDetailSanitized(description, new RegExp(/Info dla właścicieli\/opiekunów:(.*?)🏠/gis)) || "";
+    getDetailSanitized(description, new RegExp(/Info dla właścicieli\/opiekunów:(.*?)Szacowany/gis)) || "";
+  const age =
+    getDetailSanitized(description, new RegExp(/Szacowany wiek:(.*?)🏠/gis)) || "";
   return {
     food,
     tests,
@@ -81,7 +83,8 @@ const getDetails = (description: string) => {
     deworming,
     health,
     story,
-    infoForCarer
+    infoForCarer,
+    age,
   };
 };
 

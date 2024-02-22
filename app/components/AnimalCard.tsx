@@ -27,7 +27,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
 }) => {
   const [cover, setCover] = useState("");
   const pathname = usePathname();
-  const isNewbieMode = pathname.includes('newbie')
+  const isNewbieMode = pathname.includes("newbie");
 
   useEffect(() => {
     if (animal.cover.url) {
@@ -62,6 +62,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
     health,
     story,
     infoForCarer,
+    age,
   } = getDetails(animal.desc);
   const {
     medsEnabled,
@@ -87,17 +88,22 @@ const AnimalCard: FC<AnimalCardProps> = ({
       }`}
     >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
-        {!isNewbieMode && <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
-          <img
-            src={cover || "/assets/placeholder.png"}
-            alt={animal.name}
-            loading="lazy"
-            className="object-cover rounded-full aspect-square"
-          />
-        </div>}
+        {!isNewbieMode && (
+          <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
+            <img
+              src={cover || "/assets/placeholder.png"}
+              alt={animal.name}
+              loading="lazy"
+              className="object-cover rounded-full aspect-square"
+            />
+          </div>
+        )}
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
-            <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
+            <div>
+              <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
+              <span className="text-sm text-neutral-500">{age}</span>
+            </div>
             {isShift && (
               <ShiftCheckbox
                 animalID={animal.id}
@@ -214,22 +220,24 @@ const AnimalCard: FC<AnimalCardProps> = ({
             width={detailWidth}
           />
         </div>
-        {!isNewbieMode && <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
-          <Link
-            href={animal.shortUrl}
-            className="text-sm text-gray-400 w-15 hidden md:block"
-          >
-            <FontAwesomeIcon icon={faTrello} size="lg" />
-          </Link>
-          <Button
-            href={animal.shortUrl}
-            label="Zobacz w trello"
-            iconRight={<FontAwesomeIcon icon={faTrello} className="ml-2" />}
-            color="grey"
-            level="secondary"
-            classes="text-sm w-15 md:hidden"
-          />
-        </div>}
+        {!isNewbieMode && (
+          <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
+            <Link
+              href={animal.shortUrl}
+              className="text-sm text-gray-400 w-15 hidden md:block"
+            >
+              <FontAwesomeIcon icon={faTrello} size="lg" />
+            </Link>
+            <Button
+              href={animal.shortUrl}
+              label="Zobacz w trello"
+              iconRight={<FontAwesomeIcon icon={faTrello} className="ml-2" />}
+              color="grey"
+              level="secondary"
+              classes="text-sm w-15 md:hidden"
+            />
+          </div>
+        )}
         {isShift && (
           <ShiftCheckbox
             animalID={animal.id}
