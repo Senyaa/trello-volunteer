@@ -102,7 +102,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
           <div className="flex justify-between">
             <div>
               <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
-              <span className="text-sm text-neutral-500 leading-none">{age}</span>
+              <span className="block text-sm text-neutral-500 leading-none">{age}</span>
             </div>
             {isShift && (
               <ShiftCheckbox
