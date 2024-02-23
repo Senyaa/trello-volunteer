@@ -39,7 +39,7 @@ const Cats = async ({
   return (
     <div>
       <CatsNav
-        current={searchParams?.room || ""}
+        currentRoom={searchParams?.room || ""}
         animalListLength={filteredCards.length}
       />
       {isLowerCatroom && (

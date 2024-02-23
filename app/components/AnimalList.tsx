@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import { Card } from "../types/Card";
 import AnimalData from "./AnimalData";
@@ -13,6 +13,8 @@ import {
   useSelector,
   userSlice,
 } from "@/lib/redux";
+import Input from "./ui/Input";
+import { getDetailsHeaders } from "../helpers/details";
 
 interface AnimalListProps {
   animals: Card[];
@@ -43,59 +45,16 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
     [animals, isDoneIds]
   );
 
-  const getWidthClass = () => {
-    const animalDetailsCount =
-      Object.values(settings).filter(Boolean).length - 1;
-
-    // tailwind doesn't support dynamically created classes
-    // hence cannot use a template string
-    if (animalDetailsCount === 2) return "md:w-1/2";
-    if (animalDetailsCount === 3) return "md:w-1/3";
-    if (animalDetailsCount === 4) return "md:w-1/4";
-    if (animalDetailsCount === 5) return "md:w-1/5";
-    if (animalDetailsCount === 6) return "md:w-1/6";
-    if (animalDetailsCount === 7) return "md:w-[14%]";
-    if (animalDetailsCount === 8) return "md:w-[12%]";
-    if (animalDetailsCount === 9) return "md:w-[11%]";
-    if (animalDetailsCount === 10) return "md:w-[10%]";
-    if (animalDetailsCount === 11) return "md:w-[9%]";
-    if (animalDetailsCount === 12) return "md:w-1/12";
-    if (animalDetailsCount === 13) return "md:w-[7%]";
-    return "md:w-full";
-  };
-
-  const widthClass = getWidthClass();
+  const [animalsDisplayed, setAnimalsDisplayed] = useState(animalsLocalDone);
 
   const headerDetails = () => {
     if (Object.values(settings).length < 2) return null;
     return (
       <>
-        {settings.medsEnabled && <div className={widthClass}>💊 Leki</div>}
-        {settings.testsEnabled && <div className={widthClass}>🩸 Testy</div>}
-        {settings.statusEnabled && <div className={widthClass}>🏠 Status</div>}
-        {settings.personalityEnabled && (
-          <div className={widthClass}>😈 Charakter</div>
-        )}
-        {settings.castrationEnabled && (
-          <div className={widthClass}>✂️ Kastracja</div>
-        )}
-        {settings.dogInteractionEnabled && (
-          <div className={widthClass}>Stosunek do psów</div>
-        )}
-        {settings.catInteractionEnabled && (
-          <div className={widthClass}>Stosunek do kotów</div>
-        )}
-        {settings.childrenInteractionEnabled && (
-          <div className={widthClass}>Stosunek do dzieci</div>
-        )}
-        {settings.dewormingEnabled && (
-          <div className={widthClass}>Odrobaczanie</div>
-        )}
-        {settings.healthEnabled && <div className={widthClass}>Leczenie</div>}
-        {settings.storyEnabled && <div className={widthClass}>Historia</div>}
-        {settings.infoForCarerEnabled && (
-          <div className={widthClass}>Info dla opiekunów</div>
-        )}
+        {getDetailsHeaders(settings).map((header) => {
+          if (header.isEnabled)
+            return <div className="detail-cell">{`${header.icon} ${header.plName}`}</div>;
+        })}
       </>
     );
   };
@@ -104,8 +63,25 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
     return <div className="p-4">Nie znaleziono zwierzaków.</div>;
   }
 
+  const handleSearchInput = (e: any) => {
+    if (e.target.value.length < 3) setAnimalsDisplayed(animalsLocalDone);
+    const filtered = animalsLocalDone.filter((animal) => {
+      return animal.name
+        .toLocaleLowerCase()
+        .includes(e.target.value.toLocaleLowerCase());
+    });
+    setAnimalsDisplayed(filtered);
+  };
+
   return (
     <div className="mb-16 md:mb-0">
+      <div className="px-2">
+        <Input
+          placeholder="Szukaj..."
+          id="search"
+          onInput={handleSearchInput}
+        />
+      </div>
       {shift && doneCount === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
           <p className="text-center">
@@ -130,17 +106,13 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
         <div className="shrink-0 w-[12rem]">Uwagi</div>
 
         <div className="flex w-full gap-2">
-          <div className={widthClass}>🍽 Karma</div>
+          <div className="detail-cell">🍽 Karma</div>
           {headerDetails()}
         </div>
         <div className="w-[3rem]">Trello</div>
         {shift ? <div className="w-[3rem]">Dyżur</div> : null}
       </div>
-      <AnimalData
-        animals={animalsLocalDone}
-        widthClass={widthClass}
-        settings={settings}
-      />
+      <AnimalData animals={animalsDisplayed} settings={settings} />
     </div>
   );
 };

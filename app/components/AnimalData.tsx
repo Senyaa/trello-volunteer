@@ -8,11 +8,10 @@ import { selectShiftId, useSelector } from "@/lib/redux";
 
 interface AnimalDataProps {
   animals: Card[];
-  widthClass: string;
   settings: SettingsFormType;
 }
 
-const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
+const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
   const shift = useSelector(selectShiftId);
 
   const animalsNotDone = animals.filter((a) => !a.isDone);
@@ -27,7 +26,6 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
               <AnimalCard
                 isShift={Boolean(shift)}
                 animal={animal}
-                detailWidth={widthClass}
                 settings={settings}
               />
             </li>
@@ -43,7 +41,6 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, widthClass, settings }) => {
                 <AnimalCard
                   isShift={Boolean(shift)}
                   animal={animal}
-                  detailWidth={widthClass}
                   settings={settings}
                 />
               </li>

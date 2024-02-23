@@ -2,10 +2,9 @@ import { FC } from "react";
 
 interface DetailProps {
   visible?: boolean;
-  text: string;
-  icon: string;
+  text?: string;
+  icon: string | null;
   isOn?: boolean;
-  width: string;
 }
 
 const CardDetail: FC<DetailProps> = ({
@@ -13,10 +12,10 @@ const CardDetail: FC<DetailProps> = ({
   text,
   icon,
   isOn = true,
-  width,
 }) => {
+
   return (
-    <div className={isOn ? width : "hidden"}>
+    <div className={isOn ? 'detail-cell' : "hidden"}>
       {visible && (
         <div className="text-wrap overflow-auto break-word mt-2 md:mt-0 flex gap-2 md:gap-0 w-full rounded-md bg-neutral-100 dark:bg-neutral-800 border-neutral-200 dark:border-black border p-2">
           <div className="md:hidden">{icon}</div>

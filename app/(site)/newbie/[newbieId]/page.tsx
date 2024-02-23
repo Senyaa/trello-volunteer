@@ -92,7 +92,7 @@ const NewbiePage = async ({
         </span>
       </div>
       <CatsNav
-        current={searchParams?.room || ""}
+        currentRoom={searchParams?.room || ""}
         animalListLength={filteredCards.length}
         route={`/newbie/${newbieId}`}
       />
