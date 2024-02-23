@@ -21,7 +21,7 @@ const Input = ({ placeholder, label, id, onInput, icon }: InputProps) => {
         placeholder={placeholder}
         onChange={(e) => onInput(e)}
         id={id}
-        className="rounded-md py-1 pl-2 pr-7 dark:text-white bg-neutral-200 dark:bg-neutral-800 w-full relative active:outline-none"
+        className="rounded-md py-1 px-2 dark:text-white bg-neutral-200 dark:bg-neutral-800 w-full active:outline-none"
       />
       {icon}
     </>

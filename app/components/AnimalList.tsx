@@ -68,12 +68,12 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
     return <div className="p-4">Nie znaleziono zwierzaków.</div>;
   }
 
-  const handleSearchInput = (e: any) => {
-    if (e.target.value.length < 3) setAnimalsDisplayed(animalsLocalDone);
+  const handleSearchInput = (newValue: string) => {
+    if (newValue.length < 3) setAnimalsDisplayed(animalsLocalDone);
     const filtered = animalsLocalDone.filter((animal) => {
-      return animal.name
+      return animal.name.split("-")[0]
         .toLocaleLowerCase()
-        .includes(e.target.value.toLocaleLowerCase());
+        .includes(newValue.toLocaleLowerCase());
     });
     setAnimalsDisplayed(filtered);
   };
