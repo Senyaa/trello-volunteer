@@ -53,7 +53,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
       <>
         {getDetailsHeaders(settings).map((header) => {
           if (header.isEnabled)
-            return <div className="detail-cell">{`${header.icon} ${header.plName}`}</div>;
+            return <div key={header.plName} className="detail-cell">{`${header.icon} ${header.plName}`}</div>;
         })}
       </>
     );

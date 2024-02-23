@@ -18,11 +18,7 @@ interface AnimalCardProps {
   isShift: boolean;
 }
 
-const AnimalCard: FC<AnimalCardProps> = ({
-  animal,
-  settings,
-  isShift,
-}) => {
+const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
   const [cover, setCover] = useState("");
   const pathname = usePathname();
   const isNewbieMode = pathname.includes("newbie");
@@ -46,7 +42,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
   }, [animal]);
 
   const detailsValues = getDetails(animal.desc);
- 
+
   const [name, info] = animal.name.split(" - ");
 
   return (
@@ -108,6 +104,7 @@ const AnimalCard: FC<AnimalCardProps> = ({
           {getDetailsHeaders(settings, detailsValues).map((detail) => {
             return (
               <CardDetail
+                key={detail.plName}
                 visible={Boolean(detail.isEnabled && detail.value)}
                 text={detail.value}
                 icon={detail.icon}
