@@ -17,25 +17,16 @@ const LoginForm: FC<LoginButtonProps> = ({
   iconRight,
   classes,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <label htmlFor="privacy-policy" className="mt-2">
-        <input
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target?.checked)}
-          type="checkbox"
-          id="privacy-policy"
-          className="accent-green-800 mr-2"
-        />
-        Zapoznałam/em się z{" "}
+        
         <Link href="/privacy-policy" className="underline">
-          polityką prywatności.
+          Polityka prywatności
         </Link>
       </label>
       <Button
         classes={classes}
-        disabled={!isChecked}
         label={label}
         onClick={() => signIn("trello", { callbackUrl: MAIN_PAGE })}
         iconRight={iconRight}
