@@ -170,7 +170,6 @@ export const getDetailsHeaders = (
     },
     {
       isEnabled: settings.infoForCarerEnabled,
-      icon: null,
       plName: "Info dla opiekunów",
       value: details?.infoForCarer,
     },

@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import Button from "./ui/Button";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 import { MAIN_PAGE } from "../helpers/consts";
 import Link from "next/link";
 
