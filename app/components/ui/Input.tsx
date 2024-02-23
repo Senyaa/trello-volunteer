@@ -1,14 +1,14 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactNode } from "react";
 
 type InputProps = {
   placeholder: string;
-  label?: string;
   id: string;
+  label?: string;
+  icon?: ReactNode;
   onInput: (e: any) => void;
 };
 
-const Input = ({ placeholder, label, id, onInput }: InputProps) => {
+const Input = ({ placeholder, label, id, onInput, icon }: InputProps) => {
   return (
     <>
       {label && (
@@ -21,9 +21,9 @@ const Input = ({ placeholder, label, id, onInput }: InputProps) => {
         placeholder={placeholder}
         onChange={(e) => onInput(e)}
         id={id}
-        className="rounded-md py-1 pl-2 pr-7 text-white bg-neutral-800 w-full relative active:outline-none"
+        className="rounded-md py-1 pl-2 pr-7 dark:text-white bg-neutral-200 dark:bg-neutral-800 w-full relative active:outline-none"
       />
-      <FontAwesomeIcon icon={faSearch} className="absolute right-5 mt-2" />
+      {icon}
     </>
   );
 };

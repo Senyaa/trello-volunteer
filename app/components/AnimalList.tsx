@@ -15,6 +15,7 @@ import {
 } from "@/lib/redux";
 import Input from "./ui/Input";
 import { getDetailsHeaders } from "../helpers/details";
+import Search from "./Search";
 
 interface AnimalListProps {
   animals: Card[];
@@ -76,11 +77,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   return (
     <div className="mb-16 md:mb-0">
       <div className="px-2">
-        <Input
-          placeholder="Szukaj..."
-          id="search"
-          onInput={handleSearchInput}
-        />
+       <Search onInput={handleSearchInput}/>
       </div>
       {shift && doneCount === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
