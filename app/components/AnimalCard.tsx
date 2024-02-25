@@ -56,16 +56,14 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
       }`}
     >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
-        {!isNewbieMode && (
-          <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
-            <img
-              src={cover || "/assets/placeholder.png"}
-              alt={animal.name}
-              loading="lazy"
-              className="object-cover rounded-full aspect-square"
-            />
-          </div>
-        )}
+        <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
+          <img
+            src={cover || "/assets/placeholder.png"}
+            alt={animal.name}
+            loading="lazy"
+            className="object-cover rounded-full aspect-square"
+          />
+        </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
             <div>
