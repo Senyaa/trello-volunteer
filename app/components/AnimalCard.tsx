@@ -25,8 +25,12 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
 
   useEffect(() => {
     if (animal.cover.url) {
-      setCover(`/api/imageFile?url=${animal.cover.url}`);
+      if (animal.cover.url.includes("cloudinary")) {
+        setCover(animal.cover.url);
+        return;
+      }
 
+      setCover(`/api/imageFile?url=${animal.cover.url}`);
       return;
     }
 
