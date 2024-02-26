@@ -4,10 +4,10 @@ import { drizzle } from "@/drizzle/drizzle";
 import { animalOnShift } from "@/drizzle/drizzleSchema";
 import { getCurrentShiftId } from "./getCurrentShiftId";
 
-export async function checkAnimalAsDone(
+export async function addNote(
   shiftType = "cats",
   animalId: string,
-  isDone: boolean,
+  description: string,
 ) {
   const currentShiftId = await getCurrentShiftId(shiftType);
 
@@ -18,7 +18,7 @@ export async function checkAnimalAsDone(
   const updateData = {
     animalTrelloId: animalId,
     shiftId: currentShiftId,
-    done: isDone,
+    description,
   };
 
   await drizzle
@@ -26,7 +26,7 @@ export async function checkAnimalAsDone(
     .values(updateData)
     .onConflictDoUpdate({
       target: [animalOnShift.animalTrelloId, animalOnShift.shiftId],
-      set: { done: isDone },
+      set: { description },
     });
 
   return true;

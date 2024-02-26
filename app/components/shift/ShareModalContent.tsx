@@ -1,11 +1,10 @@
 import QRCode from "react-qr-code";
-import { faCopy, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useState } from "react";
-import { createPortal } from "react-dom";
+import { FC } from "react";
 import Button from "../ui/Button";
-import Toast from "../ui/Toast";
 import { isMobile } from "@/app/helpers/isMobile";
+import CopyButton from "../CopyButton";
 
 interface ShareModalContentProps {
   newbieLink: string;
@@ -16,8 +15,6 @@ const ShareModalContent: FC<ShareModalContentProps> = ({
   newbieLink,
   expiresAt,
 }) => {
-  const [isCopied, setIsCopied] = useState(false);
-
   return (
     <>
       <span className="block text-sm mb-4">
@@ -35,31 +32,17 @@ const ShareModalContent: FC<ShareModalContentProps> = ({
         <span className="p-2 bg-neutral-100 dark:bg-neutral-600 rounded-md overflow-x-hidden text-nowrap select-all whitespace-nowrap">
           {newbieLink}
         </span>
-        <button
-          className="rounded-md bg-neutral-100 dark:bg-neutral-600 flex justify-center items-center p-3 ml-2"
-          onClick={() => {
-            navigator.clipboard.writeText(newbieLink);
-            setIsCopied(true);
-          }}
-        >
-          <FontAwesomeIcon icon={faCopy} />
-        </button>
-        {isMobile() && <Button
-          label={<FontAwesomeIcon icon={faShare} />}
-          classes="ml-2"
-          onClick={() => {
-            navigator.share({ url: newbieLink });
-          }}
-        />}
+        <CopyButton content={newbieLink} />
+        {isMobile() && (
+          <Button
+            label={<FontAwesomeIcon icon={faShare} />}
+            classes="ml-2"
+            onClick={() => {
+              navigator.share({ url: newbieLink });
+            }}
+          />
+        )}
       </div>
-      {createPortal(
-        <Toast
-          text="Link skopiowany!"
-          hide={() => setIsCopied(false)}
-          isShown={isCopied}
-        />,
-        document.body
-      )}
     </>
   );
 };

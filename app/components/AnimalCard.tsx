@@ -11,6 +11,7 @@ import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import Button from "./ui/Button";
 import ShiftCheckbox from "./shift/ShiftCheckbox";
 import { usePathname } from "next/navigation";
+import AddNote from "./shift/AddNote";
 
 interface AnimalCardProps {
   animal: Card;
@@ -72,13 +73,18 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
                 {detailsValues.age}
               </span>
             </div>
-            {isShift && (
-              <ShiftCheckbox
-                animalID={animal.id}
-                isDone={animal.isDone || false}
-                classes="md:hidden"
-              />
-            )}
+            <div className="flex items-start">
+              {isShift && (
+                <>
+                  <AddNote animalID={animal.id} note={animal.note || ""} />
+                  <ShiftCheckbox
+                    animalID={animal.id}
+                    isDone={animal.isDone || false}
+                    classes="md:hidden"
+                  />
+                </>
+              )}
+            </div>
           </div>
           <div className="md:w-48 md:px-2">
             {info && (

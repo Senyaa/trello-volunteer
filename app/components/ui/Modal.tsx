@@ -5,7 +5,7 @@ import { FC, ReactNode } from "react";
 interface ModalProps {
   title: string;
   content: ReactNode;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 const Modal: FC<ModalProps> = ({ title, content, onClose }) => {

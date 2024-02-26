@@ -72,6 +72,7 @@ export interface TrelloCard {
   url: string;
   cover: Cover;
   isDone?: boolean;
+  note?: string;
 }
 
 interface Cover {
@@ -109,4 +110,4 @@ export interface Preview {
   _id: string;
 }
 
-export type Card = Pick<TrelloCard, "id" | "desc" | "idBoard" | "idList" | "name" | "shortUrl" | "url" | "cover"| "isDone">
+export type Card = Pick<TrelloCard, "id" | "desc" | "idBoard" | "idList" | "name" | "shortUrl" | "url" | "cover"| "isDone" | "note">

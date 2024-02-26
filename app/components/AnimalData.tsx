@@ -22,7 +22,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
       {animalsNotDone.length !== 0 && (
         <ul className="w-full md:my-4">
           {animalsNotDone.map((animal) => (
-            <li key={animal.id} className="m-2">
+            <li key={animal.id} className="mx-2 my-4">
               <AnimalCard
                 isShift={Boolean(shift)}
                 animal={animal}
@@ -37,7 +37,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
           <h2 className="font-extrabold opacity-50 ml-2 mt-5">Zrobione</h2>
           <ul>
             {animalsDone.map((animal) => (
-              <li key={animal.id} className="m-2">
+              <li key={animal.id} className="mx-2 my-4">
                 <AnimalCard
                   isShift={Boolean(shift)}
                   animal={animal}

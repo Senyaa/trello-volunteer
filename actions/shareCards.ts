@@ -2,12 +2,12 @@
 
 import { drizzle } from "@/drizzle/drizzle";
 import { guestView } from "@/drizzle/drizzleSchema";
-import { getParsedCards } from "./getParsedCards";
+import { getParsedCardsNotOnShift } from "./getParsedCards";
 import getCurrentUserId from "./services/getCurrentUserId";
 import { filterCats } from "@/app/helpers/cardFilters";
 
 export const shareCards = async (trelloId: string) => {
-  const cards = await getParsedCards(trelloId, false);
+  const cards = await getParsedCardsNotOnShift(trelloId);
 
   const animals = filterCats(cards);
   const userId = await getCurrentUserId();

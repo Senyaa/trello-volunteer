@@ -3,7 +3,7 @@
 import { FC } from "react";
 import Button from "../ui/Button";
 import { endShift } from "@/actions/endShift";
-import { useDispatch, userSlice } from "@/lib/redux";
+import { selectShiftId, useDispatch, useSelector, userSlice } from "@/lib/redux";
 import { useRouter } from "next/navigation";
 
 interface EndShiftButtonProps {
@@ -14,7 +14,10 @@ interface EndShiftButtonProps {
 const EndShiftButton: FC<EndShiftButtonProps> = ({ classNames, onEnd }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const shiftId = useSelector(selectShiftId);
+
   const handleEndShift = async () => {
+    const finishedShift = shiftId;
     await endShift();
     dispatch(userSlice.actions.setShiftId(""));
     dispatch(userSlice.actions.setAnimalsIdsDone([]));
@@ -22,7 +25,7 @@ const EndShiftButton: FC<EndShiftButtonProps> = ({ classNames, onEnd }) => {
     if (onEnd) {
       onEnd();
     }
-    router.push("/protected/shift-finished");
+    router.push(`/protected/shift-finished?shiftId=${finishedShift}`);
   };
 
   return (

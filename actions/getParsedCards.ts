@@ -5,9 +5,12 @@ import { drizzle } from "@/drizzle/drizzle";
 import { eq, inArray } from "drizzle-orm";
 import { animalOnShift, imageUrl } from "@/drizzle/drizzleSchema";
 
+export const getParsedCardsNotOnShift = (trelloId: string) =>
+  getParsedCards(trelloId, true);
+
 export const getParsedCards = async (
   trelloId: string,
-  isOnShift?: boolean
+  withoutShift?: boolean
 ): Promise<Card[]> => {
   const trelloCards = await getCards(trelloId);
   const attachmentIds = trelloCards
@@ -18,31 +21,31 @@ export const getParsedCards = async (
     where: inArray(imageUrl.attachmentId, attachmentIds),
   });
 
-  let isDoneOnCurrentShift: Shift[] = [];
+  let animalsOnCurrentShift: Shift[] = [];
   let currentShiftId: string | null | undefined = null;
+  currentShiftId = await getCurrentShiftId();
 
-  if (isOnShift) {
-    currentShiftId = await getCurrentShiftId();
-
-    isDoneOnCurrentShift = currentShiftId
+  if (currentShiftId && !withoutShift) {
+    animalsOnCurrentShift = currentShiftId
       ? await drizzle.query.animalOnShift.findMany({
           where: eq(animalOnShift.shiftId, currentShiftId),
         })
       : [];
   }
-
   trelloCards.forEach((card) => {
     card.cover.url =
       returnedUrls.find((url) => url.attachmentId === card.cover.idAttachment)
         ?.url || "";
 
-    if (isOnShift) {
-      const isCardOnShift =
-        isDoneOnCurrentShift.find(
-          (shiftAnimal) => shiftAnimal.animalTrelloId === card.id
-        )?.done || false;
+    if (currentShiftId && !withoutShift) {
+      const currentAnimal = animalsOnCurrentShift.find(
+        (shiftAnimal) => shiftAnimal.animalTrelloId === card.id
+      );
+      const isCardOnShift = currentAnimal?.done || false;
+      const hasNote = currentAnimal?.description || "";
 
       card.isDone = currentShiftId ? isCardOnShift : false;
+      card.note = currentShiftId ? hasNote : "";
     }
   });
 
@@ -57,6 +60,7 @@ export const getParsedCards = async (
       cover,
       shortUrl,
       isDone,
+      note,
       ..._
     }) => ({
       id,
@@ -68,9 +72,9 @@ export const getParsedCards = async (
       cover,
       shortUrl,
       isDone,
+      note,
     })
   );
-
   return cards;
 };
 
