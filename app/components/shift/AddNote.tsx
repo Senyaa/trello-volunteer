@@ -1,4 +1,4 @@
-import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../ui/Button";
 import { FC, useState } from "react";
@@ -51,7 +51,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
       {isModalOpened &&
         createPortal(
           <Modal
-            title={`Notatka dyzurowa: ${catName} ${date}`}
+            title={`${catName} ${date}`}
             content={content}
             onClose={() => {
               setNoteValue(note);
@@ -61,13 +61,15 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
           document.body
         )}
       <Button
-        label={note === "" && !noteValue ? "Dodaj notatkę" : "Edytuj notatkę"}
+        label={""}
         onClick={async () => {
           setCatName(await getName());
           setIsModalOpened(true);
         }}
-        iconRight={<FontAwesomeIcon icon={faStickyNote} className="ml-2" />}
-        classes="mr-2 h-7 pt-1 text-sm"
+        iconRight={<FontAwesomeIcon icon={faStickyNote} />}
+        classes="mr-2 h-7 pt-1 px-[11px] text-sm"
+        level="terinary"
+        color={note === "" && !noteValue ? "grey" : "green"}
       />
     </>
   );
