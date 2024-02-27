@@ -29,6 +29,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   const shift = useSelector(selectShiftId);
   const doneCount = useSelector(selectCurrentShiftDoneCount);
   const isDoneIds = useSelector(selectCurrentShiftDoneIds);
+  const [searchValue, setSearchValue] = useState("");
 
   const room = searchParams.get("room");
 
@@ -42,11 +43,17 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   }, [allCats, dispatch]);
 
   const animalsLocalDone = useMemo(
-    () => animals.map((a) => ({ ...a, isDone: isDoneIds.includes(a.id) })),
+    () =>
+      animals
+        .map((a) => ({ ...a, isDone: isDoneIds.includes(a.id) }))
+        .filter((animal) => {
+          return animal.name
+            .split("-")[0]
+            .toLocaleLowerCase()
+            .includes(searchValue.toLocaleLowerCase());
+        }),
     [animals, isDoneIds]
   );
-
-  const [animalsDisplayed, setAnimalsDisplayed] = useState(animalsLocalDone);
 
   const headerDetails = () => {
     if (Object.values(settings).length < 2) return null;
@@ -69,19 +76,13 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   }
 
   const handleSearchInput = (newValue: string) => {
-    if (newValue.length < 3) setAnimalsDisplayed(animalsLocalDone);
-    const filtered = animalsLocalDone.filter((animal) => {
-      return animal.name.split("-")[0]
-        .toLocaleLowerCase()
-        .includes(newValue.toLocaleLowerCase());
-    });
-    setAnimalsDisplayed(filtered);
+    if (newValue.length > 2) setSearchValue(newValue);
   };
 
   return (
     <div className="mb-16 md:mb-0">
       <div className="px-2">
-        <Search onInput={handleSearchInput} />
+        <Search inputValue={searchValue} onInput={handleSearchInput} />
       </div>
       {shift && doneCount === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
@@ -113,7 +114,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
         <div className="w-[3rem]">Trello</div>
         {shift ? <div className="w-[3rem]">Dyżur</div> : null}
       </div>
-      <AnimalData animals={animalsDisplayed} settings={settings} />
+      <AnimalData animals={animalsLocalDone} settings={settings} />
     </div>
   );
 };
