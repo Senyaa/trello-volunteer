@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  faRightFromBracket,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,12 +26,7 @@ const User = () => {
 
   if (status === "authenticated" && trelloId) {
     return (
-      <div className="flex">
-        <div className="px-2">{session.user?.name}</div>
-        <button className="px-2" onClick={() => signOut({ callbackUrl: "/" })}>
-          <FontAwesomeIcon icon={faRightFromBracket} />
-        </button>
-      </div>
+        <div className="text-extrabold">{session.user?.name}</div>
     );
   }
 

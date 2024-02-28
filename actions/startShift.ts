@@ -13,6 +13,7 @@ export async function startShift(shiftType = "cats") {
       .insert(dbShift)
       .values({
         shiftType: shiftType,
+        started: new Date(),
       })
       .returning();
     await tx.insert(usersOnShift).values({ userId, shiftId: shift.id });

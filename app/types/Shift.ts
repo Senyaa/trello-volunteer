@@ -1,8 +1,8 @@
-interface Shift {
+export interface Shift {
   id: string;
-  started: Date;
+  started: Date | null;
   finished: Date | null;
-  shiftType: string;
+  shiftType: string | null;
   description: string | null;
 }
 
