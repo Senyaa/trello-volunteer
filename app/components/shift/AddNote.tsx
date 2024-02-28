@@ -60,17 +60,22 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
           />,
           document.body
         )}
-      <Button
-        label={""}
-        onClick={async () => {
-          setCatName(await getName());
-          setIsModalOpened(true);
-        }}
-        iconRight={<FontAwesomeIcon icon={faStickyNote} />}
-        classes="mr-2 h-7 pt-1 px-[11px] text-sm"
-        level="terinary"
-        color={note === "" && !noteValue ? "grey" : "green"}
-      />
+      <div className="relative">
+        {note && noteValue && (
+          <span className="absolute inline-flex h-2 w-2 rounded-full bg-green-700 z-10 right-0 mr-4 mt-1"></span>
+        )}
+        <Button
+          label={""}
+          onClick={async () => {
+            setCatName(await getName());
+            setIsModalOpened(true);
+          }}
+          iconRight={<FontAwesomeIcon icon={faStickyNote} />}
+          classes="mr-2 h-7 pt-1 px-[11px] text-sm"
+          level="terinary"
+          color="grey"
+        />
+      </div>
     </>
   );
 };
