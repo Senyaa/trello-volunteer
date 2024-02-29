@@ -37,9 +37,11 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
     });
   }, [animal]);
 
+  const personality = getDetails(animal.desc).personality
+
   return (
-    <div className="dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0">
-      <div className="flex items-center">
+    <div className="dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] max-h-[120px] overflow-y-hidden ">
+      <div className="flex">
         <div className="relative h-[4rem] w-[4rem] mr-4 flex-shrink-0">
           <img
             src={cover || "/assets/placeholder.png"}
@@ -48,14 +50,14 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             className="object-cover rounded-full aspect-square"
           />
         </div>
-        <div className="h-full">
+        <div className="">
           <span className="font-extrabold">{animal.name}</span>
-          <div>{getDetails(animal.desc).personality}</div>
-          <div className="text-xs text-neutral-500">{`od ${parseTrelloIdToCreatedDate(
+          <div className="text-ellipsis">{personality.length < 30 ?  personality : `${personality.substring(0,30)}...`}</div>
+          <div className="text-xs text-neutral-500 ">{`od ${parseTrelloIdToCreatedDate(
             animal.id
           ).toLocaleDateString("pl")}`}</div>
         </div>
-        <div className="ml-4">
+        <div className="ml-4 flex justify-center">
           <Link href={animal.url}>
             <FontAwesomeIcon icon={faChevronRight} />
           </Link>
