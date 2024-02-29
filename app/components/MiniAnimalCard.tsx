@@ -40,7 +40,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
   const personality = getDetails(animal.desc).personality
 
   return (
-    <div className="dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] max-h-[120px] overflow-y-hidden ">
+    <div className="bg-white shadow-sm dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] max-h-[120px] overflow-y-hidden ">
       <div className="flex">
         <div className="relative h-[4rem] w-[4rem] mr-4 flex-shrink-0">
           <img
@@ -57,7 +57,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             animal.id
           ).toLocaleDateString("pl")}`}</div>
         </div>
-        <div className="ml-4 flex justify-center">
+        <div className="ml-4 flex items-center">
           <Link href={animal.url}>
             <FontAwesomeIcon icon={faChevronRight} />
           </Link>
