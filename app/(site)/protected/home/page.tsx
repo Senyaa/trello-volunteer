@@ -1,27 +1,35 @@
-"use client"
-import Link from "next/link";
-import Image from "next/image";
-import { MAIN_PAGE } from "@/app/helpers/consts";
+import getNewAnimals from "@/actions/getNewAnimals";
+import { getServerSession } from "@/lib/getSession";
+import MiniAnimalCard from "@/app/components/MiniAnimalCard";
 
-export default function Home() {
+const Home = async () => {
+  const session = await getServerSession();
 
-    return (
-      <main className="flex min-h-screen flex-col items-center w-full">
-        <Link
-          href={MAIN_PAGE}
-          className="block w-full relative h-[40vh]"
-        >
-          <Image
-            alt="cats"
-            src="https://images.unsplash.com/photo-1568043210943-0e8aac4b9734?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            fill
-            className="brightness-75 md:hover:brightness-50 object-cover"
-          />
-          <span className="absolute bottom-1 text-bold text-5xl md:text-7xl">
-            koty
-          </span>
-        </Link>
-        
-      </main>
-    );
-}
+  const newAnimals = await getNewAnimals(session?.user?.trelloId || "", 30);
+
+  return (
+    <main className="flex min-h-screen flex-col w-full mt-8 ">
+      <span className="mb-4 text-lg px-4">Cześć {session?.user?.name}!</span>
+
+      {newAnimals.length > 0 ? (
+        <>
+          <div className="mb-2 px-4">
+            <h2 className="font-extrabold ">Nowi podopieczni</h2>
+            <div className="text-sm text-neutral-500 leading-tight">
+              Karty kotów i psów załozone w ciągu ostatnich 30 dni. Zobacz w
+              trello klikając strzałkę.
+            </div>
+          </div>
+
+          <div className="overflow-x-scroll flex pb-2">
+            {newAnimals.map((animal) => (
+              <MiniAnimalCard animal={animal} key={animal.id} />
+            ))}
+          </div>
+        </>
+      ) : null}
+    </main>
+  );
+};
+
+export default Home;

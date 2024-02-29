@@ -1,15 +1,10 @@
 import getMyShiftsFrom30Days from "@/actions/getMyShiftsFrom30Days";
 import SignOutButton from "@/app/components/SignOutButton";
 import User from "@/app/components/User";
-import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 
 const Profile = async () => {
-  const getShifts = async () => {
-    const myShifts = await getMyShiftsFrom30Days();
-    return myShifts;
-  };
 
-  const shifts = await getShifts();
+  const shifts = await getMyShiftsFrom30Days();
 
   return (
     <div className="flex flex-col pt-4 h-full justify-between mb-16 px-2">
