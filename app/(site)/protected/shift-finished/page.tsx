@@ -32,9 +32,16 @@ const ShiftFinished = async ({
 
   return (
     <div className="flex flex-col items-center mt-4 p-2">
+      <div className="w-full px-2 mb-4">
+        <h2 className="font-extrabold text-lg w-full text-left">
+          Koniec dyżuru
+        </h2>
+      </div>
       {raport && (
-        <div className="rounded-md bg-neutral-800 p-2 w-full mb-2 max-w-[640px]">
-          <h2 className="font-extrabold mb-2">Raport {new Date().toLocaleDateString()}</h2>
+        <div className="rounded-md bg-white dark:bg-neutral-800 p-2 w-full mb-2 max-w-[640px]">
+          <h2 className="font-extrabold mb-2">
+            Raport {new Date().toLocaleDateString("pl")}
+          </h2>
           <span className="whitespace-pre-wrap">{raport}</span>
           <div className="flex justify-end">
             <CopyButton content={raport} />
@@ -52,7 +59,6 @@ const ShiftFinished = async ({
           <h2 className="font-extrabold">Dzięki za to co robisz ❤️</h2>
         </section>
       </article>
-      <BackButton />
     </div>
   );
 };

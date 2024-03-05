@@ -9,7 +9,8 @@ const Profile = async () => {
   return (
     <div className="flex flex-col pt-4 h-full justify-between mb-16 px-2">
       <div>
-        <div className="font-extrabold text-center">
+      
+        <div className="font-extrabold text-lg">
           <User />
         </div>
         <section>

@@ -20,7 +20,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
 
   const getName = async () => {
     const card = await getAnimalByCardId(animalID);
-    return card.name;
+    return card.name.split("-")[0];
   };
 
   const saveNote = async () => {
@@ -31,7 +31,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
   const content = (
     <>
       <textarea
-        className="w-full dark:bg-neutral-800 rounded-md p-2"
+        className="w-full bg-neutral-100 dark:bg-neutral-800 rounded-md p-2 shadow-inner"
         placeholder="Wpisz uwagi..."
         value={noteValue}
         onChange={(e) => setNoteValue(e.target.value)}
@@ -71,7 +71,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
             setIsModalOpened(true);
           }}
           iconRight={<FontAwesomeIcon icon={faStickyNote} />}
-          classes="mr-2 h-7 pt-1 px-[11px] text-sm"
+          classes="mr-2 h-7 pt-1 px-[11px] text-sm text-neutral-300 dark:text-white"
           level="terinary"
           color="grey"
         />
