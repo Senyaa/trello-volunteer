@@ -41,7 +41,7 @@ const Button = ({
         } else {
           return `${
             disabled ? "opacity-80" : "opacity-100"
-          } bg-transparent text-neutral-900 dark:text-neutral-100 `;
+          } bg-transparent`;
         }
       }
       default:

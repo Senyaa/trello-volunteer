@@ -19,11 +19,16 @@ const StartShiftButton: FC<StartShiftButtonProps> = ({ shiftType }) => {
     dispatch(userSlice.actions.setShiftId(newShift.id));
   };
 
-
   if (!pathname.includes(shiftType)) return null;
 
   return (
-    <Button label="Zacznij dyżur" onClick={handleStartShift} classes="w-full" />
+    <Button
+      label="Zacznij dyżur"
+      onClick={handleStartShift}
+      classes="w-full"
+      level="terinary"
+      color="grey"
+    />
   );
 };
 

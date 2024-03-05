@@ -15,7 +15,7 @@ import Loading from "./loading";
 import { MAIN_PAGE } from "./helpers/consts";
 import { getCurrentShiftId } from "@/actions/getCurrentShiftId";
 import { StoreHydration } from "./components/StoreHydration";
-import ShiftIndicator from "./components/shift/ShiftIndicator";
+import Menu from "./components/Menu";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
@@ -50,11 +50,11 @@ export default async function RootLayout({
                     </Link>
                   </h2>
                   <div className="flex items-center">
-                    {session && <ShiftIndicator isShift={Boolean(shift)} />}
-                    <User />
+                    {session && <User />}
                   </div>
                 </header>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
+                {session && <Menu />}
               </main>
             </StoreHydration>
           </ReduxProvider>
