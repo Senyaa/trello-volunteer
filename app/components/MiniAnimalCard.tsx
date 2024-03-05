@@ -41,7 +41,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
 
   return (
     <div className="bg-white shadow-sm dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] max-h-[120px] overflow-y-hidden ">
-      <div className="flex">
+      <div className="flex h-full">
         <div className="relative h-[4rem] w-[4rem] mr-4 flex-shrink-0">
           <img
             src={cover || "/assets/placeholder.png"}
@@ -50,8 +50,8 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             className="object-cover rounded-full aspect-square"
           />
         </div>
-        <div className="">
-          <span className="font-extrabold">{animal.name}</span>
+        <div className="h-full">
+          <span className="font-extrabold">{animal.name.split("-")[0]}</span>
           <div className="text-ellipsis">{personality.length < 30 ?  personality : `${personality.substring(0,30)}...`}</div>
           <div className="text-xs text-neutral-500 ">{`od ${parseTrelloIdToCreatedDate(
             animal.id
