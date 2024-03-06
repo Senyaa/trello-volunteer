@@ -72,7 +72,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
             <div>
               <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
               <span className="block text-sm text-neutral-500 leading-none">
-                {detailsValues.age}, u nas od {parseTrelloIdToCreatedDate(animal.id).toLocaleDateString("pl")}
+                {detailsValues.age}
               </span>
             </div>
             <div className="flex items-start">
