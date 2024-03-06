@@ -8,13 +8,13 @@ import {
   useSelector,
 } from "@/lib/redux";
 import StartShiftButton from "./StartShiftButton";
+import Link from "next/link";
 
 interface ShiftButtonProps {
   isShift: boolean;
 }
 
-const ShiftButton: FC<ShiftButtonProps> = ({  }) => {
-    const isShift =false;
+const ShiftButton: FC<ShiftButtonProps> = ({isShift}) => {
   const [isMenuOpened, setMenuOpened] = useState(false);
   const allCount = useSelector(selectCurrentShiftAll);
   const doneCount = useSelector(selectCurrentShiftDoneCount);
@@ -41,7 +41,7 @@ const ShiftButton: FC<ShiftButtonProps> = ({  }) => {
 
   const size = 50;
   const stroke = 4;
-  const center = size/2
+  const center = size / 2;
   const r = center - stroke;
   const circumference = Math.ceil(2 * Math.PI * r);
   const offset = Math.ceil(circumference * ((100 - progress) / 100));
@@ -54,6 +54,11 @@ const ShiftButton: FC<ShiftButtonProps> = ({  }) => {
           ref={menuRef}
         >
           <ul className="flex flex-col">
+            {isShift && (
+              <>
+                <li><Link href="/protected/report" className="py-2 px-4">Podejrzyj raport</Link></li>
+              </>
+            )}
             <li>
               {isShift ? (
                 <EndShiftButton
@@ -61,19 +66,19 @@ const ShiftButton: FC<ShiftButtonProps> = ({  }) => {
                   onEnd={() => setMenuOpened(false)}
                 />
               ) : (
-                <StartShiftButton shiftType="cats" />
+                <StartShiftButton shiftType="cats" onStart={() => setMenuOpened(false)}/>
               )}
             </li>
           </ul>
         </div>
       ) : null}
-      <div className={`${isShift ? "flex items-center justify-center" : ""} absolute bottom-3 h-full`}>
+      <div
+        className={`${
+          isShift ? "flex items-center justify-center" : ""
+        } absolute bottom-3 h-full`}
+      >
         {isShift && (
-          <svg
-            width={size}
-            height={size}
-            className="-rotate-90"
-          >
+          <svg width={size} height={size} className="-rotate-90">
             <circle
               r={r}
               cx={center}
@@ -97,7 +102,9 @@ const ShiftButton: FC<ShiftButtonProps> = ({  }) => {
         <div
           onClick={() => setMenuOpened(true)}
           className={`${
-            isShift ? "bg-white dark:bg-neutral-900 text-green-800 dark:text-white" : "bg-green-800 text-white"
+            isShift
+              ? "bg-white dark:bg-neutral-900 text-green-800 dark:text-white"
+              : "bg-green-800 text-white"
           } absolute rounded-full h-10 w-10 p-2 flex items-center justify-center text-center`}
         >
           <FontAwesomeIcon icon={faHeart} />

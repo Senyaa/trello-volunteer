@@ -1,1 +1,1 @@
-export const MAIN_PAGE="/protected/animals/cats"
+export const MAIN_PAGE="/protected/home"

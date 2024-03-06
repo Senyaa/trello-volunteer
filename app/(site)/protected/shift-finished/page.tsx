@@ -1,5 +1,5 @@
 import { getAnimalByCardId } from "@/actions/getAnimalByCardID";
-import getShiftById from "@/actions/getShiftById";
+import getAnimalsOnShiftByShiftId from "@/actions/getAnimalsOnShiftByShiftId";
 import BackButton from "@/app/components/BackButton";
 import CopyButton from "@/app/components/CopyButton";
 
@@ -9,7 +9,7 @@ const ShiftFinished = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
   const shiftId = searchParams.shiftId || "";
-  const animals = await getShiftById(shiftId);
+  const animals = await getAnimalsOnShiftByShiftId(shiftId);
 
   const generateReport = async () => {
     const animalsWithDescription = animals.filter((a) => a.description);

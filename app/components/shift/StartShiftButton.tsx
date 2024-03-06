@@ -8,15 +8,22 @@ import { usePathname } from "next/navigation";
 
 interface StartShiftButtonProps {
   shiftType: string;
+  onStart?: () => void;
 }
 
-const StartShiftButton: FC<StartShiftButtonProps> = ({ shiftType }) => {
+const StartShiftButton: FC<StartShiftButtonProps> = ({
+  shiftType,
+  onStart,
+}) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
   const handleStartShift = async () => {
     const newShift = await startShift(shiftType);
     dispatch(userSlice.actions.setShiftId(newShift.id));
+    if (onStart) {
+      onStart();
+    }
   };
 
   if (!pathname.includes(shiftType)) return null;
