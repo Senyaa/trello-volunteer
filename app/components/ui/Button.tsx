@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   classes?: string;
   iconRight?: ReactNode;
+  iconLeft?: ReactNode;
   color?: "green" | "grey";
 }
 
@@ -23,6 +24,7 @@ const Button = ({
   disabled = false,
   level = "primary",
   iconRight,
+  iconLeft,
   color = "green",
 }: ButtonProps) => {
   const getColorClasses = () => {
@@ -39,9 +41,7 @@ const Button = ({
               : "opacity-100 hover:bg-green-800 hover:text-white"
           } bg-transparent border-neutral-400 dark:border-neutral-200 border text-neutral-400 dark:text-neutral-200`;
         } else {
-          return `${
-            disabled ? "opacity-80" : "opacity-100"
-          } bg-transparent`;
+          return `${disabled ? "opacity-80" : "opacity-100"} bg-transparent`;
         }
       }
       default:
@@ -69,6 +69,8 @@ const Button = ({
         href={href}
         className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
       >
+        {iconLeft}
+
         {label}
         {iconRight}
       </Link>
@@ -80,6 +82,8 @@ const Button = ({
       className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
       onClick={disabled ? undefined : onClick}
     >
+      {iconLeft}
+
       {label}
       {iconRight}
     </button>

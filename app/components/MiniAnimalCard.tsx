@@ -15,6 +15,8 @@ interface MinimalAnimalCardProps {
 const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
   const [cover, setCover] = useState("");
 
+
+  // TODO: extract
   useEffect(() => {
     if (animal.cover.url) {
       if (animal.cover.url.includes("cloudinary")) {

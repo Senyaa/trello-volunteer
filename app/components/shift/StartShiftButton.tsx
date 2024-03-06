@@ -1,19 +1,21 @@
 "use client";
 
 import { FC } from "react";
-import Button from "../ui/Button";
-import { startShift } from "@/actions/startShift";
-import { useDispatch, userSlice } from "@/lib/redux";
 import { usePathname } from "next/navigation";
+import { useDispatch, userSlice } from "@/lib/redux";
+import { startShift } from "@/actions/startShift";
+import Button from "../ui/Button";
 
 interface StartShiftButtonProps {
   shiftType: string;
   onStart?: () => void;
+  classes?: string;
 }
 
 const StartShiftButton: FC<StartShiftButtonProps> = ({
   shiftType,
   onStart,
+  classes,
 }) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
@@ -32,7 +34,7 @@ const StartShiftButton: FC<StartShiftButtonProps> = ({
     <Button
       label="Zacznij dyżur"
       onClick={handleStartShift}
-      classes="w-full"
+      classes={classes}
       level="terinary"
       color="grey"
     />
