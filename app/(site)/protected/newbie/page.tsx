@@ -24,7 +24,7 @@ const NewbiePage = async () => {
       <StartNewbieMode />
 
       <div>
-        <h3 className="font-extrabold my-2">Historia</h3>
+        <h3 className="font-extrabold mb-2 mt-4">Historia</h3>
         {yourShared.length > 0 ? (
           <ul>
             {yourShared.map((sh) => (

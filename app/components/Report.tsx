@@ -9,8 +9,9 @@ interface ReportProps {
 }
 
 const Report: FC<ReportProps> = async ({ shiftId }) => {
-  const generateReport = async () => {
-    const shift = await getShiftById(shiftId);
+  const shift = await getShiftById(shiftId);
+
+  const generateReport = async (): Promise<string> => {
     const animals = await getAnimalsOnShiftByShiftId(shiftId);
     const animalsWithDescription = animals.filter((a) => a.description);
     const animalDetails = await Promise.all(
@@ -33,14 +34,15 @@ const Report: FC<ReportProps> = async ({ shiftId }) => {
   };
 
   const report = await generateReport();
+  const date = shift?.started ? shift.started : shift?.finished
 
   return (
     <div className="rounded-md bg-white dark:bg-neutral-800 p-2 w-full mb-2 max-w-[640px]">
       <h2 className="font-extrabold mb-2">
-        Raport {new Date().toLocaleDateString("pl")}
+        Raport {date?.toLocaleDateString("pl")}
       </h2>
       <span className="whitespace-pre-wrap">
-        {report ? report : "Brak notatek"}
+        {report.trim() !== "" ? report : "Brak notatek"}
       </span>
       <div className="flex justify-end">
         <CopyButton content={report} />
