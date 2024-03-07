@@ -25,7 +25,9 @@ const Menu = () => {
           <Link
             href="/protected/home"
             className={`${
-              pathname.includes("/protected/home") ? "text-green-700" : ""
+              pathname.includes("/protected/home")
+                ? "text-green-700 dark:text-white"
+                : "dark:text-neutral-400"
             } flex flex-col justify-center`}
           >
             <FontAwesomeIcon icon={faHome} />
@@ -37,8 +39,8 @@ const Menu = () => {
             href="/protected/animals/cats"
             className={`${
               pathname.includes("/protected/animals/cats")
-                ? "text-green-700"
-                : ""
+                ? "text-green-700 dark:text-white"
+                : "dark:text-neutral-400"
             } flex flex-col justify-center`}
           >
             <FontAwesomeIcon icon={faCat} />
@@ -46,14 +48,15 @@ const Menu = () => {
           </Link>
         </li>
         <li className="w-10">
-            <ShiftButton isShift={Boolean(shiftId)} />
-
+          <ShiftButton isShift={Boolean(shiftId)} />
         </li>
         <li>
           <Link
             href="/protected/newbie"
             className={`${
-              pathname.includes("/protected/newbie") ? "text-green-700" : ""
+              pathname.includes("/protected/newbie")
+                ? "text-green-700 dark:text-white"
+                : "dark:text-neutral-400"
             } flex flex-col justify-center`}
           >
             <FontAwesomeIcon icon={faLeaf} />
@@ -64,7 +67,9 @@ const Menu = () => {
           <Link
             href="/protected/profile"
             className={`${
-              pathname.includes("/protected/profile") ? "text-green-700" : ""
+              pathname.includes("/protected/profile")
+                ? "text-green-700 dark:text-white"
+                : "dark:text-neutral-400"
             } flex flex-col justify-center`}
           >
             <FontAwesomeIcon icon={faUser} />

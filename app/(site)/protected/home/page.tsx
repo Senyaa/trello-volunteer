@@ -8,7 +8,7 @@ const Home = async () => {
   const newAnimals = await getNewAnimals(session?.user?.trelloId || "", 30);
 
   return (
-    <main className="flex min-h-screen flex-col w-full mt-8 ">
+    <main className="flex flex-col w-full mt-8 ">
       <span className="mb-4 text-lg px-4">Cześć {session?.user?.name}!</span>
 
       <span className="px-4 mb-4 text-neutral-700 dark:text-neutral-300">
