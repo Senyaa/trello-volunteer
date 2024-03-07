@@ -17,9 +17,9 @@ const NewbiePage = async () => {
     <div className="h-full p-4 mb-8">
       <h2 className="font-extrabold my-2 text-lg">Świeżynka</h2>
       <p className="text-sm mb-2">
-        Klikając udostępnij, przekazujesz aktualny na daną chwilę stan trello
-        osobie niezalogowanej mającej dostęp do wygenerowanego linku na
-        określony czas.
+        Klikając przycisk "Udostępnij", udostępniasz aktualny stan Trello
+        osobie, która nie jest zalogowana, ale ma dostęp do wygenerowanego
+        linku. Dostęp ten jest obecnie ograniczony do 3 godzin.
       </p>
       <StartNewbieMode />
 
