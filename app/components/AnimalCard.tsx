@@ -12,8 +12,6 @@ import Button from "./ui/Button";
 import ShiftCheckbox from "./shift/ShiftCheckbox";
 import { usePathname } from "next/navigation";
 import AddNote from "./shift/AddNote";
-import parseTrelloIdToCreatedDate from "../helpers/parseTrelloIdToCreatedDate";
-import { parseToHumanDateTime } from "../helpers/parseToHumanDatetime";
 
 interface AnimalCardProps {
   animal: Card;

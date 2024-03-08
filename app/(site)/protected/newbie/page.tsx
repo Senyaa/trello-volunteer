@@ -1,5 +1,6 @@
 import getYourGuestViews from "@/actions/getYourGuestViews";
 import StartNewbieMode from "@/app/components/StartNewbieMode";
+import Container from "@/app/components/ui/Container";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -14,7 +15,7 @@ const NewbiePage = async () => {
   };
 
   return (
-    <div className="h-full p-4 mb-8">
+    <Container>
       <h2 className="font-extrabold my-2 text-lg">Świeżynka</h2>
       <p className="text-sm mb-2">
         Klikając przycisk &quot;Udostępnij&quot;, udostępniasz aktualny stan Trello
@@ -68,7 +69,7 @@ const NewbiePage = async () => {
           <span>Nie udostępniłeś jeszcze kart żadnym świeżynkom</span>
         )}
       </div>
-    </div>
+    </Container>
   );
 };
 export default NewbiePage;

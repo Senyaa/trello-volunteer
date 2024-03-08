@@ -22,7 +22,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
       {animalsNotDone.length !== 0 && (
         <ul className="w-full md:my-4">
           {animalsNotDone.map((animal) => (
-            <li key={animal.id} className="mx-2 my-4">
+            <li key={animal.id} className="my-4">
               <AnimalCard
                 isShift={Boolean(shift)}
                 animal={animal}

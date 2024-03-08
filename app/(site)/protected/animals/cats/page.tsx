@@ -5,6 +5,7 @@ import CatsNav from "@/app/components/CatsNav";
 import AnimalList from "../../../../components/AnimalList";
 import { getUserSettings } from "../../settings/getUserSettings";
 import { getParsedCards } from "@/actions/getParsedCards";
+import Container from "@/app/components/ui/Container";
 
 const Cats = async ({
   searchParams,
@@ -37,7 +38,7 @@ const Cats = async ({
     searchParams?.room?.toLocaleLowerCase() === "lowercatroom";
 
   return (
-    <div>
+    <Container>
       <CatsNav
         currentRoom={searchParams?.room || ""}
         animalListLength={filteredCards.length}
@@ -46,7 +47,7 @@ const Cats = async ({
         <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
       )}
       <AnimalList animals={filteredCards} settings={settings} allCats={allCats}/>
-    </div>
+    </Container>
   );
 };
 

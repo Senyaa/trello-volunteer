@@ -26,8 +26,7 @@ const CatsNav: FC<CatsNavProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <>
-      <div className="flex justify-between items-end m-2">
+      <div className="flex justify-between items-end mb-2">
         <h1 className="uppercase m-2">{`Koty (${animalListLength})`}</h1>
 
         <div className="flex items-end">
@@ -64,8 +63,6 @@ const CatsNav: FC<CatsNavProps> = ({
           </div>
         </div>
       </div>
-     
-    </>
   );
 };
 

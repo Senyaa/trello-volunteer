@@ -80,10 +80,8 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   };
 
   return (
-    <div className="mb-16 md:mb-0">
-      <div className="px-2">
-        <Search inputValue={searchValue} onInput={handleSearchInput} />
-      </div>
+    <>
+      <Search inputValue={searchValue} onInput={handleSearchInput} />
       {shift && doneCount === allCats.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
           <p className="text-center">
@@ -115,7 +113,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
         {shift ? <div className="w-[3rem]">Dyżur</div> : null}
       </div>
       <AnimalData animals={animalsLocalDone} settings={settings} />
-    </div>
+    </>
   );
 };
 
