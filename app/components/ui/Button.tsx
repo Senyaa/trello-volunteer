@@ -32,8 +32,8 @@ const Button = ({
       case "grey": {
         if (level === "primary") {
           return `${
-            disabled ? "opacity-80" : "opacity-100 hover:bg-green-900"
-          } bg-neutral-200 dark:bg-neutral-700 dark:text-white`;
+            disabled ? "opacity-80" : "opacity-100 hover:bg-green-700"
+          } bg-neutral-200 dark:bg-neutral-700 hover:text-white`;
         } else if (level === "secondary") {
           return `${
             disabled
@@ -70,7 +70,6 @@ const Button = ({
         className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
       >
         {iconLeft}
-
         {label}
         {iconRight}
       </Link>
@@ -83,7 +82,6 @@ const Button = ({
       onClick={disabled ? undefined : onClick}
     >
       {iconLeft}
-
       {label}
       {iconRight}
     </button>

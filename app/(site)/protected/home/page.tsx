@@ -2,6 +2,7 @@ import getNewAnimals from "@/actions/getNewAnimals";
 import { getServerSession } from "@/lib/getSession";
 import MiniAnimalCard from "@/app/components/MiniAnimalCard";
 import Button from "@/app/components/ui/Button";
+import { links } from "./links";
 
 const Home = async () => {
   const session = await getServerSession();
@@ -39,41 +40,16 @@ const Home = async () => {
       <section className="p-4">
         <h2 className="font-extrabold">Linki</h2>
         <ul>
-          <li>
-            <Button
-              href={process.env.NEXT_PUBLIC_CATS_AND_DOGS_SHEET_1 || "#"}
-              label="Grafik psy i koty (26.02 - 10.03)"
-              classes="w-full mb-2 block"
-            />
-          </li>
-          <li>
-            <Button
-              href={process.env.NEXT_PUBLIC_CATS_AND_DOGS_SHEET_2 || "#"}
-              label="Grafik psy i koty (11.03 - 24.03)"
-              classes="w-full mb-2 block"
-            />
-          </li>
-          <li>
-            <Button
-              href={process.env.NEXT_PUBLIC_WILDS_SHEET || "#"}
-              label="Grafik dzikie"
-              classes="w-full mb-2 block"
-            />
-          </li>
-          <li>
-            <Button
-              href={process.env.NEXT_PUBLIC_FB_GROUP || "#"}
-              label="Grupa FB"
-              classes="w-full mb-2 block"
-            />
-          </li>
-          <li>
-            <Button
-              href={process.env.NEXT_PUBLIC_ACTIVITY_SHEET || "#"}
-              label="Plik aktywności"
-              classes="w-full mb-2 block"
-            />
-          </li>
+          {links.map((link) => (
+            <li>
+              <Button
+                href={link.link || "#"}
+                label={link.label}
+                classes="w-full mb-2 block"
+                color="grey"
+              />
+            </li>
+          ))}
         </ul>
       </section>
     </main>
