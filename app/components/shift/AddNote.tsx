@@ -1,4 +1,4 @@
-import { faAdd, faEdit, faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../ui/Button";
 import { FC, useState } from "react";
@@ -20,7 +20,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
 
   const getName = async () => {
     const card = await getAnimalByCardId(animalID);
-    return card.name.split("-")[0];
+    return card?.name.split("-")[0];
   };
 
   const saveNote = async () => {
@@ -67,7 +67,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
         <Button
           label={""}
           onClick={async () => {
-            setCatName(await getName());
+            setCatName(await getName() || "");
             setIsModalOpened(true);
           }}
           iconRight={<FontAwesomeIcon icon={faStickyNote} />}

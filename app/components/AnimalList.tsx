@@ -52,7 +52,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
             .toLocaleLowerCase()
             .includes(searchValue.toLocaleLowerCase());
         }),
-    [animals, isDoneIds]
+    [animals, isDoneIds, searchValue]
   );
 
   const headerDetails = () => {

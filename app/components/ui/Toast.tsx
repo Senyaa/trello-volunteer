@@ -9,7 +9,7 @@ const Toast: FC<ToastProps> = ({ text, hide, isShown }) => {
     if (isShown) {
       setTimeout(hide, 3000);
     }
-  }, [isShown]);
+  }, [isShown, hide]);
 
   return (
     <div className="w-full flex justify-center">
