@@ -22,9 +22,9 @@ const Report: FC<ReportProps> = async ({ shiftId }) => {
     const animalNotes = animalsWithDescription
       .map((a) => {
         const animalName = animalDetails.find(
-          (ad) => ad.id === a.animalTrelloId
+          (ad) => ad?.id === a.animalTrelloId
         )?.name;
-        return `${animalName}: ${a.description}`;
+        return `${animalName || "Kot przeniesiony"}: ${a.description}`;
       })
       .join("  \n");
 
