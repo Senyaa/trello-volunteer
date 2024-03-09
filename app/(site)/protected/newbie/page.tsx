@@ -22,7 +22,7 @@ const NewbiePage = async () => {
         osobie, która nie jest zalogowana, ale ma dostęp do wygenerowanego
         linku. Dostęp ten jest obecnie ograniczony do 3 godzin.
       </p>
-      <StartNewbieMode />
+      <div className="flex justify-end w-full"><StartNewbieMode /></div>
 
       <div>
         <h3 className="font-extrabold mb-2 mt-4">Historia</h3>

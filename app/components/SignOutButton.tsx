@@ -12,7 +12,7 @@ const SignOutButton = () => {
       onClick={() => signOut({ callbackUrl: "/" })}
       iconLeft={<FontAwesomeIcon icon={faRightFromBracket} className="mr-2" />}
       label="Wyloguj się"
-      classes="md:w-64"
+      classes="w-48"
     />
   );
 };

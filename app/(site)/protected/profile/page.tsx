@@ -12,8 +12,11 @@ const Profile = async () => {
   return (
     <Container>
       <div>
-        <div className="font-extrabold text-lg">
-          <User />
+        <div className="flex justify-between">
+          <h2 className="font-extrabold text-lg">
+            <User />
+          </h2>
+          <SignOutButton />
         </div>
         <section>
           <span className="font-extrabold">
@@ -40,7 +43,6 @@ const Profile = async () => {
           )}
         </section>
       </div>
-      <SignOutButton />
     </Container>
   );
 };

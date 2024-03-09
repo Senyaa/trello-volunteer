@@ -18,7 +18,7 @@ const StartNewbieMode = () => {
     <Button
       label="Udostępnij"
       onClick={handleNewbieMode}
-      classes="w-full"
+      classes="w-full md:w-64"
     />
   );
 };
