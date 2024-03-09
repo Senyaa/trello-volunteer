@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getSession";
 import Container from "@/app/components/ui/Container";
 import DogsData from "@/app/components/DogsData";
+import Button from "@/app/components/ui/Button";
 
 const Dogs = async () => {
   const session = await getServerSession();
@@ -23,7 +24,13 @@ const Dogs = async () => {
 
   return (
     <Container>
-      <h1 className="uppercase m-2">{`Pieski (${allDogs.length})`}</h1>
+      <div className="flex justify-between mb-2">
+        <h1 className="uppercase m-2">{`Pieski (${allDogs.length})`}</h1>
+        <Button
+          href="/protected/animals/dogs/cheatsheet"
+          label="Ściąga do druku"
+        />
+      </div>
       <DogsData allDogs={allDogs} />
     </Container>
   );
