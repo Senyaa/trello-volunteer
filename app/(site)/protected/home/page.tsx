@@ -42,7 +42,7 @@ const Home = async () => {
         <h2 className="font-extrabold">Linki</h2>
         <ul>
           {links.map((link) => (
-            <li>
+            <li key={link.link}>
               <Button
                 href={link.link || "#"}
                 label={link.label}
