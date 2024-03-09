@@ -24,7 +24,7 @@ const Profile = async () => {
               <Link
                 key={shift.id}
                 href={`/protected/shift/${shift.id}`}
-                className="flex justify-between items-center my-2 bg-white dark:bg-neutral-700 rounded-md p-2"
+                className="flex justify-between items-center my-2 bg-white dark:bg-neutral-900 rounded-md p-2"
               >
                 <span>
                   {shift.shiftType === "cats" ? "🐱" : "🐶"}

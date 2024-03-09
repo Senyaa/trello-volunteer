@@ -34,11 +34,12 @@ const ShiftButton: FC<ShiftButtonProps> = ({ isShift }) => {
 
   const getShiftNote = async () => {
     const shift = await getShiftById(shiftId);
-    console.log(shift?.id, shift?.description);
     setNoteValue(shift?.description || "");
   };
 
   const menuRef = useRef<HTMLDivElement>(null);
+
+  //TODO: extract
   useEffect(() => {
     if (!isMenuOpened) {
       return;

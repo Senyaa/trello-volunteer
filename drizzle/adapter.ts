@@ -79,8 +79,6 @@ export function drizzleAdapter(
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      console.log(rawAccount);
-      
       return stripUndefined(
         await client
           .insert(account)

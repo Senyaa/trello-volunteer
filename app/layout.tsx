@@ -39,22 +39,25 @@ export default async function RootLayout({
           <ReduxProvider>
             <StoreHydration userSettings={settings} shiftId={shift || ""}>
               <main className="h-full flex flex-col">
-                <header className="header flex items-center justify-between p-5 bg-white shadow-xs dark:bg-neutral-900 shrink-0">
+                <header className="header flex items-center justify-between bg-white shadow-xs dark:bg-neutral-900 shrink-0">
                   <h2>
                     <Link
                       href={session ? MAIN_PAGE : "/"}
-                      className="flex items-center"
+                      className="flex items-center p-5"
                     >
-                      <FontAwesomeIcon icon={faShieldCat} className="text-3xl"/>
-                      <span className="hidden md:block text-sm ml-2">ekoapka</span>
+                      <FontAwesomeIcon
+                        icon={faShieldCat}
+                        className="text-3xl"
+                      />
+                      <span className="hidden md:block text-sm ml-2">
+                        ekoapka
+                      </span>
                     </Link>
                   </h2>
-                  <div className="flex items-center">
-                    {session && <User />}
-                  </div>
+                  {session && <Menu />}
+                  <div className="flex items-center p-5">{session && <User />}</div>
                 </header>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
-                {session && <Menu />}
               </main>
             </StoreHydration>
           </ReduxProvider>
