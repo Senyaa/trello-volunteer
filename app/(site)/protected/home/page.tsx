@@ -46,7 +46,7 @@ const Home = async () => {
               <Button
                 href={link.link || "#"}
                 label={link.label}
-                classes="w-full mb-2 block"
+                classes="w-full max-w-[400px] mb-2 block"
                 color="grey"
               />
             </li>

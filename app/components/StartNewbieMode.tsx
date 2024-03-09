@@ -16,7 +16,7 @@ const StartNewbieMode = () => {
 
   return (
     <Button
-      label="Zacznij udostępnianie"
+      label="Udostępnij"
       onClick={handleNewbieMode}
       classes="w-full"
     />

@@ -120,6 +120,9 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
               />
             );
           })}
+          {animal.desc.includes("drybed") && (
+            <CardDetail text="drybed" icon="" />
+          )}
         </div>
         {!isNewbieMode && (
           <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">

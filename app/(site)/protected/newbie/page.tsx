@@ -18,7 +18,7 @@ const NewbiePage = async () => {
     <Container>
       <h2 className="font-extrabold my-2 text-lg">Świeżynka</h2>
       <p className="text-sm mb-2">
-        Klikając przycisk &quot;Udostępnij&quot;, udostępniasz aktualny stan Trello
+        Klikając przycisk &quot;Udostępnij&quot;, udostępniasz aktualny stan KOCICH kart Trello
         osobie, która nie jest zalogowana, ale ma dostęp do wygenerowanego
         linku. Dostęp ten jest obecnie ograniczony do 3 godzin.
       </p>

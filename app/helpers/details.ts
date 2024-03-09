@@ -6,7 +6,7 @@ const getDetailSanitized = (description: string, regex: RegExp) => {
 
 const getDetails = (description: string) => {
   const food =
-    getDetailSanitized(description, new RegExp(/Karma\/Food:(.*?)😈/gis)) ||
+    getDetailSanitized(description, new RegExp(/Karma\/Food:(.*?)(😈|💊)/gis)) ||
     "zwykła";
 
   const testsFound = getDetailSanitized(

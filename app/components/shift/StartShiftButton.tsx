@@ -32,7 +32,7 @@ const StartShiftButton: FC<StartShiftButtonProps> = ({
 
   return (
     <Button
-      label="Zacznij dyżur"
+      label="Zacznij koci dyżur"
       onClick={handleStartShift}
       classes={classes}
       level="terinary"

@@ -36,9 +36,9 @@ const Menu = () => {
         </li>
         <li>
           <Link
-            href="/protected/animals/cats"
+            href="/protected/animals"
             className={`${
-              pathname.includes("/protected/animals/cats")
+              pathname.includes("/protected/animals")
                 ? "text-green-700 dark:text-white"
                 : "dark:text-neutral-400"
             } flex flex-col justify-center`}

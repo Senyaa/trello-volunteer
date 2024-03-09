@@ -76,7 +76,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allCats }) => {
   }
 
   const handleSearchInput = (newValue: string) => {
-    if (newValue.length > 2) setSearchValue(newValue);
+    setSearchValue(newValue);
   };
 
   return (

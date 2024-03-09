@@ -98,7 +98,7 @@ const ShiftButton: FC<ShiftButtonProps> = ({ isShift }) => {
                       iconLeft={
                         <FontAwesomeIcon icon={faStickyNote} className="mr-2" />
                       }
-                      classes="h-7 pt-1 px-[11px] text-sm text-neutral-300 dark:text-white"
+                      classes="h-7 pt-1 px-[11px] text-sm dark:text-white"
                       level="terinary"
                       color="grey"
                     />
