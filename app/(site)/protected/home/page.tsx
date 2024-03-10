@@ -38,8 +38,8 @@ const Home = async () => {
         </div>
       ) : null}
 
-      <section className="mb-4">
-        <h2 className="font-extrabold">Linki</h2>
+      <section className="my-4">
+        <h2 className="font-extrabold mb-2">Linki</h2>
         <ul>
           {links.map((link) => (
             <li key={link.link}>

@@ -62,7 +62,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
         )}
       <div className="relative">
         {note && noteValue && (
-          <span className="absolute inline-flex h-2 w-2 rounded-full bg-green-700 z-10 right-0 mr-4 mt-1"></span>
+          <span className="absolute inline-flex h-2 w-2 rounded-full bg-green-700 z-10 right-0 mr-4 md:mr-2 mt-1"></span>
         )}
         <Button
           label={""}
@@ -71,7 +71,7 @@ const AddNote: FC<AddNoteProps> = ({ animalID, note }) => {
             setIsModalOpened(true);
           }}
           iconRight={<FontAwesomeIcon icon={faStickyNote} />}
-          classes="mr-2 h-7 pt-1 px-[11px] text-sm text-neutral-300 dark:text-white"
+          classes="mr-2 md:mr-0 h-7 pt-1 px-[11px] md:pr-0 text-sm text-neutral-300 dark:text-white"
           level="terinary"
           color="grey"
         />

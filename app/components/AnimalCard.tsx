@@ -73,14 +73,13 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
                 {detailsValues.age}
               </span>
             </div>
-            <div className="flex items-start">
+            <div className="flex items-start md:hidden">
               {isShift && (
                 <>
                   <AddNote animalID={animal.id} note={animal.note || ""} />
                   <ShiftCheckbox
                     animalID={animal.id}
                     isDone={animal.isDone || false}
-                    classes="md:hidden"
                   />
                 </>
               )}
@@ -143,11 +142,14 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
           </div>
         )}
         {isShift && (
-          <ShiftCheckbox
-            animalID={animal.id}
-            isDone={animal.isDone || false}
-            classes="hidden md:block ml-2"
-          />
+          <div className="hidden md:flex flex-col items-center">
+            <ShiftCheckbox
+              animalID={animal.id}
+              isDone={animal.isDone || false}
+              classes="ml-2 mb-2"
+            />
+            <AddNote animalID={animal.id} note={animal.note || ""} />
+          </div>
         )}
       </div>
     </div>
