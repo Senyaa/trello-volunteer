@@ -1,7 +1,7 @@
 import { Card } from "../types/Card";
 
 export const isAnimal = (description: string): boolean => {
-  const isFromTemplate = new RegExp(/Karma\/Food*/g);
+  const isFromTemplate = new RegExp(/🏠 Status:/g);
   return Boolean(description.match(isFromTemplate));
 };
 
@@ -34,8 +34,8 @@ export const isOnDogList = (idList: string): boolean => {
 };
 
 export const isTemplate = (name: string) => {
-  const templateName = "❗Nowy kot - szablon (skopiuj kartę)❗" || "Nowy pies - szablon";
-  return Boolean(name === templateName);
+  const templates = ["❗Nowy kot - szablon (skopiuj kartę)❗", "Nowy pies - szablon"];
+  return Boolean(templates.includes(name));
 };
 
 export const filterCats = (cards: Card[]) => {

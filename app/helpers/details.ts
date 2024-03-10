@@ -1,13 +1,21 @@
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 
-const getDetailSanitized = (description: string, regex: RegExp) => {
-  return regex.exec(description)?.[1]?.toString().trim();
+const getDetailSanitized = (
+  description: string,
+  regex: RegExp,
+  isConsistentLabel = true
+) => {
+  const group = isConsistentLabel ? 1 : 2;
+  return regex.exec(description)?.[group]?.toString().trim();
 };
 
 const getDetails = (description: string) => {
   const food =
-    getDetailSanitized(description, new RegExp(/Karma\/Food:(.*?)(😈|💊)/gis)) ||
-    "zwykła";
+    getDetailSanitized(
+      description,
+      new RegExp(/(Karma\/Food:|Karma:)(.*?)(😈|💊)/gis),
+      false
+    ) || "zwykła";
 
   const testsFound = getDetailSanitized(
     description,
@@ -94,7 +102,7 @@ const getDetails = (description: string) => {
   };
 };
 
-//TODO: find 
+//TODO: find
 const detailsGot = getDetails("test");
 
 export const getDetailsHeaders = (
