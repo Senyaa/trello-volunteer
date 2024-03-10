@@ -6,7 +6,7 @@ import { Card } from "../types/Card";
 
 const DogsPdfViewer = ({dogs} : {dogs: Card[]}) => {
     return (
-        <PDFViewer className="h-full">
+        <PDFViewer className="h-full hidden md:block">
           <Cheatsheet dogs={dogs}/>
         </PDFViewer>
       );
