@@ -43,7 +43,7 @@ const getDetails = (description: string) => {
   const personality =
     getDetailSanitized(
       description,
-      new RegExp(/Charakter\/Personality:(.*?)🐶/gis)
+      new RegExp(/(Charakter\/Personality:|Charakter:)(.*?)(🐶|🪪)/gis), false
     ) || "";
   const castration =
     getDetailSanitized(description, new RegExp(/Kastracja:(.*?)🩸/gis)) || "";
