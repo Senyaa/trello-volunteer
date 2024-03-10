@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Line,
   Svg,
+  Image,
 } from "@react-pdf/renderer";
 import getDetails from "@/app/helpers/details";
 import { Card } from "../types/Card";
@@ -35,14 +36,25 @@ const styles = StyleSheet.create({
   section: {
     fontSize: "13px",
     flexDirection: "row",
-    // justifyContent: "space-between",
+    position: "relative",
+  },
+  dogId: { position: "relative" },
+  image: {
+    width: "70px",
+    minHeight: "70px",
+    objectFit: "cover",
   },
   name: {
+    backgroundColor: "rgba(255,255,255,0.8)",
+    position: "absolute",
+    bottom: 0,
     fontWeight: "bold",
     width: "70px",
+    textAlign: "center"
   },
   food: {
     width: "415px",
+    marginLeft: "10px",
   },
   drybed: {
     width: "50px",
@@ -69,7 +81,12 @@ const Cheatsheet = ({ dogs }: { dogs: Card[] }) => {
         {dogs.map((dog) => (
           <>
             <View style={styles.section}>
-              <Text style={styles.name}> {dog.name.split(" ")[0].trim()} </Text>
+              <View style={styles.dogId}>
+                <Image src={dog.cover.url} style={styles.image} />
+                <Text style={styles.name}>
+                  {dog.name.split(" ")[0].trim()}{" "}
+                </Text>
+              </View>
               <Text break wrap style={styles.food}>
                 {getDetails(dog.desc).food.trim()}
               </Text>
@@ -79,6 +96,7 @@ const Cheatsheet = ({ dogs }: { dogs: Card[] }) => {
                   : ""}
               </Text>
             </View>
+
             <Svg height="8" width="550">
               <Line
                 x1="0"
