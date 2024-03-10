@@ -1,13 +1,13 @@
 import React from "react";
-import DogsPdfViewer from "@/app/components/PdfViewer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { getParsedCards } from "@/actions/getParsedCards";
 import { getServerSession } from "@/lib/getSession";
 import { filterDogs } from "@/app/helpers/cardFilters";
+import DogsPdfViewer from "@/app/components/PdfViewer";
 import Container from "@/app/components/ui/Container";
 import Button from "@/app/components/ui/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { isMobile } from "@/app/helpers/isMobile";
+
 
 const DogsCheatsheet = async () => {
   const session = await getServerSession();
@@ -29,7 +29,7 @@ const DogsCheatsheet = async () => {
           komputerze.
         </span>
       </div>
-      <DogsPdfViewer dogs={dogs} />
+      <DogsPdfViewer dogs={dogs}/>
     </Container>
   );
 };

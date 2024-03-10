@@ -5,8 +5,6 @@ import {
   View,
   Document,
   StyleSheet,
-  Line,
-  Svg,
   Image,
 } from "@react-pdf/renderer";
 import getDetails from "@/app/helpers/details";
@@ -38,30 +36,32 @@ const styles = StyleSheet.create({
     fontSize: "13px",
     flexDirection: "row",
     position: "relative",
+    width: "50%",
+    border: "1px solid #909090",
   },
-  dogId: { position: "relative" },
+  dogId: { position: "relative", width:"70px" },
   image: {
     width: "70px",
-    height: "70px",
+    height: "auto",
     objectFit: "cover",
   },
   name: {
     backgroundColor: "rgba(255,255,255,0.8)",
     position: "absolute",
-    bottom: 0,
+bottom: 0,
     fontWeight: "bold",
     width: "70px",
     textAlign: "center",
   },
   food: {
-    width: "415px",
+    flexWrap: "wrap",
+    maxWidth: "190px",
     marginLeft: "10px",
   },
   drybed: {
     width: "50px",
     textAlign: "right",
     fontWeight: "bold",
-    flexGrow: 1,
   },
   date: {
     position: "absolute",
@@ -74,8 +74,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Cheatsheet = ({ dogs }: { dogs: Card[]}) => {
+const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
   const date = new Date().toISOString().split("T")[0];
+
   return (
     <Document language="polish" title={`psy-eko-${date}`}>
       <Page size="A4" style={styles.page}>
@@ -88,26 +89,17 @@ const Cheatsheet = ({ dogs }: { dogs: Card[]}) => {
                   {dog.name.split(" ")[0].trim()}{" "}
                 </Text>
               </View>
-              <Text break wrap style={styles.food}>
-                {getDetails(dog.desc).food.trim()}
-              </Text>
-              <Text style={styles.drybed}>
-                {dog.desc.toLocaleLowerCase().includes("drybed")
-                  ? "drybed"
-                  : ""}
-              </Text>
+              <View>
+                <Text break wrap style={styles.food}>
+                  {getDetails(dog.desc).food.trim()}
+                </Text>
+                <Text style={styles.drybed}>
+                  {dog.desc.toLocaleLowerCase().includes("drybed")
+                    ? "drybed"
+                    : ""}
+                </Text>
+              </View>
             </View>
-
-            <Svg height="8" width="550">
-              <Line
-                x1="0"
-                y1="4"
-                x2="550"
-                y2="4"
-                strokeWidth={1}
-                stroke="rgb(55,55,55)"
-              />
-            </Svg>
           </>
         ))}
         <Text style={styles.date} fixed>
@@ -118,4 +110,4 @@ const Cheatsheet = ({ dogs }: { dogs: Card[]}) => {
   );
 };
 
-export default Cheatsheet;
+export default CheatsheetGrid;
