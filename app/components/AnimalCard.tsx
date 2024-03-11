@@ -68,7 +68,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
             <div>
-              <h3 className="text-xl font-extrabold md:w-28">{name}</h3>
+              <h3 className="text-xl font-extrabold md:shrink-0 md:w-[7rem]">{name}</h3>
               <span className="block text-sm text-neutral-500 leading-none">
                 {detailsValues.age}
               </span>
@@ -85,7 +85,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
               )}
             </div>
           </div>
-          <div className="md:w-48 md:px-2">
+          <div className="md:shrink-0 md:w-[12rem] md:px-2">
             {info && (
               <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
                 <div className="text-blue-800 whitespace-pre-wrap leading-none">

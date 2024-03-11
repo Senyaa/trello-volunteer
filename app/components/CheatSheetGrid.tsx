@@ -39,28 +39,22 @@ const styles = StyleSheet.create({
     width: "50%",
     border: "1px solid #909090",
   },
-  dogId: { position: "relative", width:"70px" },
   image: {
-    width: "70px",
-    height: "auto",
+    width: "80px",
+    height: "80px",
     objectFit: "cover",
   },
+  details: {
+    marginLeft: "5px",
+  },
   name: {
-    backgroundColor: "rgba(255,255,255,0.8)",
-    position: "absolute",
-bottom: 0,
     fontWeight: "bold",
-    width: "70px",
-    textAlign: "center",
   },
   food: {
     flexWrap: "wrap",
-    maxWidth: "190px",
-    marginLeft: "10px",
+    maxWidth: "185px",
   },
   drybed: {
-    width: "50px",
-    textAlign: "right",
     fontWeight: "bold",
   },
   date: {
@@ -71,6 +65,7 @@ bottom: 0,
     right: 0,
     textAlign: "center",
     color: "grey",
+    marginTop: "10px",
   },
 });
 
@@ -80,17 +75,21 @@ const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
   return (
     <Document language="polish" title={`psy-eko-${date}`}>
       <Page size="A4" style={styles.page}>
-        {dogs.map((dog) => (
-          <>
-            <View style={styles.section}>
-              <View style={styles.dogId}>
-                <Image src={dog.cover.url} style={styles.image} />
-                <Text style={styles.name}>
-                  {dog.name.split(" ")[0].trim()}{" "}
-                </Text>
-              </View>
-              <View>
-                <Text break wrap style={styles.food}>
+        {dogs.map((dog) => {
+          const dogName = dog.name.split(" ")[0].trim();
+
+          // if (dogName !== "Hachi" && dogName !== "Rico")
+          return (
+            <View
+              style={styles.section}
+              wrap={false}
+              key={dogName}
+              break={dogName === "Karolcia"}
+            >
+              <Image src={dog.cover.url} style={styles.image} />
+              <View style={styles.details}>
+                <Text style={styles.name}>{dogName}</Text>
+                <Text style={styles.food}>
                   {getDetails(dog.desc).food.trim()}
                 </Text>
                 <Text style={styles.drybed}>
@@ -100,11 +99,11 @@ const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
                 </Text>
               </View>
             </View>
-          </>
-        ))}
-        <Text style={styles.date} fixed>
-          {date}
-        </Text>
+          );
+        })}
+        <View style={styles.date} fixed>
+          <Text>{date}</Text>
+        </View>
       </Page>
     </Document>
   );
