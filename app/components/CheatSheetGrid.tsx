@@ -77,8 +77,6 @@ const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
       <Page size="A4" style={styles.page}>
         {dogs.map((dog) => {
           const dogName = dog.name.split(" ")[0].trim();
-
-          // if (dogName !== "Hachi" && dogName !== "Rico")
           return (
             <View
               style={styles.section}
@@ -86,7 +84,8 @@ const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
               key={dogName}
               break={dogName === "Karolcia"}
             >
-              <Image src={dog.cover.url} style={styles.image} />
+              {/* temporary solution */}
+              <Image src={dog.cover.url?.replace("http", "https")} style={styles.image} />
               <View style={styles.details}>
                 <Text style={styles.name}>{dogName}</Text>
                 <Text style={styles.food}>
