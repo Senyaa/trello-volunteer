@@ -35,7 +35,7 @@ export const getParsedCards = async (
   trelloCards.forEach((card) => {
     card.cover.url =
       returnedUrls.find((url) => url.attachmentId === card.cover.idAttachment)
-        ?.url?.replace("http", "https") || "";
+        ?.url?.replace("http://", "https://") || "";
 
     if (currentShiftId && !withoutShift) {
       const currentAnimal = animalsOnCurrentShift.find(

@@ -84,8 +84,7 @@ const CheatsheetGrid = ({ dogs }: { dogs: Card[] }) => {
               key={dogName}
               break={dogName === "Karolcia"}
             >
-              {/* temporary solution */}
-              <Image src={dog.cover.url?.replace("http", "https")} style={styles.image} />
+              <Image src={dog.cover.url} style={styles.image} />
               <View style={styles.details}>
                 <Text style={styles.name}>{dogName}</Text>
                 <Text style={styles.food}>
