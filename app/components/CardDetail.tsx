@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { replaceMDLink } from "../helpers/replaceMDLink";
 
 interface DetailProps {
   visible?: boolean;
@@ -13,6 +14,7 @@ const CardDetail: FC<DetailProps> = ({
   icon,
   isOn = true,
 }) => {
+  
   return (
     <div className={isOn ? "detail-cell" : "hidden"}>
       {visible && (
@@ -22,7 +24,7 @@ const CardDetail: FC<DetailProps> = ({
          dark:bg-neutral-800 border-neutral-200 dark:border-black border p-2"
         >
           {icon && <div className="md:hidden">{icon}</div>}
-          <span>{text}</span>
+          <span dangerouslySetInnerHTML={{__html: replaceMDLink(text)}}></span>
         </div>
       )}
     </div>

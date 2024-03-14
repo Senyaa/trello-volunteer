@@ -12,6 +12,7 @@ import Button from "./ui/Button";
 import ShiftCheckbox from "./shift/ShiftCheckbox";
 import { usePathname } from "next/navigation";
 import AddNote from "./shift/AddNote";
+import { replaceMDLink } from "../helpers/replaceMDLink";
 
 interface AnimalCardProps {
   animal: Card;
@@ -100,7 +101,9 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
               <div className="bg-red-100 dark:bg-red-300 border border-red-200 dark:border-red-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
                 <span className="text-red-800 text-xs font-bold">UWAGA!</span>
                 <div className="text-red-800 whitespace-pre-wrap leading-none">
-                  {detailsValues.warning}
+                  <span
+                    dangerouslySetInnerHTML={{ __html: replaceMDLink(detailsValues.warning) }}
+                  ></span>
                 </div>
               </div>
             )}
