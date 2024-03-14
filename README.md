@@ -11,12 +11,12 @@ ekoapka is an app that simplifies volunteers' shift in a polish animal care non-
 5. ```npm run dev```
 
 ## features
-* view data from trello
+* view cats and dogs data from trello
 * choose fields to display 
 * shift checklist for single user
+* add notes during shift
+* newbie mode - temporary access without being trello board member
 
 ### to do
 * sharing shifts with different users
-* add notes during shift
-* newbie mode - temporary access without being trello board member
 * admins 
