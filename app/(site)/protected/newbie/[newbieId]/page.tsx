@@ -20,7 +20,7 @@ const NewbieShiftPage = async ({
   const guestView = await getGuestView(newbieId);
   const newbieLink = `${domain}/newbie/${newbieId}`;
 
-  if (!guestView) return <Container>This guest view doesn't exist</Container>;
+  if (!guestView) return <Container>This guest view doesn&apos;t exist</Container>;
   return (
     <Container>
       <Link
