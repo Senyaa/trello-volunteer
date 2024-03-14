@@ -23,6 +23,8 @@ const initialState: UserSliceState = {
     healthEnabled: false,
     storyEnabled: false,
     infoForCarerEnabled: false,
+    bedEnabled: false,
+    walkEnabled: false,
   },
 };
 

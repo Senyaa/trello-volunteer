@@ -9,6 +9,7 @@ import { selectShiftId, useDispatch, userSlice } from "@/lib/redux";
 import { useRouter } from "next/navigation";
 import BackButton from "@/app/components/BackButton";
 import { useSelector } from "react-redux";
+import { getDetailsHeaders } from "@/app/helpers/details";
 
 export type SettingsFormType = {
   testsEnabled: boolean;
@@ -23,6 +24,8 @@ export type SettingsFormType = {
   healthEnabled: boolean;
   storyEnabled: boolean;
   infoForCarerEnabled: boolean;
+  bedEnabled: boolean;
+  walkEnabled: boolean;
   userId?: string;
 };
 
@@ -39,6 +42,8 @@ export const initialSettingsForm = {
   healthEnabled: false,
   storyEnabled: false,
   infoForCarerEnabled: false,
+  bedEnabled: false,
+  walkEnabled: false,
 };
 
 export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
@@ -73,7 +78,6 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
     }
     setFormStatus("INITIAL");
   };
-
   return (
     <form
       onSubmit={handleSubmitForm}
@@ -81,78 +85,19 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
     >
       <section className="flex flex-col gap-2">
         <h2>Widoczne pola</h2>
-        <Toggle
-          name="medsEnabled"
-          label="💊 Leki"
-          checked={state.medsEnabled}
-          onChange={handleStateChange("medsEnabled")}
-        />
-        <Toggle
-          name="testsEnabled"
-          label="🩸 Testy (tylko koty)"
-          checked={state.testsEnabled}
-          onChange={handleStateChange("testsEnabled")}
-        />
-        <Toggle
-          name="statusEnabled"
-          label="🏠 Status"
-          checked={state.statusEnabled}
-          onChange={handleStateChange("statusEnabled")}
-        />
-        <Toggle
-          name="personalityEnabled"
-          label="😈 Charakter"
-          checked={state.personalityEnabled}
-          onChange={handleStateChange("personalityEnabled")}
-        />
-        <Toggle
-          name="castrationEnabled"
-          label="✂️ Kastracja"
-          checked={state.castrationEnabled}
-          onChange={handleStateChange("castrationEnabled")}
-        />
-        <Toggle
-          name="dogInteractionEnabled"
-          label="🐶 Stosunek do kotów"
-          checked={state.dogInteractionEnabled}
-          onChange={handleStateChange("dogInteractionEnabled")}
-        />
-        <Toggle
-          name="catInteractionEnabled"
-          label="🐱 Stosunek do kotów"
-          checked={state.catInteractionEnabled}
-          onChange={handleStateChange("catInteractionEnabled")}
-        />
-        <Toggle
-          name="childrenInteractionEnabled"
-          label="👶🏻 Stosunek do dzieci"
-          checked={state.childrenInteractionEnabled}
-          onChange={handleStateChange("childrenInteractionEnabled")}
-        />
-        <Toggle
-          name="dewormingEnabled"
-          label="🐛 Odrobaczanie"
-          checked={state.dewormingEnabled}
-          onChange={handleStateChange("dewormingEnabled")}
-        />
-        <Toggle
-          name="healthEnabled"
-          label="👨🏻‍⚕️ Leczenie"
-          checked={state.healthEnabled}
-          onChange={handleStateChange("healthEnabled")}
-        />
-        <Toggle
-          name="storyEnabled"
-          label="👩🏼‍🏫 Historia"
-          checked={state.storyEnabled}
-          onChange={handleStateChange("storyEnabled")}
-        />
-        <Toggle
-          name="infoForCarerEnabled"
-          label="Info dla właścicieli/opiekunów (tylko koty)"
-          checked={state.infoForCarerEnabled}
-          onChange={handleStateChange("infoForCarerEnabled")}
-        />
+        {getDetailsHeaders(initialSettingsForm).map((setting) => {
+          const toggleName =
+            `${setting.name}Enabled` as keyof SettingsFormType;
+          return (
+            <Toggle
+              key={toggleName}
+              name={toggleName}
+              label={`${setting.icon || ""} ${setting.plName}`}
+              checked={Boolean(state[toggleName])}
+              onChange={handleStateChange(toggleName)}
+            />
+          );
+        })}
       </section>
       <div className={`flex flex-col gap-2 ${shiftId ? "mb-8" : ""}`}>
         {formStatus === "ERROR" && (
@@ -160,7 +105,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
             Wystąpił błąd, spróbuj później
           </span>
         )}
-        <SaveSettingsButton formStatus={formStatus} />
+        <SaveSettingsButton formStatus={formStatus}/>
         <BackButton />
       </div>
     </form>

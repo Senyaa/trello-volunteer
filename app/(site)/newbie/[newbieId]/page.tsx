@@ -7,10 +7,8 @@ import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import { Card } from "@/app/types/Card";
 import Image from "next/image";
 import Container from "@/app/components/ui/Container";
-import { allTrueSettings, catsNewbieSettings, dogsNewbieSettings } from "@/app/helpers/consts";
-import Button from "@/app/components/ui/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { catsNewbieSettings, dogsNewbieSettings } from "@/app/helpers/consts";
+
 
 const NewbiePage = async ({
   searchParams,

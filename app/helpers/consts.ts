@@ -27,6 +27,8 @@ export const catsNewbieSettings = {
     healthEnabled: false,
     storyEnabled: true,
     infoForCarerEnabled: true,
+    bedEnabled: false,
+    walkEnabled: false,
   };
 export const dogsNewbieSettings = {
     testsEnabled: true,
@@ -41,4 +43,6 @@ export const dogsNewbieSettings = {
     healthEnabled: false,
     storyEnabled: true,
     infoForCarerEnabled: true,
+    bedEnabled: true,
+    walkEnabled: true,
   };

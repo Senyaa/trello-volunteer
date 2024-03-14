@@ -125,6 +125,12 @@ export const settings = pgTable("settings", {
   infoForCarerEnabled: boolean("info_for_carer_enabled")
     .notNull()
     .default(false),
+  bedEnabled: boolean("bed_enabled")
+    .notNull()
+    .default(true),
+  walkEnabled: boolean("walk_enabled")
+    .notNull()
+    .default(true),
 });
 
 export const userRelations = relations(user, ({ many, one }) => ({

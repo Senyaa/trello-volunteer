@@ -24,7 +24,7 @@ const SaveSettingsButton: FC<SaveSettingsButtonProps> = ({ formStatus }) => {
     <Button
       label={getLabel()}
       type="submit"
-      classes="w-full text-center"
+      classes="w-full text-center mt-2"
       disabled={formStatus !== "INITIAL"}
       iconRight={
         formStatus === "SAVED" ? (

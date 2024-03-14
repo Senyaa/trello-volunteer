@@ -40,8 +40,10 @@ const getDetails = (description: string) => {
   const meds = medsFound && medsFound !== "brak" ? medsFound : "";
 
   const status =
-    getDetailSanitized(description, new RegExp(/Status:(.*?)(---|🛏|👮‍♀️|📟)/gis)) ||
-    "";
+    getDetailSanitized(
+      description,
+      new RegExp(/Status:(.*?)(---|🛏|👮‍♀️|📟)/gis)
+    ) || "";
   const personality =
     getDetailSanitized(
       description,
@@ -87,11 +89,14 @@ const getDetails = (description: string) => {
       new RegExp(/Info dla właścicieli\/opiekunów:(.*?)Szacowany/gis)
     ) || "";
   const age =
-    getDetailSanitized(description, new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)(.*?)(🏠|🐶)/gis), false) ||
-    "";
+    getDetailSanitized(
+      description,
+      new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)(.*?)(🏠|🐶)/gis),
+      false
+    ) || "";
   const bed =
     getDetailSanitized(description, new RegExp(/Legowisko:(.*?)🦮/gis)) || "";
-  const walks =
+  const walk =
     getDetailSanitized(description, new RegExp(/Spacery:(.*?)(🍲|🥘|🍽)/gis)) ||
     "";
   return {
@@ -111,7 +116,7 @@ const getDetails = (description: string) => {
     infoForCarer,
     age,
     bed,
-    walks,
+    walk,
   };
 };
 
@@ -128,19 +133,22 @@ export const getDetailsHeaders = (
       icon: "💊",
       plName: "Leki",
       value: details?.meds,
+      name: "meds",
     },
     {
-      isEnabled: true,
+      isEnabled: settings.bedEnabled,
       icon: "🛏",
       plName: "Legowisko",
       value: details?.bed,
+      name: "bed",
       onlyType: "dogs",
     },
     {
-      isEnabled: true,
+      isEnabled: settings.walkEnabled,
       icon: "🦮",
       plName: "Spacer",
-      value: details?.walks,
+      value: details?.walk,
+      name: "walk",
       onlyType: "dogs",
     },
     {
@@ -148,6 +156,7 @@ export const getDetailsHeaders = (
       icon: "🩸",
       plName: "Testy",
       value: details?.tests,
+      name: "tests",
       onlyType: "cats",
     },
     {
@@ -155,59 +164,69 @@ export const getDetailsHeaders = (
       icon: "🏠",
       plName: "Status",
       value: details?.status,
+      name: "status",
     },
     {
       isEnabled: settings.personalityEnabled,
       icon: "😈",
       plName: "Charakter",
       value: details?.personality,
+      name: "personality",
     },
     {
       isEnabled: settings.castrationEnabled,
       icon: "✂️",
       plName: "Kastracja",
       value: details?.castration,
+      name: "castration",
     },
     {
       isEnabled: settings.dogInteractionEnabled,
       icon: "🐶",
       plName: "Stosunek do psów",
       value: details?.dogInteraction,
+      name: "dogInteraction",
     },
     {
       isEnabled: settings.catInteractionEnabled,
       icon: "🐱",
       plName: "Stosunek do kotów",
       value: details?.catInteraction,
+      name: "catInteraction",
     },
     {
       isEnabled: settings.childrenInteractionEnabled,
       icon: "👶🏻",
       plName: "Stosunek do dzieci",
       value: details?.childrenInteraction,
+      name: "childrenInteraction",
     },
     {
       isEnabled: settings.dewormingEnabled,
       icon: "🐛",
       plName: "Odrobaczanie",
       value: details?.deworming,
+      name: "deworming",
     },
     {
       isEnabled: settings.healthEnabled,
       icon: "👨🏻",
       plName: "Leczenie",
       value: details?.health,
+      name: "health",
     },
     {
       isEnabled: settings.storyEnabled,
       icon: "👩🏼‍🏫",
       plName: "Historia",
       value: details?.story,
+      name: "story",
     },
     {
       isEnabled: settings.infoForCarerEnabled,
       plName: "Info dla opiekunów",
       value: details?.infoForCarer,
+      name: "infoForCarer",
       onlyType: "cats",
     },
   ];
