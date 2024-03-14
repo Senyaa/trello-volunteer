@@ -4,7 +4,7 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { getParsedCards } from "@/actions/getParsedCards";
 import { getServerSession } from "@/lib/getSession";
 import { filterDogs } from "@/app/helpers/cardFilters";
-import DogsPdfViewer from "@/app/components/PdfViewer";
+import DogsPdfViewer from "@/app/components/pdf/PdfViewer";
 import Container from "@/app/components/ui/Container";
 import Button from "@/app/components/ui/Button";
 

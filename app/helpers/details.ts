@@ -28,22 +28,25 @@ const getDetails = (description: string) => {
 
   const warning = getDetailSanitized(
     description,
-    new RegExp(/UWAGA:(.*?)(Czip|Info dla)/gis)
+    new RegExp(/(UWAGA:|UWAGI:|❗️)(.*?)(Czip|Info dla|--)/gis),
+    false
   );
 
   const medsFound = getDetailSanitized(
     description,
-    new RegExp(/Leki:(.*?)(nieaktualne|🍽)/gis)
+    new RegExp(/Leki:(.*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gis)
   );
 
   const meds = medsFound && medsFound !== "brak" ? medsFound : "";
 
   const status =
-    getDetailSanitized(description, new RegExp(/Status:(.*?)👮‍♀️/gis)) || "";
+    getDetailSanitized(description, new RegExp(/Status:(.*?)(---|🛏|👮‍♀️|📟)/gis)) ||
+    "";
   const personality =
     getDetailSanitized(
       description,
-      new RegExp(/(Charakter\/Personality:|Charakter:)(.*?)(🐶|🪪)/gis), false
+      new RegExp(/(Charakter\/Personality:|Charakter:)(.*?)(🐶|🪪)/gis),
+      false
     ) || "";
   const castration =
     getDetailSanitized(description, new RegExp(/Kastracja:(.*?)🩸/gis)) || "";
@@ -61,7 +64,7 @@ const getDetails = (description: string) => {
   const childrenInteraction =
     getDetailSanitized(
       description,
-      new RegExp(/Stosunek do dzieci:(.*?)👩🏼‍🏫/gis)
+      new RegExp(/Stosunek do dzieci:(.*?)(👩🏼‍🏫|📟)/gis)
     ) || "";
   const deworming =
     getDetailSanitized(
@@ -71,17 +74,25 @@ const getDetails = (description: string) => {
   const health =
     getDetailSanitized(
       description,
-      new RegExp(/Leczenie\/Health:(.*?)👨🏻/gis)
+      new RegExp(/Leczenie\/Health:(.*?)(👨🏻|)/gis)
     ) || "";
   const story =
-    getDetailSanitized(description, new RegExp(/Historia:(.*?)✂️/gis)) || "";
+    getDetailSanitized(
+      description,
+      new RegExp(/👩🏼‍🏫 Historia:(.*?)(✂️|👉)/gis)
+    ) || "";
   const infoForCarer =
     getDetailSanitized(
       description,
       new RegExp(/Info dla właścicieli\/opiekunów:(.*?)Szacowany/gis)
     ) || "";
   const age =
-    getDetailSanitized(description, new RegExp(/Szacowany wiek:(.*?)🏠/gis)) ||
+    getDetailSanitized(description, new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)(.*?)(🏠|🐶)/gis), false) ||
+    "";
+  const bed =
+    getDetailSanitized(description, new RegExp(/Legowisko:(.*?)🦮/gis)) || "";
+  const walks =
+    getDetailSanitized(description, new RegExp(/Spacery:(.*?)(🍲|🥘|🍽)/gis)) ||
     "";
   return {
     food,
@@ -99,6 +110,8 @@ const getDetails = (description: string) => {
     story,
     infoForCarer,
     age,
+    bed,
+    walks,
   };
 };
 
@@ -117,10 +130,25 @@ export const getDetailsHeaders = (
       value: details?.meds,
     },
     {
+      isEnabled: true,
+      icon: "🛏",
+      plName: "Legowisko",
+      value: details?.bed,
+      onlyType: "dogs",
+    },
+    {
+      isEnabled: true,
+      icon: "🦮",
+      plName: "Spacer",
+      value: details?.walks,
+      onlyType: "dogs",
+    },
+    {
       isEnabled: settings.testsEnabled,
       icon: "🩸",
       plName: "Testy",
       value: details?.tests,
+      onlyType: "cats",
     },
     {
       isEnabled: settings.statusEnabled,
@@ -180,6 +208,7 @@ export const getDetailsHeaders = (
       isEnabled: settings.infoForCarerEnabled,
       plName: "Info dla opiekunów",
       value: details?.infoForCarer,
+      onlyType: "cats",
     },
   ];
 };

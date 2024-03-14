@@ -10,7 +10,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import getDetails from "@/app/helpers/details";
-import { Card } from "../types/Card";
+import { Card } from "../../types/Card";
 import { Font } from "@react-pdf/renderer";
 
 Font.register({
@@ -42,8 +42,10 @@ const styles = StyleSheet.create({
   dogId: { position: "relative" },
   image: {
     width: "70px",
-    height: "70px",
+    minHeight: "70px",
+    // height: "auto",
     objectFit: "cover",
+    overflow: "hidden"
   },
   name: {
     backgroundColor: "rgba(255,255,255,0.8)",
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Cheatsheet = ({ dogs }: { dogs: Card[]}) => {
+const Cheatsheet = ({ dogs }: { dogs: Card[] }) => {
   const date = new Date().toISOString().split("T")[0];
   return (
     <Document language="polish" title={`psy-eko-${date}`}>

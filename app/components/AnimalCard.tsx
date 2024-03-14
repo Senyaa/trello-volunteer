@@ -68,13 +68,15 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
             <div>
-              <h3 className="text-xl font-extrabold md:shrink-0 md:w-[7rem]">{name}</h3>
+              <h3 className="text-xl font-extrabold md:shrink-0 md:w-[7rem]">
+                {name}
+              </h3>
               <span className="block text-sm text-neutral-500 leading-none">
                 {detailsValues.age}
               </span>
             </div>
             <div className="flex items-start md:hidden">
-              {isShift && (
+              {!pathname.includes("newbie") && isShift && (
                 <>
                   <AddNote animalID={animal.id} note={animal.note || ""} />
                   <ShiftCheckbox
@@ -87,7 +89,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
           </div>
           <div className="md:shrink-0 md:w-[12rem] md:px-2">
             {info && (
-              <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0">
+              <div className="bg-blue-100 dark:bg-blue-300 border border-blue-200 dark:border-blue-800 w-full rounded-md p-1 px-2 mt-2 md:mt-0 md:mb-1">
                 <div className="text-blue-800 whitespace-pre-wrap leading-none">
                   <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
                   {info}
@@ -106,22 +108,24 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between w-full">
-        <div className="flex flex-col md:flex-row w-full md:gap-2 ">
+        <div className="flex flex-col md:flex-row w-full md:gap-2">
           <CardDetail text={detailsValues.food} icon="🍽" />
           {getDetailsHeaders(settings, detailsValues).map((detail) => {
-            return (
-              <CardDetail
-                key={detail.plName}
-                visible={Boolean(detail.isEnabled && detail.value)}
-                text={detail.value}
-                icon={detail.icon}
-                isOn={detail.isEnabled}
-              />
-            );
+            const displayForType = detail.onlyType
+              ? pathname.includes(detail?.onlyType)
+              : true;
+            if (displayForType) {
+              return (
+                <CardDetail
+                  key={detail.plName}
+                  visible={Boolean(detail.isEnabled && detail.value)}
+                  text={detail.value}
+                  icon={detail.icon}
+                  isOn={detail.isEnabled}
+                />
+              );
+            }
           })}
-          {animal.desc.includes("drybed") && (
-            <CardDetail text="drybed" icon="" />
-          )}
         </div>
         {!isNewbieMode && (
           <div className="text-right p-1 md:pl-4 md:pr-0 mt-1 md:mt-0">
@@ -141,7 +145,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
             />
           </div>
         )}
-        {isShift && (
+        {!pathname.includes("newbie") && isShift && (
           <div className="hidden md:flex flex-col items-center">
             <ShiftCheckbox
               animalID={animal.id}

@@ -5,24 +5,12 @@ import CatsNav from "@/app/components/CatsNav";
 import { catRooms } from "@/app/helpers/cardFilters";
 import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import { Card } from "@/app/types/Card";
-import { getServerSession } from "@/lib/getSession";
-import { redirect } from "next/navigation";
 import Image from "next/image";
-
-const allTrueSettings = {
-  testsEnabled: true,
-  medsEnabled: true,
-  statusEnabled: true,
-  personalityEnabled: true,
-  castrationEnabled: true,
-  dogInteractionEnabled: true,
-  catInteractionEnabled: true,
-  childrenInteractionEnabled: true,
-  dewormingEnabled: true,
-  healthEnabled: true,
-  storyEnabled: true,
-  infoForCarerEnabled: true,
-};
+import Container from "@/app/components/ui/Container";
+import { allTrueSettings, catsNewbieSettings, dogsNewbieSettings } from "@/app/helpers/consts";
+import Button from "@/app/components/ui/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 const NewbiePage = async ({
   searchParams,
@@ -48,10 +36,7 @@ const NewbiePage = async ({
       </div>
     );
   }
-  const session = await getServerSession();
-  if (session) {
-    redirect("/protected/animals/cats");
-  }
+
   const guestView = await getGuestView(newbieId);
   const userSharing = await getUser(guestView?.userId || "");
 
@@ -60,7 +45,9 @@ const NewbiePage = async ({
   if ((guestView?.endsAt || new Date()) < new Date()) {
     return (
       <>
-        <h3 className="font-extrabold text-lg">No i skończyło się rumakowanie.</h3>
+        <h3 className="font-extrabold text-lg">
+          No i skończyło się rumakowanie.
+        </h3>
         <span>Twoja sesja wygasła. Zapraszamy na (dalszy) wolontariat ❤️</span>
       </>
     );
@@ -71,8 +58,8 @@ const NewbiePage = async ({
       r.name.toLocaleLowerCase() === searchParams?.room?.toLocaleLowerCase()
   )?.id;
 
-  const allCats: Card[] = guestView?.content as Card[];
-  const filteredCards = allCats
+  const allAnimals: Card[] = guestView?.content as Card[];
+  const filteredCards = allAnimals
     .filter((card) => (roomId ? card.idList === roomId : true))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -80,8 +67,8 @@ const NewbiePage = async ({
     searchParams.room?.toLocaleLowerCase() === "lowercatroom";
 
   return (
-    <div>
-      <div className="p-2 dark:text-neutral-500 text-sm">
+    <Container>
+      <div className="p-2 dark:text-neutral-300 text-sm dark:bg-neutral-800 mb-2">
         <span className="block">
           Znajdujesz się w trybie gościa. Zaproszenie od:{" "}
           {userSharing?.fullName}
@@ -91,20 +78,36 @@ const NewbiePage = async ({
           {parseToHumanDateTime(guestView?.endsAt)}
         </span>
       </div>
-      <CatsNav
-        currentRoom={searchParams?.room || ""}
-        animalListLength={filteredCards.length}
-        route={`/newbie/${newbieId}`}
-      />
-      {isLowerCatroom && (
-        <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
+      {guestView?.type === "cats" ? (
+        <>
+          <CatsNav
+            currentRoom={searchParams?.room || ""}
+            animalListLength={filteredCards.length}
+            route={`/newbie/${newbieId}`}
+          />
+          {isLowerCatroom && (
+            <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
+          )}
+        </>
+      ) : (
+        <div className="flex justify-between mb-2">
+          <h1 className="uppercase">{`Psy (${filteredCards.length})`}</h1>
+          {/* TODO: turn on settings while in newbie mode */}
+          {/* <Button
+            href="/protected/settings"
+            classes="px-2"
+            color="grey"
+            label={<span className="hidden md:inline">Pola</span>}
+            iconRight={<FontAwesomeIcon icon={faGear} className="md:ml-2" />}
+          /> */}
+        </div>
       )}
       <AnimalList
         animals={filteredCards}
-        settings={allTrueSettings}
-        allCats={allCats}
+        settings={guestView?.type === "cats" ? catsNewbieSettings : dogsNewbieSettings}
+        allAnimals={allAnimals}
       />
-    </div>
+    </Container>
   );
 };
 

@@ -89,7 +89,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
         />
         <Toggle
           name="testsEnabled"
-          label="🩸 Testy"
+          label="🩸 Testy (tylko koty)"
           checked={state.testsEnabled}
           onChange={handleStateChange("testsEnabled")}
         />
@@ -149,7 +149,7 @@ export const SettingsForm: React.FC<{ initialValues: SettingsFormType }> = ({
         />
         <Toggle
           name="infoForCarerEnabled"
-          label="Info dla właścicieli/opiekunów"
+          label="Info dla właścicieli/opiekunów (tylko koty)"
           checked={state.infoForCarerEnabled}
           onChange={handleStateChange("infoForCarerEnabled")}
         />

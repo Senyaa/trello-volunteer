@@ -46,7 +46,7 @@ const Cats = async ({
       {isLowerCatroom && (
         <span className="p-2 mt-4">Do karmy podaj vetomune/genomune</span>
       )}
-      <AnimalList animals={filteredCards} settings={settings} allCats={allCats}/>
+      <AnimalList animals={filteredCards} settings={settings} allAnimals={allCats}/>
     </Container>
   );
 };

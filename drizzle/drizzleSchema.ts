@@ -183,6 +183,7 @@ export const guestView = pgTable("guest_view", {
   createdAt: timestamp("created_at").default(sql`now()`),
   endsAt: timestamp("ends_at").notNull(),
   content: jsonb("content"),
+  type: text("type").default("cats"),
 });
 
 export const guestViewRelations = relations(guestView, ({ one }) => ({

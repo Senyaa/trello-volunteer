@@ -4,12 +4,20 @@ import { drizzle } from "@/drizzle/drizzle";
 import { guestView } from "@/drizzle/drizzleSchema";
 import { getParsedCardsNotOnShift } from "./getParsedCards";
 import getCurrentUserId from "./services/getCurrentUserId";
-import { filterCats } from "@/app/helpers/cardFilters";
+import { filterCats, filterDogs } from "@/app/helpers/cardFilters";
 
-export const shareCards = async (trelloId: string) => {
+export const shareCards = async (
+  trelloId: string,
+  type: "cats" | "dogs"
+) => {
   const cards = await getParsedCardsNotOnShift(trelloId);
+  let animals;
+  if (type === "cats") {
+    animals = filterCats(cards);
+  } else if (type === "dogs") {
+    animals = filterDogs(cards);
 
-  const animals = filterCats(cards);
+  }
   const userId = await getCurrentUserId();
 
   if (!userId) return;
@@ -21,6 +29,7 @@ export const shareCards = async (trelloId: string) => {
   const guestShift = {
     userId,
     content: animals,
+    type: type,
     endsAt: defaultEndTime,
   };
 
@@ -28,5 +37,6 @@ export const shareCards = async (trelloId: string) => {
     .insert(guestView)
     .values(guestShift)
     .returning();
+
   return guestViewReturned[0];
 };

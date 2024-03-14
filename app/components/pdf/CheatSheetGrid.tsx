@@ -8,7 +8,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import getDetails from "@/app/helpers/details";
-import { Card } from "../types/Card";
+import { Card } from "../../types/Card";
 import { Font } from "@react-pdf/renderer";
 
 Font.register({
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "80px",
-    height: "80px",
+    height: "80px", 
     objectFit: "cover",
   },
   details: {

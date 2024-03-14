@@ -3,13 +3,16 @@ import { getParsedCards } from "@/actions/getParsedCards";
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getSession";
 import Container from "@/app/components/ui/Container";
-import DogsData from "@/app/components/DogsData";
+import CheatSheetButton from "@/app/components/pdf/CheatSheetButton";
+import AnimalList from "@/app/components/AnimalList";
+import { getUserSettings } from "../../settings/getUserSettings";
 import Button from "@/app/components/ui/Button";
-import { isMobile } from "@/app/helpers/isMobile";
-import CheatSheetButton from "@/app/components/CheatSheetButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 const Dogs = async () => {
   const session = await getServerSession();
+  const settings = await getUserSettings();
 
   const cards = await getParsedCards(session?.user?.trelloId || "").catch(
     (e) => {
@@ -28,9 +31,18 @@ const Dogs = async () => {
     <Container>
       <div className="flex justify-between mb-2">
         <h1 className="uppercase m-2">{`Pieski (${allDogs.length})`}</h1>
-        <CheatSheetButton/>
+        <div>
+          <Button
+            href="/protected/settings"
+            classes="px-2 mr-2"
+            color="grey"
+            label={<span className="hidden md:inline">Pola</span>}
+            iconRight={<FontAwesomeIcon icon={faGear} className="md:ml-2" />}
+          />
+          <CheatSheetButton />
+        </div>
       </div>
-      <DogsData allDogs={allDogs} />
+      <AnimalList animals={allDogs} settings={settings} allAnimals={allDogs} />
     </Container>
   );
 };

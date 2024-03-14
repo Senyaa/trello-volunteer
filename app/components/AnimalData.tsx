@@ -5,6 +5,7 @@ import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
 import { Card } from "../types/Card";
 import AnimalCard from "./AnimalCard";
 import { selectShiftId, useSelector } from "@/lib/redux";
+import { usePathname } from "next/navigation";
 
 interface AnimalDataProps {
   animals: Card[];
@@ -13,6 +14,8 @@ interface AnimalDataProps {
 
 const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
   const shift = useSelector(selectShiftId);
+  const pathname= usePathname();
+  const isDog = pathname.includes("dogs")
 
   const animalsNotDone = animals.filter((a) => !a.isDone);
   const animalsDone = animals.filter((a) => a.isDone);
@@ -20,11 +23,11 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
   return (
     <>
       {animalsNotDone.length !== 0 && (
-        <ul className="w-full md:my-4">
+        <ul className="w-full">
           {animalsNotDone.map((animal) => (
             <li key={animal.id} className="my-4">
               <AnimalCard
-                isShift={Boolean(shift)}
+                isShift={!isDog && Boolean(shift)}
                 animal={animal}
                 settings={settings}
               />
@@ -39,7 +42,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
             {animalsDone.map((animal) => (
               <li key={animal.id} className="mx-2 my-4">
                 <AnimalCard
-                  isShift={Boolean(shift)}
+                  isShift={!isDog && Boolean(shift)}
                   animal={animal}
                   settings={settings}
                 />

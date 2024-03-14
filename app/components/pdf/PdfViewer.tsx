@@ -1,11 +1,11 @@
 "use client";
 
 import { PDFViewer } from "@react-pdf/renderer";
-import { Card } from "../types/Card";
+import { Card } from "../../types/Card";
 import Cheatsheet from "./CheatSheet";
 import CheatsheetGrid from "./CheatSheetGrid";
 import { useState } from "react";
-import Button from "./ui/Button";
+import Button from "../ui/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faTable } from "@fortawesome/free-solid-svg-icons";
 

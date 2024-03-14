@@ -1,7 +1,7 @@
 "use client"
 
-import { isMobile } from "../helpers/isMobile";
-import Button from "./ui/Button";
+import { isMobile } from "../../helpers/isMobile";
+import Button from "../ui/Button";
 
 const CheatSheetButton = () => {
   if (!isMobile()) {
