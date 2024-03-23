@@ -11,6 +11,10 @@ const getMyShiftsFrom30Days = async (): Promise<Shift[]> => {
     columns: { shiftId: true },
   });
 
+  if (shiftIds.length === 0) {
+    return [];
+  }
+
   const shiftIdsArray: string[] = shiftIds.map((o) => o.shiftId);
 
   const last30DaysAfter = new Date();

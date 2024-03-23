@@ -1,6 +1,7 @@
 import { AuthOptions } from "next-auth";
-import { drizzle } from "@/drizzle/drizzle";
+import { drizzle, drizzleSchema } from "@/drizzle/drizzle";
 import { drizzleAdapter } from "@/drizzle/adapter";
+import { eq } from "drizzle-orm";
 
 export const authOptions: AuthOptions = {
   adapter: drizzleAdapter(drizzle),
@@ -17,6 +18,18 @@ export const authOptions: AuthOptions = {
         session.user.id = user.id;
       }
       return session;
+    },
+    async signIn({ user, account }) {
+      await drizzle
+        .update(drizzleSchema.account)
+        .set({
+          oauthToken: (account as any).oauth_token,
+          oauthTokenSecret: (account as any).oauth_token_secret,
+        })
+        .where(eq(drizzleSchema.account.userId, user.id))
+        .returning();
+
+      return true;
     },
   },
 

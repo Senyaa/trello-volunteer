@@ -20,14 +20,7 @@ const Cats = async ({
       r.name.toLocaleLowerCase() === searchParams?.room?.toLocaleLowerCase()
   )?.id;
 
-  const cards = await getParsedCards(session?.user?.trelloId || "").catch(
-    (e) => {
-      if (e.message.includes("Unauthorized")) {
-        redirect("/access-denied?boardAccess=false");
-      }
-      return [];
-    }
-  );
+  const cards = await getParsedCards(session?.user?.trelloId || "");
 
   const allCats = filterCats(cards)
   const filteredCards = allCats

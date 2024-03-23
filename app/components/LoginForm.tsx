@@ -19,18 +19,17 @@ const LoginForm: FC<LoginButtonProps> = ({
 }) => {
   return (
     <>
-      <label htmlFor="privacy-policy" className="mt-2">
-        
-        <Link href="/privacy-policy" className="underline">
-          Polityka prywatności
-        </Link>
-      </label>
       <Button
         classes={classes}
         label={label}
         onClick={() => signIn("trello", { callbackUrl: MAIN_PAGE })}
         iconRight={iconRight}
       />
+      <label htmlFor="privacy-policy" className="mt-5 block">
+        <Link href="/privacy-policy" className="underline">
+          Polityka prywatności
+        </Link>
+      </label>
     </>
   );
 };
