@@ -1,5 +1,6 @@
 import getShiftById from "@/actions/getShiftById";
 import Report from "@/app/components/Report";
+import Container from "@/app/components/ui/Container";
 
 const ShiftPage = async ({ params }: { params: { shiftId: string } }) => {
   const shiftId = params.shiftId;
@@ -8,10 +9,10 @@ const ShiftPage = async ({ params }: { params: { shiftId: string } }) => {
 
   const date = shift?.started ? shift.started : shift?.finished
   return (
-    <div className="p-4">
+    <Container>
       <h2 className="font-extrabold text-lg">Dyżur z dnia {date?.toLocaleDateString("pl")}</h2>
       <Report shiftId={shiftId} />
-    </div>
+    </Container>
   );
 };
 

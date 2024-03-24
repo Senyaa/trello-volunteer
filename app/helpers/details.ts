@@ -28,7 +28,7 @@ const getDetails = (description: string) => {
 
   const warning = getDetailSanitized(
     description,
-    new RegExp(/(UWAGA:|UWAGI:|❗️)(.*?)(Czip|Info dla|--)/gis),
+    new RegExp(/(❗️UWAGA:|UWAGA:|UWAGI:|❗️)(.*?)(Czip|Info dla|--)/gis),
     false
   );
 

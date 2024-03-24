@@ -37,7 +37,7 @@ const NewbieShiftPage = async ({
           {parseToHumanDateTime(guestView.endsAt)}.
         </span>
       ) : (
-        <span>Ten link juz nie działa</span>
+        <span>Ten link już nie działa</span>
       )}
       <div className="flex flex-col items-center">
         <div className="bg-white p-4 mb-4 md:max-w-[280px]">

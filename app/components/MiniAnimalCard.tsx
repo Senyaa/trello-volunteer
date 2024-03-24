@@ -15,7 +15,6 @@ interface MinimalAnimalCardProps {
 const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
   const [cover, setCover] = useState("");
 
-
   // TODO: extract
   useEffect(() => {
     if (animal.cover.url) {
@@ -39,7 +38,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
     });
   }, [animal]);
 
-  const personality = getDetails(animal.desc).personality
+  const personality = getDetails(animal.desc).personality;
 
   return (
     <div className="bg-white shadow-sm dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] h-[120px] overflow-y-hidden ">
@@ -52,10 +51,16 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             className="object-cover rounded-full aspect-square"
           />
         </div>
-        <div className="h-full">
-          <span className="font-extrabold">{animal.name.split("-")[0]}</span>
-          <div className="text-ellipsis">{personality.length < 30 ?  personality : `${personality.substring(0,30)}...`}</div>
-          <div className="text-xs text-neutral-500 ">{`od ${parseTrelloIdToCreatedDate(
+        <div className="h-full flex flex-col justify-between">
+          <div>
+            <span className="font-extrabold">{animal.name.split("-")[0]}</span>
+            <div className="text-ellipsis">
+              {personality.length < 30
+                ? personality
+                : `${personality.substring(0, 30)}...`}
+            </div>
+          </div>
+          <div className="text-xs text-neutral-500 bottom-0">{`od ${parseTrelloIdToCreatedDate(
             animal.id
           ).toLocaleDateString("pl")}`}</div>
         </div>
