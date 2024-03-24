@@ -14,7 +14,7 @@ const Home = async () => {
         <div className="md:max-w-[400px]">
           <div className="mb-5 text-lg font-bold">Cześć wolontariuszu!</div>
           <p>
-            Ta strona powstała, aby ułatwić dyzur w fundacji i działa na podstawie danych z trello. Jeśli masz pomysły
+            Ta strona powstała, aby ułatwić dyżur w fundacji i działa na podstawie danych z trello. Jeśli masz pomysły
             na jakiekolwiek usprawnienia, podziel się nimi.
           </p>
           <p className="mb-5">Fajnie, ze jesteś!</p>

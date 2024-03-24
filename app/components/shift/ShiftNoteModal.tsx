@@ -27,7 +27,7 @@ const ShiftNoteModal: FC<ShiftNoteModalProps> = ({ note, onClose }) => {
     <>
       <textarea
         className="w-full bg-neutral-100 dark:bg-neutral-800 rounded-md p-2 shadow-inner"
-        placeholder="Wpisz uwagi do dyzuru..."
+        placeholder="Wpisz uwagi do dyżuru..."
         value={noteValue}
         onChange={(e) => setNoteValue(e.target.value)}
         name={"shift"}
@@ -43,7 +43,7 @@ const ShiftNoteModal: FC<ShiftNoteModalProps> = ({ note, onClose }) => {
 
   return createPortal(
     <Modal
-      title={`Dyzur ${date}`}
+      title={`Dyżur ${date}`}
       content={modalContent}
       onClose={() => {
         setNoteValue(note);

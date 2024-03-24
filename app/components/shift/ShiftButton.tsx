@@ -90,7 +90,7 @@ const ShiftButton: FC<ShiftButtonProps> = ({ isShift }) => {
                       <span className="absolute inline-flex h-2 w-2 rounded-full bg-green-700 z-10 left-5 mr-4 mt-1"></span>
                     )}
                     <Button
-                      label="Notatka do dyzuru"
+                      label="Notatka do dyżuru"
                       onClick={async () => {
                         await getShiftNote();
                         setMenuOpened(false);
