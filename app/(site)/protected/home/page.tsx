@@ -4,11 +4,16 @@ import MiniAnimalCard from "@/app/components/MiniAnimalCard";
 import Button from "@/app/components/ui/Button";
 import { links } from "./links";
 import Container from "@/app/components/ui/Container";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
 const Home = async () => {
   const session = await getServerSession();
 
   const newAnimals = await getNewAnimals(session?.user?.trelloId || "", 30);
+
+  const isEndOfMonth = new Date().getDate() > 21;
 
   return (
     <Container>
@@ -17,6 +22,22 @@ const Home = async () => {
       <span className="mb-4 text-neutral-700 dark:text-neutral-300">
         Design strony głównej jest w trakcie. Co chciał(a)byś tu zobaczyć?
       </span>
+
+      {isEndOfMonth && <div className="p-4 bg-neutral-200 dark:bg-neutral-800 mb-4 border border-green-700 flex flex-row  items-center rounded-md">
+        <FontAwesomeIcon icon={faWarning} className="mr-4 text-green-700 text-xl" />
+        <div>
+          <p className="font-bold text-green-700">Kończy się miesiąc </p>
+          <p>
+            Uzupełnij{" "}
+            <Link
+              href={process.env.NEXT_PUBLIC_ACTIVITY_SHEET || "#"}
+              className="underline"
+            >
+              plik aktywności
+            </Link>
+          </p>
+        </div>
+      </div>}
 
       {newAnimals.length > 0 ? (
         <div className="mb-4">
