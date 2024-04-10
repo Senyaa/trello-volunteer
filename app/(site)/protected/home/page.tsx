@@ -23,21 +23,26 @@ const Home = async () => {
         Design strony głównej jest w trakcie. Co chciał(a)byś tu zobaczyć?
       </span>
 
-      {isEndOfMonth && <div className="p-4 bg-neutral-200 dark:bg-neutral-800 mb-4 border border-green-700 flex flex-row  items-center rounded-md">
-        <FontAwesomeIcon icon={faWarning} className="mr-4 text-green-700 text-xl" />
-        <div>
-          <p className="font-bold text-green-700">Kończy się miesiąc </p>
-          <p>
-            Uzupełnij{" "}
-            <Link
-              href={process.env.NEXT_PUBLIC_ACTIVITY_SHEET || "#"}
-              className="underline"
-            >
-              plik aktywności
-            </Link>
-          </p>
+      {isEndOfMonth && (
+        <div className="p-4 bg-neutral-200 dark:bg-neutral-800 mb-4 border border-green-700 flex flex-row  items-center rounded-md">
+          <FontAwesomeIcon
+            icon={faWarning}
+            className="mr-4 text-green-700 text-xl"
+          />
+          <div>
+            <p className="font-bold text-green-700">Kończy się miesiąc </p>
+            <p>
+              Uzupełnij{" "}
+              <Link
+                href={process.env.NEXT_PUBLIC_ACTIVITY_SHEET || "#"}
+                className="underline"
+              >
+                plik aktywności
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>}
+      )}
 
       {newAnimals.length > 0 ? (
         <div className="mb-4">
