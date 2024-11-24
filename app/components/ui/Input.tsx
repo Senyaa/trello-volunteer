@@ -1,14 +1,24 @@
-import { ReactNode } from "react";
+import { ChangeEventHandler, ReactNode } from "react";
 
 type InputProps = {
-  placeholder: string;
+  placeholder?: string;
   id: string;
+  value: string;
   label?: string;
   icon?: ReactNode;
-  onInput: (e: any) => void;
+  classes?: string
+  onInput: ChangeEventHandler<HTMLInputElement>;
 };
 
-const Input = ({ placeholder, label, id, onInput, icon }: InputProps) => {
+const Input = ({
+  placeholder,
+  label,
+  id,
+  onInput,
+  icon,
+  classes,
+  value,
+}: InputProps) => {
   return (
     <>
       {label && (
@@ -19,9 +29,10 @@ const Input = ({ placeholder, label, id, onInput, icon }: InputProps) => {
       <input
         type="text"
         placeholder={placeholder}
-        onChange={(e) => onInput(e)}
+        onChange={onInput}
+        value={value}
         id={id}
-        className="rounded-md py-1 px-2 dark:text-white bg-neutral-200 dark:bg-neutral-800 w-full active:outline-none"
+        className={`rounded-md py-1 px-2 dark:text-white bg-neutral-200 dark:bg-neutral-800 active:outline-none ${classes}`}
       />
       {icon}
     </>

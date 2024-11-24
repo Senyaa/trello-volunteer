@@ -1,6 +1,6 @@
 import { PgDatabase } from "drizzle-orm/pg-core";
 import * as schema from "./drizzleSchema";
-import { Adapter, AdapterUser } from "next-auth/adapters";
+import { Adapter } from "next-auth/adapters";
 import { and, eq } from "drizzle-orm";
 
 type NonNullableProps<T> = {

@@ -2,16 +2,19 @@ import getNewAnimals from "@/actions/getNewAnimals";
 import { getServerSession } from "@/lib/getSession";
 import MiniAnimalCard from "@/app/components/MiniAnimalCard";
 import Button from "@/app/components/ui/Button";
-import { links } from "./links";
 import Container from "@/app/components/ui/Container";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
+import getLinks from "@/actions/getLinks";
+import LinkType from "../../admin/links/types";
 
 const Home = async () => {
   const session = await getServerSession();
 
   const newAnimals = await getNewAnimals(session?.user?.trelloId || "", 30);
+  const links = await getLinks() ;
+
 
   const isEndOfMonth = new Date().getDate() > 21;
 
@@ -67,10 +70,10 @@ const Home = async () => {
       <section className="my-4">
         <h2 className="font-extrabold mb-2">Linki</h2>
         <ul>
-          {links.map((link) => (
-            <li key={link.link}>
+          {(links as LinkType[]).map((link) => (
+            <li key={link.id}>
               <Button
-                href={link.link || "#"}
+                href={link.url || "#"}
                 label={link.label}
                 classes="w-full max-w-[400px] mb-2 block"
                 color="grey"

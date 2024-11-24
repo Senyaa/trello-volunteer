@@ -1,10 +1,8 @@
 {
-  "id": "540faaae-edc5-4e4a-917f-09f322c68961",
-  "prevId": "79a4c584-ef9d-4cc6-9cbe-59dd44ab2ebe",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "account": {
+    "public.account": {
       "name": "account",
       "schema": "",
       "columns": {
@@ -87,30 +85,33 @@
         "account_user_id_user_id_fk": {
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "account_provider_provider_account_id_unique": {
           "name": "account_provider_provider_account_id_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "provider",
             "provider_account_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
-      }
+      },
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "animal_on_shift": {
+    "public.animal_on_shift": {
       "name": "animal_on_shift",
       "schema": "",
       "columns": {
@@ -150,9 +151,12 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "document": {
+    "public.document": {
       "name": "document",
       "schema": "",
       "columns": {
@@ -186,9 +190,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "guest_view": {
+    "public.guest_view": {
       "name": "guest_view",
       "schema": "",
       "columns": {
@@ -230,21 +237,24 @@
         "guest_view_user_id_user_id_fk": {
           "name": "guest_view_user_id_user_id_fk",
           "tableFrom": "guest_view",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "image_url": {
+    "public.image_url": {
       "name": "image_url",
       "schema": "",
       "columns": {
@@ -271,9 +281,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "session": {
+    "public.session": {
       "name": "session",
       "schema": "",
       "columns": {
@@ -301,21 +314,24 @@
         "session_user_id_user_id_fk": {
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "settings": {
+    "public.settings": {
       "name": "settings",
       "schema": "",
       "columns": {
@@ -420,9 +436,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "shift": {
+    "public.shift": {
       "name": "shift",
       "schema": "",
       "columns": {
@@ -461,9 +480,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "user": {
+    "public.user": {
       "name": "user",
       "schema": "",
       "columns": {
@@ -521,9 +543,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "users_on_shift": {
+    "public.users_on_shift": {
       "name": "users_on_shift",
       "schema": "",
       "columns": {
@@ -545,28 +570,28 @@
         "users_on_shift_user_id_user_id_fk": {
           "name": "users_on_shift_user_id_user_id_fk",
           "tableFrom": "users_on_shift",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "users_on_shift_shift_id_shift_id_fk": {
           "name": "users_on_shift_shift_id_shift_id_fk",
           "tableFrom": "users_on_shift",
-          "tableTo": "shift",
           "columnsFrom": [
             "shift_id"
           ],
+          "tableTo": "shift",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -578,9 +603,12 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "verification_token": {
+    "public.verification_token": {
       "name": "verification_token",
       "schema": "",
       "columns": {
@@ -614,14 +642,23 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     }
   },
   "enums": {},
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "540faaae-edc5-4e4a-917f-09f322c68961",
+  "prevId": "79a4c584-ef9d-4cc6-9cbe-59dd44ab2ebe",
+  "sequences": {},
+  "policies": {},
+  "views": {},
+  "roles": {}
 }

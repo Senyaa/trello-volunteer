@@ -125,12 +125,8 @@ export const settings = pgTable("settings", {
   infoForCarerEnabled: boolean("info_for_carer_enabled")
     .notNull()
     .default(false),
-  bedEnabled: boolean("bed_enabled")
-    .notNull()
-    .default(true),
-  walkEnabled: boolean("walk_enabled")
-    .notNull()
-    .default(true),
+  bedEnabled: boolean("bed_enabled").notNull().default(true),
+  walkEnabled: boolean("walk_enabled").notNull().default(true),
 });
 
 export const userRelations = relations(user, ({ many, one }) => ({
@@ -179,6 +175,13 @@ export const document = pgTable("document", {
   name: text("name"),
   createdAt: timestamp("created_at").default(sql`now()`),
   content: text("content"),
+});
+
+export const link = pgTable("link", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  label: text("label").notNull().unique(),
+  url: text("url").notNull(),
+  createdAt: timestamp("created_at").default(sql`now()`),
 });
 
 export const guestView = pgTable("guest_view", {

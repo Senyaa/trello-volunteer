@@ -5,6 +5,18 @@ import { eq } from "drizzle-orm";
 
 export const authOptions: AuthOptions = {
   adapter: drizzleAdapter(drizzle),
+  debug: true,
+  logger: {
+    error(code, ...message) {
+      console.error(code, message)
+    },
+    warn(code, ...message) {
+      console.warn(code, message)
+    },
+    debug(code, ...message) {
+      console.debug(code, message)
+    },
+  },
   pages: {
     signIn: "/login",
   },
@@ -26,7 +38,7 @@ export const authOptions: AuthOptions = {
           oauthToken: (account as any).oauth_token,
           oauthTokenSecret: (account as any).oauth_token_secret,
         })
-        .where(eq(drizzleSchema.account.userId, user.id))
+        .where(eq(drizzleSchema.account.providerAccountId, user.id))
         .returning();
 
       return true;
