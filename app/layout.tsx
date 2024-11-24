@@ -16,6 +16,7 @@ import { MAIN_PAGE } from "./helpers/consts";
 import { getCurrentShiftId } from "@/actions/getCurrentShiftId";
 import { StoreHydration } from "./components/StoreHydration";
 import Menu from "./components/Menu";
+import getUser from "@/actions/getUser";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
@@ -31,7 +32,8 @@ export default async function RootLayout({
   const session = await getServerSession();
   const settings = await getUserSettings();
   const shift = await getCurrentShiftId();
-
+  const user = await getUser();
+ 
   return (
     <html lang="en" className="w-full h-full">
       <body className="w-full h-full bg-neutral-100 dark:bg-black">
@@ -55,7 +57,7 @@ export default async function RootLayout({
                     </Link>
                   </h2>
                   {session && <Menu />}
-                  <div className="flex items-center p-5">{session && <User />}</div>
+                  <div className="flex items-center p-5">{session && <User userType={user?.userType || "USER"}/>}</div>
                 </header>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </main>

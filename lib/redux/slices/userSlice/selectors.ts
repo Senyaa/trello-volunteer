@@ -1,6 +1,7 @@
 import { ReduxState } from "../../store";
 
 export const selectTrelloId = (state: ReduxState) => state.user.trelloId;
+export const selectUserType = (state: ReduxState) => state.user.userType;
 export const selectShiftId = (state: ReduxState) => state.user.shiftId;
 export const selectSettings = (state: ReduxState) => state.user.settings;
 export const selectCurrentShiftAll = (state: ReduxState) =>  state.user.currentShift.all;

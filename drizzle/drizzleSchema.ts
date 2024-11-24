@@ -60,6 +60,7 @@ export const user = pgTable("user", {
   emailVerified: timestamp("email_verified"),
   image: text("image"),
   boards: text("boards").array(),
+  userType: text("userType").default("USER"),
 });
 
 export const verificationToken = pgTable(

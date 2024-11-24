@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: UserSliceState = {
   trelloId: "",
+  userType: "USER",
   currentShift: {
     id: "",
     type: "cats",
@@ -35,6 +36,9 @@ export const userSlice = createSlice({
     setTrelloId: (state, action: PayloadAction<string>) => {
       state.trelloId = action.payload;
     },
+    setUserType: (state, action: PayloadAction<"USER" | "ADMIN">) => {
+      state.userType = action.payload;
+    },
     setShiftId: (state, action: PayloadAction<string>) => {
       state.shiftId = action.payload;
       state.currentShift.id = action.payload;
@@ -61,6 +65,7 @@ export const userSlice = createSlice({
 });
 
 export interface UserSliceState {
+  userType: "USER" | "ADMIN";
   trelloId: string;
   shiftId: string;
   settings: SettingsFormType;

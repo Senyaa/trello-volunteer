@@ -5,25 +5,23 @@ import getLinks from "@/actions/getLinks";
 import { deleteLink } from "@/actions/deleteLink";
 
 const Links = async () => {
-    const links = await getLinks();
-    console.log("links", links)
-
+  const links = await getLinks();
 
   const handleRemove = async (idToRemove?: string) => {
-    "use server"
+    "use server";
     //TODO: add modal
     if (!idToRemove) {
       console.error("No id to remove");
     } else {
       delete links[Number(idToRemove)];
-      await deleteLink(idToRemove)
+      await deleteLink(idToRemove);
     }
   };
 
   return (
     <Container>
       <Header>Zarządzaj linkami</Header>
-      <LinkList linkList={links} onRemove={handleRemove}/>
+      <LinkList linkList={links} onRemove={handleRemove} />
     </Container>
   );
 };

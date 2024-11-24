@@ -1,4 +1,5 @@
 import getMyShiftsFrom30Days from "@/actions/getMyShiftsFrom30Days";
+import getUser from "@/actions/getUser";
 import SignOutButton from "@/app/components/SignOutButton";
 import User from "@/app/components/User";
 import Container from "@/app/components/ui/Container";
@@ -8,6 +9,9 @@ import Link from "next/link";
 
 const Profile = async () => {
   const shifts = await getMyShiftsFrom30Days();
+  const user = await getUser();
+
+  const isAdmin = user?.userType === "ADMIN";
 
   return (
     <Container>
@@ -17,6 +21,14 @@ const Profile = async () => {
         </h2>
         <SignOutButton />
       </div>
+      {isAdmin && (
+        <Link
+          href="/admin"
+          className="my-4 bg-white dark:bg-neutral-900 rounded-md p-2"
+        >
+          ✨ Panel admina
+        </Link>
+      )}
       <section>
         <span className="font-bold">
           Moje dyżury <small>(ostatnie 30 dni)</small>
