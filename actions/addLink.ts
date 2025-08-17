@@ -16,7 +16,5 @@ if (id && !id.includes("new")) {
     set: { label, url },
   });
 
-  console.log("savedLink", savedLink)
-
   return savedLink;
 }

@@ -13,13 +13,13 @@ const getDetails = (description: string) => {
   const food =
     getDetailSanitized(
       description,
-      new RegExp(/(Karma\/Food:|Karma:)(.*?)(😈|💊)/gis),
+      new RegExp(/(Karma\/Food:|Karma:)(.*?)(😈|💊)/gi),
       false
     ) || "zwykła";
 
   const testsFound = getDetailSanitized(
     description,
-    new RegExp(/Testy:(.*?)(💉|🐛)/gis)
+    new RegExp(/Testy:(.*?)(💉|🐛)/gi)
   );
   const tests =
     testsFound && testsFound.trim().toLocaleLowerCase() !== "ujemne"
@@ -28,13 +28,13 @@ const getDetails = (description: string) => {
 
   const warning = getDetailSanitized(
     description,
-    new RegExp(/(❗️UWAGA:|UWAGA:|UWAGI:|❗️)(.*?)(Czip|Info dla|--)/gis),
+    new RegExp(/(❗️UWAGA:|UWAGA:|UWAGI:|❗️)(.*?)(Czip|Info dla|--)/gi),
     false
   );
 
   const medsFound = getDetailSanitized(
     description,
-    new RegExp(/Leki:(.*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gis)
+    new RegExp(/Leki:(.*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gi)
   );
 
   const meds = medsFound && medsFound !== "brak" ? medsFound : "";
@@ -42,62 +42,62 @@ const getDetails = (description: string) => {
   const status =
     getDetailSanitized(
       description,
-      new RegExp(/Status:(.*?)(---|🛏|👮‍♀️|📟)/gis)
+      new RegExp(/Status:(.*?)(---|🛏|👮‍♀️|📟)/gi)
     ) || "";
   const personality =
     getDetailSanitized(
       description,
-      new RegExp(/(Charakter\/Personality:|Charakter:)(.*?)(🐶|🪪)/gis),
+      new RegExp(/(Charakter\/Personality:|Charakter:)(.*?)(🐶|🪪)/gi),
       false
     ) || "";
   const castration =
-    getDetailSanitized(description, new RegExp(/Kastracja:(.*?)🩸/gis)) || "";
+    getDetailSanitized(description, new RegExp(/Kastracja:(.*?)🩸/gi)) || "";
 
   const dogInteraction =
     getDetailSanitized(
       description,
-      new RegExp(/Stosunek do psów:(.*?)🐱/gis)
+      new RegExp(/Stosunek do psów:(.*?)🐱/gi)
     ) || "";
   const catInteraction =
     getDetailSanitized(
       description,
-      new RegExp(/Stosunek do kotów:(.*?)👶🏻/gis)
+      new RegExp(/Stosunek do kotów:(.*?)👶🏻/gi)
     ) || "";
   const childrenInteraction =
     getDetailSanitized(
       description,
-      new RegExp(/Stosunek do dzieci:(.*?)(👩🏼‍🏫|📟)/gis)
+      new RegExp(/Stosunek do dzieci:(.*?)(👩🏼‍🏫|📟)/gi)
     ) || "";
   const deworming =
     getDetailSanitized(
       description,
-      new RegExp(/Odrobaczanie \(data \+ środek\):(.*?)(👨🏻‍⚕️|💉)/gis)
+      new RegExp(/Odrobaczanie \(data \+ środek\):(.*?)(👨🏻‍⚕️|💉)/gi)
     ) || "";
   const health =
     getDetailSanitized(
       description,
-      new RegExp(/Leczenie\/Health:(.*?)(👨🏻|)/gis)
+      new RegExp(/Leczenie\/Health:(.*?)(👨🏻|)/gi)
     ) || "";
   const story =
     getDetailSanitized(
       description,
-      new RegExp(/👩🏼‍🏫 Historia:(.*?)(✂️|👉)/gis)
+      new RegExp(/👩🏼‍🏫 Historia:(.*?)(✂️|👉)/gi)
     ) || "";
   const infoForCarer =
     getDetailSanitized(
       description,
-      new RegExp(/Info dla właścicieli\/opiekunów:(.*?)Szacowany/gis)
+      new RegExp(/Info dla właścicieli\/opiekunów:(.*?)Szacowany/gi)
     ) || "";
   const age =
     getDetailSanitized(
       description,
-      new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)(.*?)(🏠|🐶)/gis),
+      new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)(.*?)(🏠|🐶)/gi),
       false
     ) || "";
   const bed =
-    getDetailSanitized(description, new RegExp(/Legowisko:(.*?)🦮/gis)) || "";
+    getDetailSanitized(description, new RegExp(/Legowisko:(.*?)🦮/gi)) || "";
   const walk =
-    getDetailSanitized(description, new RegExp(/Spacery:(.*?)(🍲|🥘|🍽)/gis)) ||
+    getDetailSanitized(description, new RegExp(/Spacery:(.*?)(🍲|🥘|🍽)/gi)) ||
     "";
   return {
     food,

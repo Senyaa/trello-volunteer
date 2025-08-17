@@ -16,7 +16,7 @@ const AdminPage = () => {
         href="/admin/users"
         className="my-1 bg-white dark:bg-neutral-900 rounded-md px-4 p-2"
       >
-        Zarządzaj uzytkownikami
+       Lista uzytkowników
       </Link>
     </Container>
   );

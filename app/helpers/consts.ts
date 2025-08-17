@@ -13,6 +13,8 @@ export const allTrueSettings = {
     healthEnabled: true,
     storyEnabled: true,
     infoForCarerEnabled: true,
+    bedEnabled: true,
+    walkEnabled: true,
   };
 export const catsNewbieSettings = {
     testsEnabled: true,
