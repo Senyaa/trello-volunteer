@@ -34,21 +34,26 @@ const Profile = async () => {
           Moje dyżury
         </span>
         {shifts.length > 0 ? (
-          shifts.map((shift) => (
-            <Link
-              key={shift.id}
-              href={`/protected/shift/${shift.id}`}
-              className="flex justify-between items-center my-2 bg-white dark:bg-neutral-900 rounded-md p-2"
-            >
-              <span>
-                {shift.shiftType === "cats" ? "🐱" : "🐶"}
-                {shift.started
-                  ? shift.started.toLocaleDateString("pl")
-                  : shift.finished?.toLocaleDateString("pl")}
-              </span>
-              <FontAwesomeIcon icon={faChevronRight} />
-            </Link>
-          ))
+          shifts
+            .sort(
+              (a, b) =>
+                (a?.started?.getTime() ?? 0) - (b?.started?.getTime() ?? 0)
+            )
+            .map((shift) => (
+              <Link
+                key={shift.id}
+                href={`/protected/shift/${shift.id}`}
+                className="flex justify-between items-center my-2 bg-white dark:bg-neutral-900 rounded-md p-2"
+              >
+                <span>
+                  {shift.shiftType === "cats" ? "🐱" : "🐶"}
+                  {shift.started
+                    ? shift.started.toLocaleDateString("pl")
+                    : shift.finished?.toLocaleDateString("pl")}
+                </span>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </Link>
+            ))
         ) : (
           <div className="mt-4">
             <span>Brak dyżurów w aplikacji</span>
