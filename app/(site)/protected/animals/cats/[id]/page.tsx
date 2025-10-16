@@ -8,13 +8,15 @@ import Image from "next/image";
 import CardDetailsAll from "@/app/components/cards/CardDetailsAll";
 
 interface CatPageProps {
-  params: { id: string };
+  params: Promise<{id: string}>;
 }
 
 const CatPage = async ({
   params,
 }: CatPageProps) => {
-  const cat = await getAnimalByCardId(params.id);
+
+  const paramsResolved = await params;
+  const cat = await getAnimalByCardId(paramsResolved.id);
 
   if (!cat)
     return (
