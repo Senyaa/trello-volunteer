@@ -2,7 +2,7 @@
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createPortal } from "react-dom";
-import Toast from "./ui/Toast";
+import Toast from "../ui/Toast";
 import { useState } from "react";
 
 const CopyButton = ({ content }: { content: string }) => {

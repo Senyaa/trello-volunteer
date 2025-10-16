@@ -1,8 +1,8 @@
 "use client";
 
 import { FC } from "react";
-import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
-import { Card } from "../types/Card";
+import { SettingsFormType } from "../../(site)/protected/settings/SettingsForm";
+import { Card } from "../../types/Card";
 import AnimalCard from "./AnimalCard";
 import { selectShiftId, useSelector } from "@/lib/redux";
 import { usePathname } from "next/navigation";

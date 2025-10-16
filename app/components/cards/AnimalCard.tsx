@@ -1,18 +1,18 @@
 import Link from "next/link";
-import { Card } from "../types/Card";
+import { Card } from "../../types/Card";
 import { FC, useEffect, useState } from "react";
-import getCardCover from "../client/getCardCover";
+import getCardCover from "../../client/getCardCover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
 import CardDetail from "./CardDetail";
-import getDetails, { getDetailsHeaders } from "../helpers/details";
+import getDetails, { getDetailsHeaders } from "../../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
-import Button from "./ui/Button";
-import ShiftCheckbox from "./shift/ShiftCheckbox";
+import { SettingsFormType } from "../../(site)/protected/settings/SettingsForm";
+import Button from "../ui/Button";
+import ShiftCheckbox from "../shift/ShiftCheckbox";
 import { usePathname } from "next/navigation";
-import AddNote from "./shift/AddNote";
-import { replaceMDLink } from "../helpers/replaceMDLink";
+import AddNote from "../shift/AddNote";
+import { replaceMDLink } from "../../helpers/replaceMDLink";
 
 interface AnimalCardProps {
   animal: Card;

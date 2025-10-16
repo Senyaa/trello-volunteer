@@ -5,7 +5,7 @@ import { replaceMDLink } from "@/app/helpers/replaceMDLink";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import CardDetailsAll from "@/app/components/CardDetailsAll";
+import CardDetailsAll from "@/app/components/cards/CardDetailsAll";
 
 interface CatPageProps {
   params: { id: string };

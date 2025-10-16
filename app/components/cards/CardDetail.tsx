@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { replaceMDLink } from "../helpers/replaceMDLink";
+import { replaceMDLink } from "../../helpers/replaceMDLink";
 
 interface DetailProps {
   visible?: boolean;

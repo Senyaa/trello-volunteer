@@ -2,7 +2,7 @@ import { FC } from "react";
 import getAnimalsOnShiftByShiftId from "@/actions/getAnimalsOnShiftByShiftId";
 import { getAnimalByCardId } from "@/actions/getAnimalByCardID";
 import getShiftById from "@/actions/getShiftById";
-import CopyButton from "./CopyButton";
+import CopyButton from "./newbie/CopyButton";
 
 interface ReportProps {
   shiftId: string;

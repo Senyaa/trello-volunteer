@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getSession";
 import Container from "@/app/components/ui/Container";
 import CheatSheetButton from "@/app/components/pdf/CheatSheetButton";
-import AnimalList from "@/app/components/AnimalList";
+import AnimalList from "@/app/components/cards/AnimalList";
 import { getUserSettings } from "../../settings/getUserSettings";
 import Button from "@/app/components/ui/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

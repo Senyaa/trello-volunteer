@@ -1,5 +1,5 @@
 import { getGuestView } from "@/actions/getGuestView";
-import CopyButton from "@/app/components/CopyButton";
+import CopyButton from "@/app/components/newbie/CopyButton";
 import ShareButton from "@/app/components/ShareButton";
 import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import QRCode from "react-qr-code";

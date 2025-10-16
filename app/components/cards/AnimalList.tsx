@@ -1,10 +1,10 @@
 "use client";
 import { FC, useEffect, useMemo, useState } from "react";
-import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
-import { Card } from "../types/Card";
+import { SettingsFormType } from "../../(site)/protected/settings/SettingsForm";
+import { Card } from "../../types/Card";
 import AnimalData from "./AnimalData";
 import { usePathname, useSearchParams } from "next/navigation";
-import EndShiftButton from "./shift/EndShiftButton";
+import EndShiftButton from "../shift/EndShiftButton";
 import {
   selectCurrentShiftDoneCount,
   selectCurrentShiftDoneIds,
@@ -13,9 +13,9 @@ import {
   useSelector,
   userSlice,
 } from "@/lib/redux";
-import { getDetailsHeaders } from "../helpers/details";
-import Search from "./Search";
-import Container from "./ui/Container";
+import { getDetailsHeaders } from "../../helpers/details";
+import Search from "../ui/Search";
+import Container from "../ui/Container";
 
 interface AnimalListProps {
   animals: Card[];

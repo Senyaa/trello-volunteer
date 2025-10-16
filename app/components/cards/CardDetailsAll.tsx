@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import CardDetail from "@/app/components/CardDetail";
+import CardDetail from "@/app/components/cards/CardDetail";
 import { getDetailsHeaders } from "@/app/helpers/details";
 import { allTrueSettings } from "@/app/helpers/consts";
 

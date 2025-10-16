@@ -1,7 +1,7 @@
 import { getGuestView } from "@/actions/getGuestView";
 import getUser from "@/actions/getUser";
-import AnimalList from "@/app/components/AnimalList";
-import CatsNav from "@/app/components/CatsNav";
+import AnimalList from "@/app/components/cards/AnimalList";
+import CatsNav from "@/app/components/cards/CatsNav";
 import { catRooms } from "@/app/helpers/cardFilters";
 import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import { Card } from "@/app/types/Card";

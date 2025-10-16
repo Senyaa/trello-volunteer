@@ -1,7 +1,7 @@
 import { getServerSession } from "@/lib/getSession";
 import { catRooms, filterCats } from "@/app/helpers/cardFilters";
-import CatsNav from "@/app/components/CatsNav";
-import AnimalList from "../../../../components/AnimalList";
+import CatsNav from "@/app/components/cards/CatsNav";
+import AnimalList from "../../../../components/cards/AnimalList";
 import { getUserSettings } from "../../settings/getUserSettings";
 import { getParsedCards } from "@/actions/getParsedCards";
 import Container from "@/app/components/ui/Container";

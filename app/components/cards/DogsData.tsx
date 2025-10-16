@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { initialSettingsForm } from "../(site)/protected/settings/SettingsForm";
-import { Card } from "../types/Card";
+import { initialSettingsForm } from "../../(site)/protected/settings/SettingsForm";
+import { Card } from "../../types/Card";
 import AnimalCard from "./AnimalCard";
-import Search from "./Search";
+import Search from "../ui/Search";
 
 const DogsData = ({ allDogs }: { allDogs: Card[] }) => {
   const [searchValue, setSearchValue] = useState("");

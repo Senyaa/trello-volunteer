@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import Button from "./ui/Button";
+import Button from "../ui/Button";
 
 interface CatsNavProps {
   animalListLength: number;
