@@ -37,7 +37,7 @@ const Profile = async () => {
           shifts
             .sort(
               (a, b) =>
-                (a?.started?.getTime() ?? 0) - (b?.started?.getTime() ?? 0)
+               (b?.started?.getTime()?? 0) - (a?.started?.getTime() ?? 0)
             )
             .map((shift) => (
               <Link
