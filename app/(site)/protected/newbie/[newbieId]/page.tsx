@@ -14,7 +14,7 @@ const NewbieShiftPage = async ({
 }: {
   params: { newbieId: string };
 }) => {
-  const headersList = headers();
+  const headersList = await headers();
   const domain = headersList.get("host") || "";
   const newbieId = params.newbieId;
   const guestView = await getGuestView(newbieId);

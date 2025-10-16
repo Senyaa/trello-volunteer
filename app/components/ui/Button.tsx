@@ -1,3 +1,5 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -12,6 +14,7 @@ interface ButtonProps {
   classes?: string;
   iconRight?: ReactNode;
   iconLeft?: ReactNode;
+  isLoading?: boolean;
   color?: "green" | "grey";
 }
 
@@ -25,6 +28,7 @@ const Button = ({
   level = "primary",
   iconRight,
   iconLeft,
+  isLoading = false,
   color = "green",
 }: ButtonProps) => {
   const getColorClasses = () => {
@@ -76,14 +80,20 @@ const Button = ({
     );
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       type={type}
-      className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes}`}
-      onClick={disabled ? undefined : onClick}
+      className={`${getColorClasses()} rounded-md py-2 px-4 ease-in-out ${classes} `}
+      onClick={disabled || isLoading ? undefined : onClick}
     >
-      {iconLeft}
-      {label}
-      {iconRight}
+      {isLoading ? (
+        <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+      ) : (
+        <>
+          {iconLeft}
+          {label}
+          {iconRight}
+        </>
+      )}
     </button>
   );
 };
