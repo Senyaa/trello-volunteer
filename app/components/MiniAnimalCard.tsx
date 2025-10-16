@@ -50,6 +50,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             alt={animal.name}
             loading="lazy"
             className="object-cover rounded-full aspect-square"
+            unoptimized
           />
         </div>
         <div className="h-full flex flex-col justify-between">
