@@ -1,5 +1,5 @@
 import getYourGuestViews from "@/actions/getYourGuestViews";
-import StartNewbieMode from "@/app/components/StartNewbieMode";
+import StartNewbieMode from "@/app/components/newbie/StartNewbieMode";
 import Container from "@/app/components/ui/Container";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

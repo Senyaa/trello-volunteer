@@ -1,6 +1,5 @@
 import { getGuestView } from "@/actions/getGuestView";
 import CopyButton from "@/app/components/newbie/CopyButton";
-import ShareButton from "@/app/components/ShareButton";
 import { parseToHumanDateTime } from "@/app/helpers/parseToHumanDatetime";
 import QRCode from "react-qr-code";
 import { headers } from "next/headers";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Container from "@/app/components/ui/Container";
+import ShareButton from "@/app/components/newbie/ShareButton";
 
 const NewbieShiftPage = async ({
   params,
