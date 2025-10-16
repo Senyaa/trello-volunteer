@@ -12,11 +12,12 @@ import ShareButton from "@/app/components/newbie/ShareButton";
 const NewbieShiftPage = async ({
   params,
 }: {
-  params: { newbieId: string };
+  params: Promise<{ newbieId: string }>;
 }) => {
+  const paramsResolved = await params;
   const headersList = await headers();
   const domain = headersList.get("host") || "";
-  const newbieId = params.newbieId;
+  const newbieId = paramsResolved.newbieId;
   const guestView = await getGuestView(newbieId);
   const newbieLink = `${domain}/newbie/${newbieId}`;
 
