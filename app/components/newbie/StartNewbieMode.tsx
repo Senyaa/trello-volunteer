@@ -1,9 +1,9 @@
 "use client";
 
-import Button from "./ui/Button";
 import { shareCards } from "@/actions/shareCards";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Button from "../ui/Button";
 
 const StartNewbieMode = () => {
   const session = useSession();
