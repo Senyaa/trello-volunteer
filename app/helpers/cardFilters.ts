@@ -34,7 +34,7 @@ export const isOnDogList = (idList: string): boolean => {
 };
 
 export const isTemplate = (name: string) => {
-  const templates = ["❗Nowy kot - szablon (skopiuj kartę)❗", "Nowy pies - szablon"];
+  const templates = ["❗Nowy kot - szablon (skopiuj kartę)❗", "Nowy pies - szablon", "Karta do kopiowania dla nowego kota"];
   return Boolean(templates.includes(name));
 };
 

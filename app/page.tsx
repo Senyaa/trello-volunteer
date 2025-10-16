@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import LoginForm from "./components/LoginForm";
 import { MAIN_PAGE } from "./helpers/consts";
 import Image from "next/image";
+import Link from "next/link";
 
 const Home = async () => {
   const session = await getServerSession();
@@ -17,7 +18,7 @@ const Home = async () => {
           <p>
             Ta strona powstała, aby ułatwić dyżur w fundacji i działa na
             podstawie danych z trello. Jeśli masz pomysły na jakiekolwiek
-            usprawnienia, podziel się nimi.
+            usprawnienia, <Link href={"mailto:kolejnik12+eko@gmail.com"}>podziel się nimi</Link>.
           </p>
           <p className="mb-5">Fajnie, ze jesteś!</p>
           <LoginForm classes="mt-5 w-full" />
@@ -31,11 +32,6 @@ const Home = async () => {
         height={300}
         priority
       />
-      {/* <img
-        className="w-full md:w-[50%] h-[300px] md:h-full object-cover"
-        src="https://images.unsplash.com/photo-1594546927369-f4f587649acc?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="hedgehog"
-      /> */}
     </article>
   );
 };
