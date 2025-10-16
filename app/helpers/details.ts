@@ -1,119 +1,73 @@
 import { SettingsFormType } from "../(site)/protected/settings/SettingsForm";
-
-
+import { Details } from "../types/Details";
 
 export const getDetailSanitized = (
   description: string,
   regex: RegExp,
-  isConsistentLabel = true
+  isConsistentLabel = true,
+  fallback = ""
 ) => {
   const group = isConsistentLabel ? 1 : 2;
-  return regex.exec(description)?.[group]?.toString().trim();
+  return regex.exec(description)?.[group]?.toString().trim() || fallback;
 };
 
 export const REGEX = {
   food: new RegExp(/(Karma\/Food:|Karma:)([\s\S]*?)(😈|💊)/i),
   tests: new RegExp(/Testy:([\s\S]*?)(💉|🐛)/gi),
-  warning: new RegExp(/(❗️UWAGA:|UWAGA:|UWAGI:|❗️)([\s\S]*?)(Czip|Info dla|--)/gi),
+  warning: new RegExp(
+    /(❗️UWAGA:|UWAGA:|UWAGI:|❗️)([\s\S]*?)(Czip|Info dla|--)/gi
+  ),
   meds: new RegExp(/Leki:([\s\S]*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gi),
   status: new RegExp(/Status:([\s\S]*?)(---|🛏|👮‍♀️|📟)/gi),
-  personality: new RegExp(/(Charakter\/Personality:|Charakter:)([\s\S]*?)(🐶|🪪)/gi),
+  personality: new RegExp(
+    /(Charakter\/Personality:|Charakter:)([\s\S]*?)(🐶|🪪)/gi
+  ),
   castration: new RegExp(/Kastracja:([\s\S]*?)🩸/gi),
-  age: new RegExp(/(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)([\s\S]*?)(🏠|🐶)/gi),
-
-}
+  age: new RegExp(
+    /(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)([\s\S]*?)(🏠|🐶)/gi
+  ),
+  dogInteraction: new RegExp(/Stosunek do psów:([\s\S]*?)🐱/gi),
+  catInteraction: new RegExp(/Stosunek do kotów:([\s\S]*?)👶🏻/gi),
+  childrenInteraction: new RegExp(/Stosunek do dzieci:([\s\S]*?)(👩🏼‍🏫|📟)/gi),
+  deworming: new RegExp(/Odrobaczanie \(data \+ środek\):([\s\S]*?)(👨🏻‍⚕️|💉)/gi),
+  health: new RegExp(/Leczenie\/Health:([\s\S]*?)(👨🏻|)/gi),
+  story: new RegExp(/👩🏼‍🏫 Historia:([\s\S]*?)(✂️|👉)/gi),
+  infoForCarer: new RegExp(
+    /Info dla właścicieli\/opiekunów:([\s\S]*?)Szacowany/gi
+  ),
+  bed: new RegExp(/Legowisko:([\s\S]*?)🦮/gi),
+  walk: new RegExp(/Spacery:([\s\S]*?)(🍲|🥘|🍽)/gi),
+};
 const getDetails = (description: string) => {
-  const food =
-    getDetailSanitized(
-      description,
-      REGEX.food,
-      false
-    ) || "zwykła";
+  const food = getDetailSanitized(description, REGEX.food, false, "zwykła");
 
-    console.log(description.match(REGEX.food));
-
-  const testsFound = getDetailSanitized(
-    description,
-   REGEX.tests
-  );
+  const testsFound = getDetailSanitized(description, REGEX.tests);
   const tests =
     testsFound && testsFound.trim().toLocaleLowerCase() !== "ujemne"
       ? testsFound
       : "";
 
-  const warning = getDetailSanitized(
-    description,
-    REGEX.warning,
-    false
-  );
-
-  const medsFound = getDetailSanitized(
-    description,
-    REGEX.meds
-  );
-
+  const medsFound = getDetailSanitized(description, REGEX.meds);
   const meds = medsFound && medsFound !== "brak" ? medsFound : "";
 
-  const status =
-    getDetailSanitized(
-      description,
-      REGEX.status
-    ) || "";
-  const personality =
-    getDetailSanitized(
-      description,
-      REGEX.personality,
-      false
-    ) || "";
-  const castration =
-    getDetailSanitized(description, REGEX.castration) || "";
+  const warning = getDetailSanitized(description, REGEX.warning, false);
+  const status = getDetailSanitized(description, REGEX.status);
+  const personality = getDetailSanitized(description, REGEX.personality, false);
+  const castration = getDetailSanitized(description, REGEX.castration);
+  const dogInteraction = getDetailSanitized(description, REGEX.dogInteraction);
+  const catInteraction = getDetailSanitized(description, REGEX.catInteraction);
+  const childrenInteraction = getDetailSanitized(
+    description,
+    REGEX.childrenInteraction
+  );
+  const deworming = getDetailSanitized(description, REGEX.deworming);
+  const health = getDetailSanitized(description, REGEX.health);
+  const story = getDetailSanitized(description, REGEX.story);
+  const infoForCarer = getDetailSanitized(description, REGEX.infoForCarer);
+  const age = getDetailSanitized(description, REGEX.age, false);
+  const bed = getDetailSanitized(description, REGEX.bed);
+  const walk = getDetailSanitized(description, REGEX.walk);
 
-  const dogInteraction =
-    getDetailSanitized(
-      description,
-      new RegExp(/Stosunek do psów:([\s\S]*?)🐱/gi)
-    ) || "";
-  const catInteraction =
-    getDetailSanitized(
-      description,
-      new RegExp(/Stosunek do kotów:([\s\S]*?)👶🏻/gi)
-    ) || "";
-  const childrenInteraction =
-    getDetailSanitized(
-      description,
-      new RegExp(/Stosunek do dzieci:([\s\S]*?)(👩🏼‍🏫|📟)/gi)
-    ) || "";
-  const deworming =
-    getDetailSanitized(
-      description,
-      new RegExp(/Odrobaczanie \(data \+ środek\):([\s\S]*?)(👨🏻‍⚕️|💉)/gi)
-    ) || "";
-  const health =
-    getDetailSanitized(
-      description,
-      new RegExp(/Leczenie\/Health:([\s\S]*?)(👨🏻|)/gi)
-    ) || "";
-  const story =
-    getDetailSanitized(
-      description,
-      new RegExp(/👩🏼‍🏫 Historia:([\s\S]*?)(✂️|👉)/gi)
-    ) || "";
-  const infoForCarer =
-    getDetailSanitized(
-      description,
-      new RegExp(/Info dla właścicieli\/opiekunów:([\s\S]*?)Szacowany/gi)
-    ) || "";
-  const age =
-    getDetailSanitized(
-      description,
-      REGEX.age,
-      false
-    ) || "";
-  const bed =
-    getDetailSanitized(description, new RegExp(/Legowisko:([\s\S]*?)🦮/gi)) || "";
-  const walk =
-    getDetailSanitized(description, new RegExp(/Spacery:([\s\S]*?)(🍲|🥘|🍽)/gi)) ||
-    "";
   return {
     food,
     tests,
@@ -135,12 +89,9 @@ const getDetails = (description: string) => {
   };
 };
 
-//TODO: find
-const detailsGot = getDetails("test");
-
 export const getDetailsHeaders = (
   settings: SettingsFormType,
-  details?: typeof detailsGot
+  details?: Details
 ) => {
   return [
     {

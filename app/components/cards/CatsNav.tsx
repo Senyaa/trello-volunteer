@@ -1,6 +1,6 @@
 "use client";
-import { FC } from "react";
-import { useRouter } from "next/navigation";
+import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import Button from "../ui/Button";
@@ -24,6 +24,27 @@ const CatsNav: FC<CatsNavProps> = ({
   route = "/protected/animals/cats",
 }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onRoomSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsLoading(true);
+    router.push(`${route}${e.target.value ? `?room=${e.target.value}` : ""}`);
+  };
+
+  useEffect(() => {
+    const handleRouteChangeComplete = () => {
+      setIsLoading(false);
+    };
+
+    router.events?.on("routeChangeComplete", handleRouteChangeComplete);
+    router.events?.on("routeChangeError", handleRouteChangeComplete);
+
+    return () => {
+      router.events?.off("routeChangeComplete", handleRouteChangeComplete);
+      router.events?.off("routeChangeError", handleRouteChangeComplete);
+    };
+  }, [router]);
+
   return (
     <div className="flex justify-between items-end mb-2">
       <h1 className="uppercase m-2">{`Koty (${animalListLength})`}</h1>
@@ -42,23 +63,23 @@ const CatsNav: FC<CatsNavProps> = ({
           <label htmlFor="cats-nav" className="text-xs mb-0">
             Miejsce
           </label>
-          <select
-            className="rounded-md py-3 pl-2 pr-7 bg-neutral-200 dark:text-white dark:bg-neutral-900"
-            name="cats-nav"
-            id="cats-nav"
-            onChange={(e) =>
-              router.push(
-                `${route}${e.target.value ? `?room=${e.target.value}` : ""}`
-              )
-            }
-            value={currentRoom?.toLocaleLowerCase()}
-          >
-            {options.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+          {isLoading ? (
+            <span>loading...</span>
+          ) : (
+            <select
+              className="rounded-md py-3 pl-2 pr-7 bg-neutral-200 dark:text-white dark:bg-neutral-900"
+              name="cats-nav"
+              id="cats-nav"
+              onChange={onRoomSelect}
+              value={currentRoom?.toLocaleLowerCase()}
+            >
+              {options.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
       </div>
     </div>

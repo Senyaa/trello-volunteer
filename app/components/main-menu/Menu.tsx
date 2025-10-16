@@ -6,11 +6,11 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ShiftButton from "./shift/ShiftButton";
+import ShiftButton from "../shift/ShiftButton";
 import { useSelector } from "react-redux";
 import { selectShiftId } from "@/lib/redux";
 import MenuItem from "./MenuItem";
-import { isMobile } from "../helpers/isMobile";
+import { isMobile } from "../../helpers/isMobile";
 import { ReactNode } from "react";
 
 const Menu = () => {

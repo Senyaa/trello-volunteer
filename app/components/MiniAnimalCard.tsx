@@ -7,6 +7,7 @@ import parseTrelloIdToCreatedDate from "../helpers/parseTrelloIdToCreatedDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import Image from "next/image";
 
 interface MinimalAnimalCardProps {
   animal: any;
@@ -44,7 +45,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
     <div className="bg-white shadow-sm dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] h-[120px] overflow-y-hidden ">
       <div className="flex h-full">
         <div className="relative h-[4rem] w-[4rem] mr-4 flex-shrink-0">
-          <img
+          <Image
             src={cover || "/assets/placeholder.png"}
             alt={animal.name}
             loading="lazy"

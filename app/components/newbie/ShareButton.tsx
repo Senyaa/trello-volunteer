@@ -1,9 +1,9 @@
 "use client"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isMobile } from "../helpers/isMobile";
-import Button from "./ui/Button";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
+import Button from "../ui/Button";
+import { isMobile } from "@/app/helpers/isMobile";
 
 const ShareButton = ({ link }: { link: string }) => {
   if (isMobile()) {

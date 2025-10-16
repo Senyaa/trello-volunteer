@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import User from "./components/User";
-import SessionProvider from "./components/SessionProvider";
+import SessionProvider from "./components/main-menu/SessionProvider";
 import { faShieldCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getServerSession } from "@/lib/getSession";
@@ -15,7 +15,7 @@ import Loading from "./loading";
 import { MAIN_PAGE } from "./helpers/consts";
 import { getCurrentShiftId } from "@/actions/getCurrentShiftId";
 import { StoreHydration } from "./components/StoreHydration";
-import Menu from "./components/Menu";
+import Menu from "./components/main-menu/Menu";
 import getUser from "@/actions/getUser";
 config.autoAddCss = false;
 

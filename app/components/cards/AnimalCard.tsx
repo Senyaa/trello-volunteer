@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card } from "../../types/Card";
 import { FC, useEffect, useState } from "react";
 import getCardCover from "../../client/getCardCover";
@@ -59,11 +60,13 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
     >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
         <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
-          <img
+          <Image
             src={cover || "/assets/placeholder.png"}
             alt={animal.name}
-            loading="lazy"
+            fill
+            sizes="112px"
             className="object-cover rounded-full aspect-square"
+            unoptimized
           />
         </div>
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
@@ -102,7 +105,9 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
                 <span className="text-red-800 text-xs font-bold">UWAGA!</span>
                 <div className="text-red-800 whitespace-pre-wrap leading-none">
                   <span
-                    dangerouslySetInnerHTML={{ __html: replaceMDLink(detailsValues.warning) }}
+                    dangerouslySetInnerHTML={{
+                      __html: replaceMDLink(detailsValues.warning),
+                    }}
                   ></span>
                 </div>
               </div>

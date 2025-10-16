@@ -29,7 +29,7 @@ const User: React.FC<UserProps> = ({ userType = "USER" }) => {
       dispatch(userSlice.actions.setTrelloId(""));
       dispatch(userSlice.actions.setUserType("USER"));
     }
-  }, [status, trelloId, userType]);
+  }, [status, trelloId, userType, dispatch, session]);
 
   const adminIndicator = userType === "ADMIN" ? "✨" : "";
 

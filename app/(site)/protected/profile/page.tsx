@@ -1,6 +1,6 @@
 import getMyShiftsFrom30Days from "@/actions/getMyShiftsFrom30Days";
 import getUser from "@/actions/getUser";
-import SignOutButton from "@/app/components/SignOutButton";
+import SignOutButton from "@/app/components/main-menu/SignOutButton";
 import User from "@/app/components/User";
 import Container from "@/app/components/ui/Container";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
