@@ -7,7 +7,7 @@ import { drizzleVercel } from "./drizzleVercel";
   try {
     const isVercel = process.env.PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK;
 
-    const options = { migrationsFolder: "./migrations" };
+    const options = { migrationsFolder: "./drizzle/migrations" };
 
     console.log("Starting migrations");
 
