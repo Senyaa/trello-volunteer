@@ -9,7 +9,6 @@ import CardDetailsAll from "@/app/components/ui/CardDetailsAll";
 
 interface CatPageProps {
   params: { id: string };
-  pathname: string[];
 }
 
 const CatPage = async ({
