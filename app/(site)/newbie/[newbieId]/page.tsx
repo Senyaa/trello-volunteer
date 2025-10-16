@@ -36,7 +36,7 @@ const NewbiePage = async ({
   }
 
   const guestView = await getGuestView(newbieId);
-  const userSharing = await getUser(guestView?.userId || "");
+  const userSharing = await getUser();
 
   // obrazki
 
