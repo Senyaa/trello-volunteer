@@ -1,23 +1,20 @@
 import { getAnimalByCardId } from "@/actions/getAnimalByCardID";
-import CardDetail from "@/app/components/CardDetail";
 import Container from "@/app/components/ui/Container";
-import { allTrueSettings } from "@/app/helpers/consts";
 import getDetails from "@/app/helpers/details";
 import { replaceMDLink } from "@/app/helpers/replaceMDLink";
-import { getServerSession } from "@/lib/getSession";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getDetailsHeaders } from "@/app/helpers/details";
 import Image from "next/image";
+import CardDetailsAll from "@/app/components/ui/CardDetailsAll";
+
+interface CatPageProps {
+  params: { id: string };
+  pathname: string[];
+}
 
 const CatPage = async ({
   params,
-  pathname,
-}: {
-  params: { id: string };
-  pathname: string[];
-}) => {
-  const session = await getServerSession();
+}: CatPageProps) => {
   const cat = await getAnimalByCardId(params.id);
 
   if (!cat)
@@ -29,7 +26,7 @@ const CatPage = async ({
 
   const detailsValues = getDetails(cat.desc);
 
-  const [name, info] = cat.name.split(" - ");
+  const [_name, info] = cat.name.split(" - ");
 
   return (
     <Container>
@@ -65,25 +62,7 @@ const CatPage = async ({
           </div>
         )}
       </div>
-      <div className="flex flex-col md:flex-row w-full md:gap-2">
-        <CardDetail text={detailsValues.food} icon="🍽" />
-        {getDetailsHeaders(allTrueSettings, detailsValues).map((detail) => {
-          const displayForType = detail.onlyType
-            ? pathname.includes(detail?.onlyType)
-            : true;
-          if (displayForType) {
-            return (
-              <CardDetail
-                key={detail.plName}
-                visible={Boolean(detail.isEnabled && detail.value)}
-                text={detail.value}
-                icon={detail.icon}
-                isOn={detail.isEnabled}
-              />
-            );
-          }
-        })}
-      </div>
+      <CardDetailsAll cat={cat} />
     </Container>
   );
 };

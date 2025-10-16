@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getSession";
 import { catRooms, filterCats } from "@/app/helpers/cardFilters";
 import CatsNav from "@/app/components/CatsNav";
@@ -10,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
 const Cats = async ({
-  searchParams,
+  searchParams
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
