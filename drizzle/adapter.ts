@@ -1,6 +1,6 @@
 import { PgDatabase } from "drizzle-orm/pg-core";
 import * as schema from "./drizzleSchema";
-import { Adapter } from "next-auth/adapters";
+import { Adapter, AdapterAccount, AdapterUser } from "next-auth/adapters";
 import { and, eq } from "drizzle-orm";
 
 type NonNullableProps<T> = {
@@ -19,7 +19,7 @@ export function drizzleAdapter(
   const { user, account, session, verificationToken } = schema;
 
   return {
-    async createUser(data) {
+    async createUser(data: AdapterUser) {
       return await client
         .insert(user)
         .values(data)
@@ -78,7 +78,7 @@ export function drizzleAdapter(
         .returning()
         .then((res) => res[0]);
     },
-    async linkAccount(rawAccount) {
+    async linkAccount(rawAccount: AdapterAccount) {
       return stripUndefined(
         await client
           .insert(account)
