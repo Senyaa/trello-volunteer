@@ -2,8 +2,9 @@ import getShiftById from "@/actions/getShiftById";
 import Report from "@/app/components/Report";
 import Container from "@/app/components/ui/Container";
 
-const ShiftPage = async ({ params }: { params: { shiftId: string } }) => {
-  const shiftId = params.shiftId;
+const ShiftPage = async ({ params }: { params: Promise<{ shiftId: string }> }) => {
+  const paramsResolved = await params;
+  const shiftId = paramsResolved.shiftId;
 
   const shift = await getShiftById(shiftId);
 
