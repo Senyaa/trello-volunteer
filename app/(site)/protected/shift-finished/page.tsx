@@ -3,9 +3,10 @@ import Report from "@/app/components/Report";
 const ShiftFinished = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
-  const shiftId = searchParams.shiftId || "";
+  const sp = await searchParams;
+  const shiftId = sp.shiftId || "";
 
   return (
     <div className="flex flex-col items-center mt-4 p-2">

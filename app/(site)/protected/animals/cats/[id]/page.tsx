@@ -25,7 +25,7 @@ const CatPage = async ({
 
   const detailsValues = getDetails(cat.desc);
 
-  const [_name, info] = cat.name.split(" - ");
+  const [_name, info] = cat.name?.split(" - ");
 
   return (
     <Container>

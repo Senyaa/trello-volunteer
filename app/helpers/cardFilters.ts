@@ -11,7 +11,7 @@ export const catRooms: { name: string; id: string }[] = (
   .toString()
   .split(",")
   .map((catroom: string) => {
-    const [name, id] = catroom.split("-");
+    const [name, id] = catroom?.split("-");
     return { name, id };
   });
 
@@ -21,7 +21,7 @@ export const dogRooms: { name: string; id: string }[] = (
   .toString()
   .split(",")
   .map((dogroom: string) => {
-    const [name, id] = dogroom.split("-");
+    const [name, id] = dogroom?.split("-");
     return { name, id };
   });
 

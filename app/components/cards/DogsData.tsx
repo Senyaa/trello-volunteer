@@ -14,8 +14,8 @@ const DogsData = ({ allDogs }: { allDogs: Card[] }) => {
   };
 
   const dogsToDisplay = allDogs.filter((animal) => {
-    return animal.name
-      .split("-")[0]
+    return animal?.name
+      ?.split("-")[0]
       .toLocaleLowerCase()
       .includes(searchValue.toLocaleLowerCase());
   });

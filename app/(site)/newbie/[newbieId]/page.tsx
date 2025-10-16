@@ -14,10 +14,13 @@ const NewbiePage = async ({
   searchParams,
   params,
 }: {
-  searchParams: { [key: string]: string | undefined };
-  params: { newbieId: string };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+  params: Promise<{ newbieId: string }>;
 }) => {
-  const newbieId = params.newbieId;
+  const paramsResolved = await params
+
+  const sp = await searchParams;  
+  const newbieId = paramsResolved.newbieId;
   const validUUID =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   if (!validUUID.test(newbieId)) {
@@ -53,7 +56,7 @@ const NewbiePage = async ({
 
   const roomId = catRooms.find(
     (r) =>
-      r.name.toLocaleLowerCase() === searchParams?.room?.toLocaleLowerCase()
+      r.name.toLocaleLowerCase() === sp?.room?.toLocaleLowerCase()
   )?.id;
 
   const allAnimals: Card[] = guestView?.content as Card[];
@@ -62,7 +65,7 @@ const NewbiePage = async ({
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const isLowerCatroom =
-    searchParams.room?.toLocaleLowerCase() === "lowercatroom";
+    sp.room?.toLocaleLowerCase() === "lowercatroom";
 
   return (
     <Container>
@@ -79,7 +82,7 @@ const NewbiePage = async ({
       {guestView?.type === "cats" ? (
         <>
           <CatsNav
-            currentRoom={searchParams?.room || ""}
+            currentRoom={sp?.room || ""}
             animalListLength={filteredCards.length}
             route={`/newbie/${newbieId}`}
           />

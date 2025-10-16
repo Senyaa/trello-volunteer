@@ -28,7 +28,7 @@ export async function GET(request: Request): Promise<Response> {
 
       if (previewId && attachmentId) {
         const imageString = `data:image/${url
-          .split(".")
+          ?.split(".")
           .at(-1)};base64,${imageAsBase64}`;
 
         const uploadedImage = await cloudinary.v2.uploader.upload(imageString, {

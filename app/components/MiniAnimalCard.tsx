@@ -54,7 +54,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
         </div>
         <div className="h-full flex flex-col justify-between">
           <div>
-            <span className="font-extrabold">{animal.name.split("-")[0]}</span>
+            <span className="font-extrabold">{animal.name?.split("-")[0]}</span>
             <div className="text-ellipsis">
               {personality.length < 30
                 ? personality

@@ -9,17 +9,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
 const Cats = async ({
-  searchParams
+  searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{
+    [key: string]: string | string[] | undefined;
+  }>;
 }) => {
   const session = await getServerSession();
   const settings = await getUserSettings();
 
-  const roomId = catRooms.find(
-    (r) =>
-      r.name.toLocaleLowerCase() === searchParams?.room?.toLocaleLowerCase()
-  )?.id;
+  const searchParamsResolved = await searchParams;
+  const roomParamRaw = searchParamsResolved?.room;
+  const roomParam = Array.isArray(roomParamRaw)
+    ? roomParamRaw[0]
+    : roomParamRaw;
+  const room = roomParam ? roomParam.toLocaleLowerCase() : undefined;
+
+  const roomId = catRooms.find((r) => r.name.toLocaleLowerCase() === room)?.id;
 
   const cards = await getParsedCards(session?.user?.trelloId || "");
 
@@ -27,8 +33,6 @@ const Cats = async ({
   const filteredCards = allCats
     .filter((card) => (roomId ? card.idList === roomId : true))
     .sort((a, b) => a.name.localeCompare(b.name));
-
-  const room = searchParams?.room?.toLocaleLowerCase();
 
   const isLowerCatroom = room === "lowercatroom";
   const isUpperCatroom = room === "uppercatroom";
@@ -41,10 +45,10 @@ const Cats = async ({
   return (
     <Container>
       <CatsNav
-        currentRoom={searchParams?.room || ""}
+        currentRoom={room || ""}
         animalListLength={filteredCards.length}
       />
-      <div className="mb-4">
+       <div className="mb-4">
         {(isLowerCatroom || !room) && isFriday && (
           <div className="py-2 px-4 mt-2 bg-neutral-200 dark:bg-neutral-800 border border-green-700 flex flex-row  items-center rounded-md">
             <FontAwesomeIcon
@@ -77,11 +81,11 @@ const Cats = async ({
           </div>
         )}
       </div>
-      <AnimalList
+    <AnimalList
         animals={filteredCards}
         settings={settings}
         allAnimals={allCats}
-      />
+      /> 
     </Container>
   );
 };

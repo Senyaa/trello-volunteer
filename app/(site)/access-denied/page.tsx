@@ -19,9 +19,10 @@ const isOauthTokenInvalid = async (session: Session | null) => {
 };
 
 const AccessDenied = async (params: {
-  searchParams: { boardAccess?: string };
+  searchParams: Promise<{ boardAccess?: string }>;
 }) => {
-  const noAccess = params.searchParams.boardAccess === "false";
+  const sp = await params.searchParams;
+  const noAccess = sp.boardAccess === "false";
   const session = await getServerSession();
 
   const tokenInvalid = await isOauthTokenInvalid(session);

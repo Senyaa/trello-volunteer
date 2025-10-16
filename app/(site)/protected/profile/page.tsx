@@ -1,4 +1,3 @@
-import getMyShiftsFrom30Days from "@/actions/getMyShiftsFrom30Days";
 import getUser from "@/actions/getUser";
 import SignOutButton from "@/app/components/main-menu/SignOutButton";
 import User from "@/app/components/User";
@@ -6,9 +5,10 @@ import Container from "@/app/components/ui/Container";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import getAllMyShifts from "@/actions/getAllMyShifts";
 
 const Profile = async () => {
-  const shifts = await getMyShiftsFrom30Days();
+  const shifts = await getAllMyShifts();
   const user = await getUser();
 
   const isAdmin = user?.userType === "ADMIN";
@@ -31,7 +31,7 @@ const Profile = async () => {
       )}
       <section>
         <span className="font-bold">
-          Moje dyżury <small>(ostatnie 30 dni)</small>
+          Moje dyżury
         </span>
         {shifts.length > 0 ? (
           shifts.map((shift) => (

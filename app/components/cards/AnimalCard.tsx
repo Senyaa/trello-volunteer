@@ -1,19 +1,21 @@
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Card } from "../../types/Card";
-import { FC, useEffect, useState } from "react";
-import getCardCover from "../../client/getCardCover";
+import { usePathname } from "next/navigation";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrello } from "@fortawesome/free-brands-svg-icons";
-import CardDetail from "./CardDetail";
-import getDetails, { getDetailsHeaders } from "../../helpers/details";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
+import { Card } from "../../types/Card";
+import getCardCover from "../../client/getCardCover";
+import CardDetail from "./CardDetail";
 import { SettingsFormType } from "../../(site)/protected/settings/SettingsForm";
 import Button from "../ui/Button";
 import ShiftCheckbox from "../shift/ShiftCheckbox";
-import { usePathname } from "next/navigation";
 import AddNote from "../shift/AddNote";
 import { replaceMDLink } from "../../helpers/replaceMDLink";
+import getDetails, { getDetailsHeaders } from "../../helpers/details";
 
 interface AnimalCardProps {
   animal: Card;
@@ -50,7 +52,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
 
   const detailsValues = getDetails(animal.desc);
 
-  const [name, info] = animal.name.split(" - ");
+  const [name, info] = animal.name?.split(" - ");
 
   return (
     <div
@@ -141,7 +143,8 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
               href={animal.shortUrl}
               className="text-sm text-gray-400 w-15 hidden md:block"
             >
-              <FontAwesomeIcon icon={faTrello} size="lg" />
+              trello
+              <FontAwesomeIcon icon={faTrello} />
             </Link>
             <Button
               href={animal.shortUrl}

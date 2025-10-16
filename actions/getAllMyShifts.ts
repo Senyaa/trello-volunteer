@@ -1,0 +1,29 @@
+import { drizzle } from "@/drizzle/drizzle";
+import { usersOnShift, shift } from "@/drizzle/drizzleSchema";
+import { and, eq, inArray, desc } from "drizzle-orm";
+import getCurrentUserId from "./services/getCurrentUserId";
+import { Shift } from "@/app/types/Shift";
+
+const getAllMyShifts = async (): Promise<Shift[]> => {
+    const userId = await getCurrentUserId();
+
+    const shiftIds = await drizzle.query.usersOnShift.findMany({
+        where: eq(usersOnShift.userId, userId as any),
+        columns: { shiftId: true },
+    });
+
+    if (shiftIds.length === 0) {
+        return [];
+    }
+
+    const shiftIdsArray: string[] = shiftIds.map((o) => o.shiftId);
+
+    const myShifts = await drizzle.query.shift.findMany({
+        where: and(inArray(shift.id, shiftIdsArray)),
+        orderBy: [desc(shift.started), desc(shift.finished)],
+    });
+
+    return myShifts || [];
+};
+
+export default getAllMyShifts;

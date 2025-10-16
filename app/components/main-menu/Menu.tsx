@@ -1,6 +1,6 @@
 "use client";
 import {
-  faHome,
+  faHouse,
   faLeaf,
   faPaw,
   faUser,
@@ -26,7 +26,7 @@ const Menu = () => {
         <MenuItem
           label="Start"
           link="/protected/home"
-          icon={getIconForMobile(<FontAwesomeIcon icon={faHome}/>)}
+          icon={getIconForMobile(<FontAwesomeIcon icon={faHouse}/>)}
         />
         <MenuItem
           label="Zwierzęta"

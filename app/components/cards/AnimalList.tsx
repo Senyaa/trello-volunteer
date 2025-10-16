@@ -51,7 +51,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
         .map((a) => ({ ...a, isDone: isDoneIds.includes(a.id) }))
         .filter((animal) => {
           return animal.name
-            .split("-")[0]
+            ?.split("-")[0]
             .toLocaleLowerCase()
             .includes(searchValue.toLocaleLowerCase());
         }),
@@ -90,7 +90,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
   return (
     <>
       <Search inputValue={searchValue} onInput={handleSearchInput} />
-      {!isDog && shift && doneCount === allAnimals.length && (
+       {!isDog && shift && doneCount === allAnimals.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
           <p className="text-center">
             <span className="font-extrabold mb-2 block">
@@ -124,7 +124,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
           </>
         )}
       </div>
-      <AnimalData animals={animalsLocalDone} settings={settings} />
+      <AnimalData animals={animalsLocalDone} settings={settings} /> 
     </>
   );
 };
