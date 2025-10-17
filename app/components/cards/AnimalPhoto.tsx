@@ -14,6 +14,7 @@ const AnimalPhoto = ({
 }) => {
   const [cover, setCover] = useState("");
   const [isLoading, setIsLoading] = useState(true); 
+  const [isPhotoOpened, setOpenPhoto] = useState(false); 
 
   useEffect(() => {
     if (animal.cover.url) {
@@ -36,15 +37,16 @@ const AnimalPhoto = ({
       if (coverUrl) {
         setCover(`/api/imageFile?url=${coverUrl}`);
       }
-      setIsLoading(false); // Stop loading after attempting to fetch the cover
+      setIsLoading(false);
     });
   }, [animal]);
 
   const sizeClass = isMini
     ? "w-16 h-16 md:w-20 md:h-20"
-    : "w-24 h-24 md:w-32 md:h-32";
+    : "w-24 h-24";
 
   return (
+    <>
     <div
       className={`${sizeClass} flex-shrink-0 relative ${
         isLoading ? "animate-pulse" : ""
@@ -60,6 +62,7 @@ const AnimalPhoto = ({
           loading="lazy"
           unoptimized
           onLoadingComplete={() => setIsLoading(false)} 
+          onClick={() => setOpenPhoto(true)}
         />
       ) : (
         <div
@@ -75,6 +78,31 @@ const AnimalPhoto = ({
         </div>
       )}
     </div>
+    {isPhotoOpened && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+        onClick={() => setOpenPhoto(false)}
+      >
+        <div className="relative">
+          <Image
+            src={cover}
+            alt={name}
+            width={512}
+            height={512}
+            className="object-contain max-h-screen max-w-screen"
+            loading="lazy"
+            unoptimized
+          />
+          <button
+            className="absolute top-2 right-2 text-white text-2xl"
+            onClick={() => setOpenPhoto(false)}
+          >
+            &times;
+          </button>     
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
