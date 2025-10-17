@@ -1,7 +1,10 @@
+"use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { TrelloCard } from "@/app/types/Card";
 import { catRoomsMap } from "@/app/helpers/cardFilters";
+import { useState } from "react";
 
 const RoomReminders = ({
   room,
@@ -10,6 +13,7 @@ const RoomReminders = ({
   infoCards: TrelloCard[];
   room?: string | null;
 }) => {
+  const [isClosed, setIsClosed] = useState(false);
   const isLowerCatroom = room === "lowercatroom";
   const isUpperCatroom = room === "uppercatroom";
 
@@ -22,7 +26,6 @@ const RoomReminders = ({
     const cardList = card.idList;
     const currentRoomId = room ? catRoomsMap[room] : "";
 
-    console.log("cardList", cardList, "currentRoomId", currentRoomId, "room", room);
     return cardList === currentRoomId || room === null || room === undefined;
   });
 
@@ -54,17 +57,34 @@ const RoomReminders = ({
       )}
       {(isLowerCatroom || !room) && (
         <div className="py-2 px-4 mt-2 bg-neutral-200 dark:bg-neutral-800 border border-green-700 flex flex-row items-center rounded-md">
-          <span>{`Do karmy ${!room ? "w dolnej kociarni ": ""}podawaj vetomune/genomune`}</span>
+          <span>{`Do karmy ${
+            !room ? "w dolnej kociarni " : ""
+          }podawaj vetomune/genomune`}</span>
         </div>
       )}
       {infoCardsPerRoom.length > 0 && (
-        <div className="py-2 px-4 mt-2 bg-neutral-200 dark:bg-neutral-800 border border-pink-700 rounded-md">
-          <p className="font-bold text-pink-700">Kto się lubi</p>
-          {infoCardsPerRoom?.map((infoCard) => (
-            <p key={infoCard.id} className="whitespace-pre">
-              {infoCard.desc}
-            </p>
-          ))}
+        <div className="pt-2 px-4 mt-2 bg-neutral-200 dark:bg-neutral-800 border border-pink-700 rounded-md">
+          <div className="flex flex-row items-center mb-2">
+            <p className="font-bold text-pink-700">Kto się lubi</p>
+            <button
+              className="ml-auto text-pink-700 text-sm"
+              onClick={() => setIsClosed(!isClosed)}
+            >
+              <FontAwesomeIcon
+                icon={!isClosed ? faChevronUp : faChevronDown}
+                className="ml-2"
+              />
+            </button>
+          </div>
+          <div
+            className={`flex flex-col gap-2 py-2 ${isClosed ? "hidden" : "block"}`}
+          >
+            {infoCardsPerRoom?.map((infoCard) => (
+              <p key={infoCard.id} className="whitespace-pre">
+                {infoCard.desc}
+              </p>
+            ))}
+          </div>
         </div>
       )}
     </div>
