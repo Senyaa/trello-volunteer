@@ -3,9 +3,34 @@ import getDetails, { getDetailSanitized, REGEX } from "../details";
 
 describe("getDetails", () => {
   it("should get food detail", () => {
-    const description = "💊 Leki: \n\n🍽 Karma/Food: mokra zwykła  \n\n😈 Charakter/Personality: łagodny (ale czasem syczy)";
+    const description =
+      "💊 Leki: \n\n🍽 Karma/Food: mokra zwykła  \n\n😈 Charakter/Personality: łagodny (ale czasem syczy)";
     const result = getDetailSanitized(description, REGEX.food, false);
     expect(result).toBe("mokra zwykła");
+  });
+  
+  it("should get warning detail", () => {
+    const description = `❗ UWAGA:
+Często nie czuje że się załatwia,
+wymieniamy mu wszystko codziennie, bo nawet jak nie widać, to sika pod siebie.
+Zostawia kupę i pieczątki.
+Myjemy dupkę mokrym ręcznikiem papierowym  lub chusteczkami
+W razie biegunki pół diadoga lub sanofor
+bardzo nie lubi Carlosa! nie puszczać ich razem
+
+Czip
+
+Info dla właścicieli/opiekunów: nie trzyma moczu i kału
+
+🪪 Płeć, wiek: samiec, ok. 4-5 lat (ur. ~2019)
+Waga  2.06.25 4,30 kg`;
+    const result = getDetailSanitized(description, REGEX.warning, false);
+    expect(result).toBe(`Często nie czuje że się załatwia,
+wymieniamy mu wszystko codziennie, bo nawet jak nie widać, to sika pod siebie.
+Zostawia kupę i pieczątki.
+Myjemy dupkę mokrym ręcznikiem papierowym  lub chusteczkami
+W razie biegunki pół diadoga lub sanofor
+bardzo nie lubi Carlosa! nie puszczać ich razem`);
   });
 
   it("should extract details from a description string", () => {

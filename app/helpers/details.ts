@@ -10,33 +10,36 @@ export const getDetailSanitized = (
   const group = isConsistentLabel ? 1 : 2;
   return regex.exec(description)?.[group]?.toString().trim() || fallback;
 };
+const createRegex = (pattern: RegExp) => {
+  return new RegExp(pattern.source.replace(/\s\*/g, "\\s*"));
+};
 
 export const REGEX = {
-  food: new RegExp(/(Karma\/Food:|Karma:)([\s\S]*?)(😈|💊)/i),
-  tests: new RegExp(/Testy:([\s\S]*?)(💉|🐛)/gi),
-  warning: new RegExp(
-    /(❗️UWAGA:|UWAGA:|UWAGI:|❗️)([\s\S]*?)(Czip|Info dla|--)/gi
+  food: createRegex(/(Karma\/Food:|Karma:)([\s\S]*?)(😈|💊)/i),
+  tests: createRegex(/Testy:([\s\S]*?)(💉|🐛)/gi),
+  warning: createRegex(
+    /(❗️UWAGA:|UWAGA:|UWAGI:|❗️|❗ UWAGA:)([\s\S]*?)(Czip|Info dla|--)/gi
   ),
-  meds: new RegExp(/Leki:([\s\S]*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gi),
-  status: new RegExp(/Status:([\s\S]*?)(---|🛏|👮‍♀️|📟)/gi),
-  personality: new RegExp(
+  meds: createRegex(/Leki:([\s\S]*?)(\.\.\.|___|---|nieaktualne|🍽|👱|😌)/gi),
+  status: createRegex(/Status:([\s\S]*?)(---|🛏|👮‍♀️|📟)/gi),
+  personality: createRegex(
     /(Charakter\/Personality:|Charakter:)([\s\S]*?)(🐶|🪪)/gi
   ),
-  castration: new RegExp(/Kastracja:([\s\S]*?)🩸/gi),
-  age: new RegExp(
+  castration: createRegex(/Kastracja:([\s\S]*?)🩸/gi),
+  age: createRegex(
     /(Płeć, wiek:|Płeć\/wiek:|Szacowany wiek:)([\s\S]*?)(🏠|🐶)/gi
   ),
-  dogInteraction: new RegExp(/Stosunek do psów:([\s\S]*?)🐱/gi),
-  catInteraction: new RegExp(/Stosunek do kotów:([\s\S]*?)👶🏻/gi),
-  childrenInteraction: new RegExp(/Stosunek do dzieci:([\s\S]*?)(👩🏼‍🏫|📟)/gi),
-  deworming: new RegExp(/Odrobaczanie \(data \+ środek\):([\s\S]*?)(👨🏻‍⚕️|💉)/gi),
-  health: new RegExp(/Leczenie\/Health:([\s\S]*?)(👨🏻|)/gi),
-  story: new RegExp(/👩🏼‍🏫 Historia:([\s\S]*?)(✂️|👉)/gi),
-  infoForCarer: new RegExp(
+  dogInteraction: createRegex(/Stosunek do psów:([\s\S]*?)🐱/gi),
+  catInteraction: createRegex(/Stosunek do kotów:([\s\S]*?)👶🏻/gi),
+  childrenInteraction: createRegex(/Stosunek do dzieci:([\s\S]*?)(👩🏼‍🏫|📟)/gi),
+  deworming: createRegex(/Odrobaczanie \(data \+ środek\):([\s\S]*?)(👨🏻‍⚕️|💉)/gi),
+  health: createRegex(/Leczenie\/Health:([\s\S]*?)(👨🏻|)/gi),
+  story: createRegex(/👩🏼‍🏫 Historia:([\s\S]*?)(✂️|👉)/gi),
+  infoForCarer: createRegex(
     /Info dla właścicieli\/opiekunów:([\s\S]*?)Szacowany/gi
   ),
-  bed: new RegExp(/Legowisko:([\s\S]*?)🦮/gi),
-  walk: new RegExp(/Spacery:([\s\S]*?)(🍲|🥘|🍽)/gi),
+  bed: createRegex(/Legowisko:([\s\S]*?)🦮/gi),
+  walk: createRegex(/Spacery:([\s\S]*?)(🍲|🥘|🍽)/gi),
 };
 const getDetails = (description: string) => {
   const food = getDetailSanitized(description, REGEX.food, false, "zwykła");
