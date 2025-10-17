@@ -62,7 +62,11 @@ const AnimalPhoto = ({
           loading="lazy"
           unoptimized
           onLoadingComplete={() => setIsLoading(false)} 
-          onClick={() => setOpenPhoto(true)}
+          onClick={() => {
+            console.log("cover", cover)
+            console.log("animal.cover.url", animal.cover.url)
+            console.log("animal", animal)
+            setOpenPhoto(true)}}
         />
       ) : (
         <div
@@ -78,14 +82,14 @@ const AnimalPhoto = ({
         </div>
       )}
     </div>
-    {isPhotoOpened && (
+    {isPhotoOpened && animal.cover.url && (
       <div
         className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
         onClick={() => setOpenPhoto(false)}
       >
         <div className="relative">
           <Image
-            src={cover}
+            src={animal.cover.url}
             alt={name}
             width={512}
             height={512}

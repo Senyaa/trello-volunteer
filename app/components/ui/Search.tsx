@@ -24,8 +24,7 @@ const Search: FC<SearchProps> = ({ inputValue, onInput }) => {
           className="rounded-md pb-1 pt-2 pr-2 pl-10 dark:text-white bg-neutral-200 dark:bg-neutral-800 w-full active:outline-none"
         />
         <button onClick={() => onInput("")} className="absolute right-3 mt-2">
-          X
-          {/* <FontAwesomeIcon icon={faCircleXmark} />{" "} */}
+          &times;
         </button>
       </div>
     </div>

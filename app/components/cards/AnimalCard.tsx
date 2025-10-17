@@ -38,7 +38,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
         animal.isDone ? "opacity-50" : ""
       }`}
     >
-      <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
+      <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row gap-4">
         <AnimalPhoto animal={animal} name={animal.name} />
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">

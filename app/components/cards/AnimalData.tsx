@@ -20,6 +20,8 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
   const animalsNotDone = animals.filter((a) => !a.isDone);
   const animalsDone = animals.filter((a) => a.isDone);
 
+  const isShift = !isDog && Boolean(shift);
+
   return (
     <>
       {animalsNotDone.length !== 0 && (
@@ -27,7 +29,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
           {animalsNotDone.map((animal) => (
             <li key={animal.id} className="my-4">
               <AnimalCard
-                isShift={!isDog && Boolean(shift)}
+                isShift={isShift}
                 animal={animal}
                 settings={settings}
               />
@@ -42,7 +44,7 @@ const AnimalData: FC<AnimalDataProps> = ({ animals, settings }) => {
             {animalsDone.map((animal) => (
               <li key={animal.id} className="mx-2 my-4">
                 <AnimalCard
-                  isShift={!isDog && Boolean(shift)}
+                  isShift={isShift}
                   animal={animal}
                   settings={settings}
                 />
