@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +7,6 @@ import { faTrello } from "@fortawesome/free-brands-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { Card } from "../../types/Card";
-import getCardCover from "../../client/getCardCover";
 import CardDetail from "./CardDetail";
 import { SettingsFormType } from "../../(site)/protected/settings/SettingsForm";
 import Button from "../ui/Button";

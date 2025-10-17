@@ -15,6 +15,17 @@ export const catRooms: { name: string; id: string }[] = (
     return { name, id };
   });
 
+export const catRoomsMap = (
+  process.env.NEXT_PUBLIC_CATS_PLACES || ""
+)
+  .toString()
+  .split(",")
+  .reduce((acc, catroom) => {
+    const [name, id] = catroom?.split("-");
+    if (name && id) acc[name.toLocaleLowerCase()] = id;
+    return acc;
+  }, {} as Record<string, string>);
+
 export const dogRooms: { name: string; id: string }[] = (
   process.env.NEXT_PUBLIC_DOGS_PLACES || ""
 )
