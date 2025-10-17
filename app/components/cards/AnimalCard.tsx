@@ -143,7 +143,6 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
               href={animal.shortUrl}
               className="text-sm text-gray-400 w-15 hidden md:block"
             >
-              trello
               <FontAwesomeIcon icon={faTrello} />
             </Link>
             <Button

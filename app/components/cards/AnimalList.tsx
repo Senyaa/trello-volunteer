@@ -13,9 +13,9 @@ import {
   useSelector,
   userSlice,
 } from "@/lib/redux";
-import { getDetailsHeaders } from "../../helpers/details";
 import Search from "../ui/Search";
 import Container from "../ui/Container";
+import AnimalListDesktopHeader from "./AnimalListDesktopHeader";
 
 interface AnimalListProps {
   animals: Card[];
@@ -25,8 +25,8 @@ interface AnimalListProps {
 
 const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const dispatch = useDispatch();
+  const pathname = usePathname();
 
   const shift = useSelector(selectShiftId);
   const doneCount = useSelector(selectCurrentShiftDoneCount);
@@ -35,6 +35,9 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const room = searchParams.get("room");
+  const isDog = pathname.includes("dogs");
+
+  const isShiftAvailable = shift && !isDog;
 
   useEffect(() => {
     dispatch(userSlice.actions.setAnimalsToDo(allAnimals.length));
@@ -58,27 +61,6 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
     [animals, isDoneIds, searchValue]
   );
 
-  const isDog = pathname.includes("dogs");
-
-  const headerDetails = () => {
-    if (Object.values(settings).length < 2) return null;
-    return (
-      <>
-        {getDetailsHeaders(settings).map((header) => {
-          const displayForType = header.onlyType
-            ? pathname.includes(header?.onlyType)
-            : true;
-          if (header.isEnabled && displayForType)
-            return (
-              <div key={header.plName} className="detail-cell">{`${
-                header.icon ? header.icon + " " : ""
-              }${header.plName}`}</div>
-            );
-        })}
-      </>
-    );
-  };
-
   if (animals.length === 0) {
     return <Container>Nie znaleziono zwierzaków.</Container>;
   }
@@ -90,7 +72,7 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
   return (
     <>
       <Search inputValue={searchValue} onInput={handleSearchInput} />
-       {!isDog && shift && doneCount === allAnimals.length && (
+      {isShiftAvailable && doneCount === allAnimals.length && (
         <div className="flex flex-col px-2 py-4 bg-neutral-100 dark:bg-neutral-900 m-2 rounded-md">
           <p className="text-center">
             <span className="font-extrabold mb-2 block">
@@ -109,22 +91,13 @@ const AnimalList: FC<AnimalListProps> = ({ animals, settings, allAnimals }) => {
           <EndShiftButton classNames="mt-2" />
         </div>
       )}
-      <div className="hidden z-10 md:flex bg-neutral-200 dark:bg-neutral-900 rounded-md p-2 mt-2 gap-2 border-2 border-solid dark:border-black">
-        <div className="shrink-0 w-[12rem]">Imię</div>
-        <div className="shrink-0 w-[12rem]">Uwagi</div>
-
-        <div className="flex w-full gap-2">
-          <div className="detail-cell">🍽 Karma</div>
-          {headerDetails()}
-        </div>
-        {!pathname.includes("newbie") && (
-          <>
-            <div className="w-[3rem]">Trello</div>
-            {!isDog && shift ? <div className="w-[3rem]">Dyżur</div> : null}
-          </>
-        )}
+      <div className="relative">
+        <AnimalListDesktopHeader
+          settings={settings}
+          isShift={Boolean(isShiftAvailable)}
+        />
+        <AnimalData animals={animalsLocalDone} settings={settings} />
       </div>
-      <AnimalData animals={animalsLocalDone} settings={settings} /> 
     </>
   );
 };
