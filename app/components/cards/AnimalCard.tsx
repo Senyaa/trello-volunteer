@@ -16,6 +16,7 @@ import ShiftCheckbox from "../shift/ShiftCheckbox";
 import AddNote from "../shift/AddNote";
 import { replaceMDLink } from "../../helpers/replaceMDLink";
 import getDetails, { getDetailsHeaders } from "../../helpers/details";
+import AnimalPhoto from "./AnimalPhoto";
 
 interface AnimalCardProps {
   animal: Card;
@@ -24,31 +25,8 @@ interface AnimalCardProps {
 }
 
 const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
-  const [cover, setCover] = useState("");
   const pathname = usePathname();
   const isNewbieMode = pathname.includes("newbie");
-
-  useEffect(() => {
-    if (animal.cover.url) {
-      if (animal.cover.url.includes("cloudinary")) {
-        setCover(animal.cover.url);
-        return;
-      }
-
-      setCover(`/api/imageFile?url=${animal.cover.url}`);
-      return;
-    }
-
-    const attachmentId = animal.cover.idAttachment;
-
-    getCardCover(animal.id, attachmentId).then((images) => {
-      const coverUrl = images.find((i) => i.id === attachmentId)?.url;
-
-      if (coverUrl) {
-        setCover(`/api/imageFile?url=${coverUrl}`);
-      }
-    });
-  }, [animal]);
 
   const detailsValues = getDetails(animal.desc);
 
@@ -61,16 +39,7 @@ const AnimalCard: FC<AnimalCardProps> = ({ animal, settings, isShift }) => {
       }`}
     >
       <div className="flex justify-start w-full md:max-w-min md:h-full md:flex-row">
-        <div className="relative md:rounded-none h-[7rem] w-[7rem] rounded-full md:h-[4rem] md:w-[4rem] mr-4 flex-shrink-0">
-          <Image
-            src={cover || "/assets/placeholder.png"}
-            alt={animal.name}
-            fill
-            sizes="112px"
-            className="object-cover rounded-full aspect-square"
-            unoptimized
-          />
-        </div>
+        <AnimalPhoto animal={animal} name={animal.name} />
         <div className="flex flex-col w-full md:flex-row md:items-start md:h-full">
           <div className="flex justify-between">
             <div>

@@ -1,58 +1,25 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
-import getCardCover from "../client/getCardCover";
+import { FC } from "react";
 import getDetails from "../helpers/details";
 import parseTrelloIdToCreatedDate from "../helpers/parseTrelloIdToCreatedDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import Image from "next/image";
+import AnimalPhoto from "./cards/AnimalPhoto";
+import { Card } from "../types/Card";
 
 interface MinimalAnimalCardProps {
-  animal: any;
+  animal: Card;
 }
 
 const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
-  const [cover, setCover] = useState("");
-
-  // TODO: extract
-  useEffect(() => {
-    if (animal.cover.url) {
-      if (animal.cover.url.includes("cloudinary")) {
-        setCover(animal.cover.url);
-        return;
-      }
-
-      setCover(`/api/imageFile?url=${animal.cover.url}`);
-      return;
-    }
-
-    const attachmentId = animal.cover.idAttachment;
-
-    getCardCover(animal.id, attachmentId).then((images) => {
-      const coverUrl = images.find((i) => i.id === attachmentId)?.url;
-
-      if (coverUrl) {
-        setCover(`/api/imageFile?url=${coverUrl}`);
-      }
-    });
-  }, [animal]);
-
   const personality = getDetails(animal.desc).personality;
 
   return (
     <div className="bg-white shadow-sm dark:bg-neutral-900 rounded-md p-4 mx-2 shrink-0 max-w-[250px] h-[120px] overflow-y-hidden ">
-      <div className="flex h-full">
-        <div className="relative h-[4rem] w-[4rem] mr-4 flex-shrink-0">
-          <Image
-            src={cover || "/assets/placeholder.png"}
-            alt={animal.name}
-            loading="lazy"
-            className="object-cover rounded-full aspect-square"
-            unoptimized
-          />
-        </div>
+      <div className="flex h-full gap-4">
+        <AnimalPhoto animal={animal} name={animal.name} isMini/>
         <div className="h-full flex flex-col justify-between">
           <div>
             <span className="font-extrabold">{animal.name?.split("-")[0]}</span>
@@ -66,7 +33,7 @@ const MiniAnimalCard: FC<MinimalAnimalCardProps> = ({ animal }) => {
             animal.id
           ).toLocaleDateString("pl")}`}</div>
         </div>
-        <div className="ml-4 flex items-center">
+        <div className="flex items-center">
           <Link href={animal.url}>
             <FontAwesomeIcon icon={faChevronRight} />
           </Link>
