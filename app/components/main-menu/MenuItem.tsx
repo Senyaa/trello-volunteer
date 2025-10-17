@@ -19,7 +19,7 @@ const MenuItem: FC<MenuItemProps> = ({ link, label, icon }) => {
           pathname.includes(link)
             ? "text-green-700 dark:text-white"
             : "dark:text-neutral-400"
-        } flex flex-col justify-center px-4`}
+        } flex flex-col justify-center items-center px-4`}
       >
         {icon}
         <div className="text-xs md:text-base mt-1">{label}</div>
